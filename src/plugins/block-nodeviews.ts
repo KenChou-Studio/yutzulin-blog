@@ -234,6 +234,35 @@ class CustomBlockView {
 		this.dom.dataset.blockType = this.type;
 		this.dom.setAttribute("contenteditable", "false");
 		this.build();
+
+		// The blue frame stays while the block is selected; make it easy to leave:
+		// Escape, the ✓ button, or a click anywhere outside the block.
+		this.dom.addEventListener("keydown", (event) => {
+			if ((event as KeyboardEvent).key === "Escape") this.dismiss();
+		});
+		this.onOutsidePointer = (event: Event) => {
+			if (!this.dom.contains(event.target as Node)) this.dom.classList.remove("is-selected");
+		};
+		document.addEventListener("pointerdown", this.onOutsidePointer, true);
+	}
+
+	private onOutsidePointer!: (event: Event) => void;
+
+	/** Leaves the block: drops the frame and puts the cursor after it. */
+	private dismiss() {
+		this.dom.classList.remove("is-selected");
+		(document.activeElement as HTMLElement | null)?.blur?.();
+		const pos = this.getPos();
+		if (typeof pos === "number") {
+			const { state } = this.view;
+			const after = Math.min(pos + this.node.nodeSize, state.doc.content.size);
+			const sel = state.selection.constructor as any;
+			try {
+				this.view.dispatch(state.tr.setSelection(sel.near(state.doc.resolve(after), 1)));
+			} catch {
+				/* keep the current selection */
+			}
+		}
 	}
 
 	private get data(): Data {
@@ -254,7 +283,8 @@ class CustomBlockView {
 			<div class="sb-chrome">
 				<span class="sb-chrome__name">${esc(blockLabel(this.type))}</span>
 				<button type="button" class="sb-chrome__btn" data-sb-action="details" title="${esc(c.edit)}">⚙</button>
-				<button type="button" class="sb-chrome__btn" data-sb-action="delete" title="${esc(c.delete)}">✕</button>
+				<button type="button" class="sb-chrome__btn" data-sb-action="done" title="${esc(c.close)}">✓</button>
+				<button type="button" class="sb-chrome__btn sb-chrome__btn--danger" data-sb-action="delete" title="${esc(c.delete)}">🗑</button>
 			</div>
 			<div class="sb-node sb-body">${this.spec.render(d, field, esc)}</div>
 			${this.settingsHtml()}`;
@@ -313,6 +343,7 @@ class CustomBlockView {
 		});
 
 		this.dom.querySelector('[data-sb-action="delete"]')?.addEventListener("click", () => this.remove());
+		this.dom.querySelector('[data-sb-action="done"]')?.addEventListener("click", () => this.dismiss());
 		this.dom
 			.querySelectorAll('[data-sb-action="details"]')
 			.forEach((button) => button.addEventListener("click", () => this.openDetails()));
@@ -401,6 +432,7 @@ class CustomBlockView {
 
 	destroy() {
 		clearTimeout(this.timer);
+		document.removeEventListener("pointerdown", this.onOutsidePointer, true);
 	}
 }
 

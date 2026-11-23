@@ -210,3 +210,11 @@
 	opacity: 0.6;
 	font: 500 14px system-ui, sans-serif;
 }
+
+/* Delete is destructive: keep it apart and red on hover so it is not mistaken for "close" */
+.sb-chrome__btn--danger {
+	margin-inline-start: 4px;
+}
+.sb-chrome__btn--danger:hover {
+	background: #dc2626;
+}
