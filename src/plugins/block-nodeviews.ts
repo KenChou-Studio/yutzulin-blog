@@ -224,7 +224,13 @@ class CustomBlockView {
 		const rows = this.spec.settings
 			.map(({ field, type = "text" }) => {
 				const dict = (BLOCKS[this.type][getLocale()] ?? BLOCKS[this.type].zh).fields[field];
-				return `<label class="sb-setting"><span>${esc(fieldLabel(this.type, field))}</span><input type="${type === "number" ? "number" : "text"}" data-sb-setting="${field}" placeholder="${esc(dict?.placeholder ?? "")}" value="${esc(this.data[field])}" /></label>`;
+				const input = `<input type="${type === "number" ? "number" : "text"}" data-sb-setting="${field}" placeholder="${esc(dict?.placeholder ?? "")}" value="${esc(this.data[field])}" />`;
+				// Image fields get a button that opens EmDash's media library (pick or upload).
+				const pick =
+					field === "imageUrl"
+						? `<button type="button" class="sb-setting__pick" data-sb-action="details">${esc((COMMON_I18N[getLocale()] ?? COMMON_I18N.zh).chooseImage)}</button>`
+						: "";
+				return `<label class="sb-setting"><span>${esc(fieldLabel(this.type, field))}</span><span class="sb-setting__row">${input}${pick}</span></label>`;
 			})
 			.join("");
 		return `<div class="sb-settings">${rows}</div>`;
@@ -264,7 +270,9 @@ class CustomBlockView {
 		});
 
 		this.dom.querySelector('[data-sb-action="delete"]')?.addEventListener("click", () => this.remove());
-		this.dom.querySelector('[data-sb-action="details"]')?.addEventListener("click", () => this.openDetails());
+		this.dom
+			.querySelectorAll('[data-sb-action="details"]')
+			.forEach((button) => button.addEventListener("click", () => this.openDetails()));
 	}
 
 	private schedule() {
@@ -333,7 +341,7 @@ class CustomBlockView {
 
 	stopEvent(event: Event): boolean {
 		const target = event.target as HTMLElement | null;
-		return !!target?.closest("[data-sb-field], [data-sb-setting], .sb-chrome__btn");
+		return !!target?.closest("[data-sb-field], [data-sb-setting], .sb-chrome__btn, .sb-setting__pick");
 	}
 
 	ignoreMutation(): boolean {

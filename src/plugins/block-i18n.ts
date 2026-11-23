@@ -543,6 +543,7 @@ export const COMMON_I18N = {
 	zh: {
 		edit: "編輯全部欄位",
 		delete: "刪除區塊",
+		chooseImage: "選擇／上傳圖片",
 		cancel: "取消",
 		save: "儲存",
 		close: "關閉",
@@ -551,6 +552,7 @@ export const COMMON_I18N = {
 	en: {
 		edit: "Edit all fields",
 		delete: "Delete block",
+		chooseImage: "Choose / upload image",
 		cancel: "Cancel",
 		save: "Save",
 		close: "Close",
@@ -736,10 +738,10 @@ export function getPortableTextBlocks(locale: SupportedLocale = "zh"): PortableT
 					placeholder: BLOCKS.hero_block[locale].fields.secondaryUrl.placeholder,
 				},
 				{
-					type: "text_input" as const,
+					type: "media_picker" as const,
 					action_id: "imageUrl",
 					label: BLOCKS.hero_block[locale].fields.imageUrl.label,
-					placeholder: BLOCKS.hero_block[locale].fields.imageUrl.placeholder,
+					mime_type_filter: "image/",
 				},
 				{
 					type: "text_input" as const,

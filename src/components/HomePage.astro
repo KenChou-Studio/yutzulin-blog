@@ -38,11 +38,13 @@ const heroBlocks = Array.isArray(homePage?.data?.hero_content) ? homePage.data.h
 const rawContentBlocks = Array.isArray(homePage?.data?.content) ? homePage.data.content : [];
 const featuredImage = homePage?.data?.featured_image;
 
-// Prefer dedicated hero_content section. Fallback to intro splitting in rawContentBlocks if hero_content is empty
-let introBlocks = heroBlocks;
+// A Hero block inside Content is the single place that sets the home hero (text, buttons and
+// image). The separate Hero field and the Featured image only apply to older pages without one.
+const hasHeroBlock = rawContentBlocks.some((b: any) => b?._type === "hero_block");
+let introBlocks = hasHeroBlock ? [] : heroBlocks;
 let bodyBlocks = rawContentBlocks;
 
-if (introBlocks.length === 0 && rawContentBlocks.length > 0) {
+if (!hasHeroBlock && introBlocks.length === 0 && rawContentBlocks.length > 0) {
 	const dividerIndex = rawContentBlocks.findIndex(
 		(b: any) => b._type === "break" || b._type === "horizontalRule" || b.style === "lineBreak"
 	);

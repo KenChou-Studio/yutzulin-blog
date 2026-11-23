@@ -177,3 +177,26 @@
 	width: 100%;
 	object-fit: cover;
 }
+
+.sb-setting__row {
+	display: flex;
+	gap: 6px;
+}
+.sb-setting__row input {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+.sb-setting__pick {
+	flex: none;
+	padding: 5px 10px;
+	border: 1px solid rgb(127 127 127 / 0.4);
+	border-radius: 6px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+	white-space: nowrap;
+}
+.sb-setting__pick:hover {
+	background: rgb(127 127 127 / 0.15);
+}

@@ -73,7 +73,7 @@
         },
         {
           "slug": "hero_content",
-          "label": "Hero (headline, subtitle, lead and focus line)",
+          "label": "Hero (legacy: used on the home page only when Content has no Hero block)",
           "type": "portableText"
         },
         {
@@ -83,7 +83,7 @@
         },
         {
           "slug": "featured_image",
-          "label": "Featured image / portrait",
+          "label": "Featured image (not used on the home page when it has a Hero block)",
           "type": "image"
         },
         {
