@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
 
-import { search } from "emdash";
-import { getTranslator, localePath, resolveRouteLocale } from "../../i18n";
+import { getEmDashEntry, search } from "emdash";
+import { getTranslator, localePath, localizeUrl, resolveRouteLocale } from "../../i18n";
 import Base from "../../layouts/Base.astro";
 
 const locale = resolveRouteLocale(Astro.params.locale);
@@ -18,7 +18,7 @@ const query = Astro.url.searchParams.get("q")?.trim() || "";
 // results, and handles tokenization/stemming. Templates that grep all
 // post bodies in JS quickly become unusable past a few hundred posts.
 const { items: results, nextCursor } = query
-	? await search(query, { collections: ["posts"], locale, limit: 30 })
+	? await search(query, { collections: ["posts", "news"], locale, limit: 30 })
 	: { items: [], nextCursor: undefined };
 
 function escapeHtml(text: string) {
@@ -33,13 +33,27 @@ function escapeHtml(text: string) {
 // The snippet is cut from the first indexed field, which for posts is the
 // title. When it is the whole title, show its highlights in the heading
 // instead of repeating the title underneath.
+// A news result links wherever the news item points (its own link field), else the archive.
+const newsLinks = new Map<string, string>();
+await Promise.all(
+	results
+		.filter((result) => result.collection === "news")
+		.map(async (result) => {
+			const { entry } = await getEmDashEntry("news", result.slug ?? result.id, { locale });
+			newsLinks.set(result.id, localizeUrl(locale, (entry?.data.link as string | undefined) || "/news"));
+		}),
+);
+
 const rows = results.map((result) => {
 	const title = result.title ?? t("posts.untitled");
 	const snippetIsTitle =
 		result.snippet?.replaceAll("<mark>", "").replaceAll("</mark>", "") ===
 		escapeHtml(title);
 	return {
-		path: localePath(locale, `/posts/${result.slug ?? result.id}`),
+		path:
+			result.collection === "news"
+				? (newsLinks.get(result.id) ?? localePath(locale, "/news"))
+				: localePath(locale, `/posts/${result.slug ?? result.id}`),
 		title,
 		titleHtml: snippetIsTitle ? result.snippet : undefined,
 		snippet: snippetIsTitle ? undefined : result.snippet,

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getEmDashCollection, getSiteSettings } from "emdash";
 
-import { LOCALES, getTranslator, localePath, resolveRouteLocale } from "../../i18n";
+import { LOCALES, getTranslator, localePath, localizeUrl, resolveRouteLocale } from "../../i18n";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 
 export const GET: APIRoute = async ({ site, url, params, request }) => {
@@ -21,24 +21,45 @@ export const GET: APIRoute = async ({ site, url, params, request }) => {
 		limit: 20,
 	});
 
-	const items = posts
-		.map((post) => {
-			if (!post.data.publishedAt) return null;
-			const pubDate = post.data.publishedAt.toUTCString();
+	const { entries: news } = await getEmDashCollection("news", {
+		locale,
+		orderBy: { published_at: "desc" },
+		limit: 20,
+	});
 
-			const postUrl = new URL(localePath(locale, `/posts/${post.data.slug ?? post.id}`), siteUrl).href;
-			const title = escapeXml(post.data.title || t("posts.untitled"));
-			const description = escapeXml(post.data.excerpt || "");
+	// Posts and news in one feed, newest first. A news item links to its own URL when it has
+	// one (resolved against the locale for site paths), otherwise to the news archive.
+	const feed = [
+		...posts.map((post) => ({
+			date: post.data.publishedAt,
+			title: post.data.title || t("posts.untitled"),
+			description: post.data.excerpt || "",
+			url: new URL(localePath(locale, `/posts/${post.data.slug ?? post.id}`), siteUrl).href,
+			guid: undefined as string | undefined,
+		})),
+		...news.map((item) => ({
+			date: item.data.publishedAt,
+			title: item.data.title || t("posts.untitled"),
+			description: item.data.excerpt || "",
+			url: new URL(localizeUrl(locale, item.data.link || "/news"), siteUrl).href,
+			// A news item often points at a post; keep its identity separate from the post's.
+			guid: `news:${locale}:${item.data.slug ?? item.id}`,
+		})),
+	]
+		.filter((entry): entry is typeof entry & { date: Date } => entry.date instanceof Date)
+		.sort((a, b) => b.date.getTime() - a.date.getTime())
+		.slice(0, 20);
 
-			return `    <item>
-      <title>${title}</title>
-      <link>${postUrl}</link>
-      <guid isPermaLink="true">${postUrl}</guid>
-      <pubDate>${pubDate}</pubDate>
-      <description>${description}</description>
-    </item>`;
-		})
-		.filter(Boolean)
+	const items = feed
+		.map(
+			(entry) => `    <item>
+      <title>${escapeXml(entry.title)}</title>
+      <link>${entry.url}</link>
+      <guid isPermaLink="${entry.guid ? "false" : "true"}">${entry.guid ?? entry.url}</guid>
+      <pubDate>${entry.date.toUTCString()}</pubDate>
+      <description>${escapeXml(entry.description)}</description>
+    </item>`,
+		)
 		.join("\n");
 
 	const rss = `<?xml version="1.0" encoding="UTF-8"?>

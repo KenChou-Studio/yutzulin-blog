@@ -271,7 +271,8 @@ const year = new Date().getFullYear();
 							inputClass="site-search-input"
 							resultsClass="site-search-results"
 							resultClass="site-search-result"
-							collections={["posts", "pages"]}
+							collections={["posts", "pages", "news"]}
+							routeMap={{ news: localePath(locale, "/news") }}
 						>
 							<span slot="loading">{t("search.loading")}</span>
 							<span slot="no-results">{t("search.noResultsLive")}</span>
