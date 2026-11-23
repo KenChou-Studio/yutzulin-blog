@@ -129,6 +129,26 @@ const SPECS: Record<CustomBlockType, BlockSpec> = {
 				</div>
 			</div>`,
 	},
+	recent_news: {
+		cls: "sb-wrap--posts",
+		settings: [{ field: "actionUrl", type: "url" }, { field: "limit", type: "number" }],
+		render: (d, f) => `
+			<section class="modular-recent-news">
+				<div class="section-head">
+					<div>
+						${f("eyebrow", { cls: "eyebrow", placeholder: "Eyebrow" })}
+						${f("title", { tag: "h2", placeholder: "Title" })}
+					</div>
+					<div class="section-head__action">
+						${f("lead", { tag: "p", multiline: true, placeholder: "Lead" })}
+						<div style="margin-top:14px"><span class="btn btn--sm">${f("actionText", { tag: "span", placeholder: "View all news" })}</span></div>
+					</div>
+				</div>
+				<div class="news-grid sb-posts-placeholder" aria-hidden="true">
+					<div class="sb-ghost-post"></div><div class="sb-ghost-post"></div><div class="sb-ghost-post"></div>
+				</div>
+			</section>`,
+	},
 	recent_posts: {
 		cls: "sb-wrap--posts",
 		settings: [{ field: "actionUrl", type: "url" }, { field: "limit", type: "number" }, { field: "tag" }],

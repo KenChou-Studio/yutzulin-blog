@@ -27,6 +27,7 @@ const COMPONENTS = [
 	"HeroBlock",
 	"StatsBlock",
 	"RecentPostsBlock",
+	"RecentNewsBlock",
 	"NewsItem",
 	"NewsGrid",
 ].map((name) => `src/components/ui/${name}.astro`);

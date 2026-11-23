@@ -1,0 +1,75 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../../../layouts/Base.astro";
+import NewsItem from "../../../components/ui/NewsItem.astro";
+import Pagination from "../../../components/Pagination.astro";
+import { getTranslator, localePath, resolveRouteLocale } from "../../../i18n";
+
+const locale = resolveRouteLocale(Astro.params.locale);
+if (!locale) {
+	return Astro.rewrite("/404");
+}
+const t = await getTranslator(Astro, locale);
+
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
+const { entries, cacheHint, nextCursor } = await getEmDashCollection("news", {
+	locale,
+	orderBy: { published_at: "desc" },
+	limit: 12,
+	cursor,
+});
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<Base title={t("news.title")} description={t("news.description")}>
+	<header class="band intro">
+		<div class="frame">
+			<p class="eyebrow">{t("news.eyebrow")}</p>
+			<h1 class="intro__title">{t("news.title")}</h1>
+			<p class="intro__lead">{t("news.lead")}</p>
+		</div>
+	</header>
+
+	<section class="band section">
+		<div class="frame">
+			{
+				entries.length === 0 ? (
+					<div class="empty-state">
+						<h2 class="empty-state__title">{cursor ? t("news.noMore") : t("news.none")}</h2>
+						<p class="empty-state__text">{t("news.noneText")}</p>
+					</div>
+				) : (
+					<>
+						<div class="news-grid">
+							{entries.map((entry) => (
+								<NewsItem
+									node={{
+										image: entry.data.featured_image,
+										imageAlt: (entry.data.featured_image as { alt?: string } | undefined)?.alt,
+										title: entry.data.title,
+										description: entry.data.excerpt,
+										link: entry.data.link,
+									}}
+								/>
+							))}
+						</div>
+						<Pagination
+							basePath={localePath(locale, "/news")}
+							cursor={cursor}
+							nextCursor={nextCursor}
+							locale={locale}
+						/>
+					</>
+				)
+			}
+		</div>
+	</section>
+</Base>
+
+<style>
+	.news-grid {
+		display: grid;
+		gap: clamp(16px, 2vw, 24px);
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+	}
+</style>

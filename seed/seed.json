@@ -95,6 +95,41 @@
       ]
     },
     {
+      "slug": "news",
+      "label": "News",
+      "labelSingular": "News item",
+      "description": "Short news items: image, title, description and an optional link. The latest ones can be shown on the home page with the Recent News block.",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "scheduling"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "featured_image",
+          "label": "Image",
+          "type": "image"
+        },
+        {
+          "slug": "excerpt",
+          "label": "Description",
+          "type": "text"
+        },
+        {
+          "slug": "link",
+          "label": "Link URL",
+          "type": "string"
+        }
+      ]
+    },
+    {
       "slug": "ui_strings",
       "label": "UI Text",
       "labelSingular": "UI Text",
@@ -696,6 +731,16 @@
               "linkText": "Read Insights →"
             },
             {
+              "_type": "recent_news",
+              "_key": "h_recent_news_01",
+              "eyebrow": "Latest News",
+              "title": "News & Updates",
+              "lead": "Updates on projects, publications and new field notes.",
+              "actionText": "View all news",
+              "actionUrl": "/news",
+              "limit": 3
+            },
+            {
               "_type": "recent_posts",
               "_key": "h_recent_posts_01",
               "eyebrow": "Urban Insights & Case Studies",
@@ -798,6 +843,16 @@
               "description": "烏特勒支、阿姆斯特丹、台夫特、維也納、巴塞隆納、臺灣等。",
               "link": "/insights",
               "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "recent_news",
+              "_key": "h_recent_news_01",
+              "eyebrow": "最新消息",
+              "title": "最新動態",
+              "lead": "計畫、著作與新文章的最新消息。",
+              "actionText": "查看所有消息",
+              "actionUrl": "/news",
+              "limit": 3
             },
             {
               "_type": "recent_posts",
@@ -1541,109 +1596,6 @@
         },
         "locale": "zh-TW",
         "translationOf": "insights"
-      },
-      {
-        "id": "news",
-        "slug": "news",
-        "status": "published",
-        "locale": "en",
-        "data": {
-          "title": "News",
-          "excerpt": "Updates on projects, publications and new field notes.",
-          "content": [
-            {
-              "_type": "block",
-              "_key": "n_h",
-              "style": "h2",
-              "children": [
-                {
-                  "_type": "span",
-                  "_key": "n_hs",
-                  "text": "Latest News"
-                }
-              ]
-            },
-            {
-              "_type": "news_item",
-              "_key": "n1",
-              "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=500&fit=crop",
-              "imageAlt": "Residents at a community workshop",
-              "title": "Jiangcui community planning project presented in Atlanta",
-              "description": "The AI-assisted place-making work on reserved public facility land was presented at the 2026 international planning conference.",
-              "link": "/posts/jiangcui-green-boundary-ai-place-making"
-            },
-            {
-              "_type": "news_item",
-              "_key": "n2",
-              "imageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=500&fit=crop",
-              "imageAlt": "Canal and historic buildings in Utrecht",
-              "title": "New field note: Utrecht Central Station area",
-              "description": "How the city reopened its canal ring and built the world’s largest bicycle parking facility.",
-              "link": "/posts/utrecht-central-station-area-regeneration"
-            },
-            {
-              "_type": "news_item",
-              "_key": "n3",
-              "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=500&fit=crop",
-              "imageAlt": "Aerial view of Barcelona’s Eixample grid",
-              "title": "New field note: Barcelona Superblocks",
-              "description": "From Cerdà’s grid to pedestrian-priority Superilles and green axes.",
-              "link": "/posts/barcelona-green-urban-fabric-superblocks"
-            }
-          ]
-        }
-      },
-      {
-        "id": "news-zh",
-        "slug": "news",
-        "status": "published",
-        "locale": "zh-TW",
-        "translationOf": "news",
-        "data": {
-          "title": "最新消息",
-          "excerpt": "計畫、著作與新文章的最新動態。",
-          "content": [
-            {
-              "_type": "block",
-              "_key": "n_h",
-              "style": "h2",
-              "children": [
-                {
-                  "_type": "span",
-                  "_key": "n_hs",
-                  "text": "最新消息"
-                }
-              ]
-            },
-            {
-              "_type": "news_item",
-              "_key": "n1",
-              "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=500&fit=crop",
-              "imageAlt": "社區工作坊中的居民",
-              "title": "江翠社區規劃計畫於亞特蘭大發表",
-              "description": "以 AI 輔助公共設施保留地場所營造的成果，於 2026 年國際規劃研討會發表。",
-              "link": "/posts/jiangcui-green-boundary-ai-place-making"
-            },
-            {
-              "_type": "news_item",
-              "_key": "n2",
-              "imageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=500&fit=crop",
-              "imageAlt": "烏特勒支的運河與歷史建築",
-              "title": "新文章：烏特勒支中央車站地區",
-              "description": "城市如何重新開通運河環，並打造全球最大的自行車停車設施。",
-              "link": "/posts/utrecht-central-station-area-regeneration"
-            },
-            {
-              "_type": "news_item",
-              "_key": "n3",
-              "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=500&fit=crop",
-              "imageAlt": "巴塞隆納擴建區街廓鳥瞰",
-              "title": "新文章：巴塞隆納超級街區",
-              "description": "從塞爾達方格到行人優先的超級街區與綠軸。",
-              "link": "/posts/barcelona-green-urban-fabric-superblocks"
-            }
-          ]
-        }
       },
       {
         "id": "contact",
@@ -4552,6 +4504,116 @@
         }
       },
       {
+        "id": "ui:blocks-news-eyebrow:en",
+        "slug": "blocks-news-eyebrow",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.newsEyebrow",
+          "text": "Latest News"
+        }
+      },
+      {
+        "id": "ui:blocks-news-title:en",
+        "slug": "blocks-news-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.newsTitle",
+          "text": "News & Updates"
+        }
+      },
+      {
+        "id": "ui:blocks-news-lead:en",
+        "slug": "blocks-news-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.newsLead",
+          "text": "Updates on projects, publications and new field notes."
+        }
+      },
+      {
+        "id": "ui:blocks-news-action:en",
+        "slug": "blocks-news-action",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.newsAction",
+          "text": "View all news"
+        }
+      },
+      {
+        "id": "ui:news-title:en",
+        "slug": "news-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.title",
+          "text": "News"
+        }
+      },
+      {
+        "id": "ui:news-description:en",
+        "slug": "news-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.description",
+          "text": "Updates on projects, publications and new field notes."
+        }
+      },
+      {
+        "id": "ui:news-eyebrow:en",
+        "slug": "news-eyebrow",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.eyebrow",
+          "text": "News"
+        }
+      },
+      {
+        "id": "ui:news-lead:en",
+        "slug": "news-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.lead",
+          "text": "The latest updates, newest first."
+        }
+      },
+      {
+        "id": "ui:news-none:en",
+        "slug": "news-none",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.none",
+          "text": "No news yet"
+        }
+      },
+      {
+        "id": "ui:news-none-text:en",
+        "slug": "news-none-text",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.noneText",
+          "text": "Published news will show up here."
+        }
+      },
+      {
+        "id": "ui:news-no-more:en",
+        "slug": "news-no-more",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "news.noMore",
+          "text": "No more news"
+        }
+      },
+      {
         "id": "ui:widgets-no-categories:en",
         "slug": "widgets-no-categories",
         "status": "published",
@@ -5777,6 +5839,127 @@
         "translationOf": "ui:blocks-card-link:en"
       },
       {
+        "id": "ui:blocks-news-eyebrow:zh-TW",
+        "slug": "blocks-news-eyebrow",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.newsEyebrow",
+          "text": "最新消息"
+        },
+        "translationOf": "ui:blocks-news-eyebrow:en"
+      },
+      {
+        "id": "ui:blocks-news-title:zh-TW",
+        "slug": "blocks-news-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.newsTitle",
+          "text": "最新動態"
+        },
+        "translationOf": "ui:blocks-news-title:en"
+      },
+      {
+        "id": "ui:blocks-news-lead:zh-TW",
+        "slug": "blocks-news-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.newsLead",
+          "text": "計畫、著作與新文章的最新消息。"
+        },
+        "translationOf": "ui:blocks-news-lead:en"
+      },
+      {
+        "id": "ui:blocks-news-action:zh-TW",
+        "slug": "blocks-news-action",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.newsAction",
+          "text": "查看所有消息"
+        },
+        "translationOf": "ui:blocks-news-action:en"
+      },
+      {
+        "id": "ui:news-title:zh-TW",
+        "slug": "news-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.title",
+          "text": "最新消息"
+        },
+        "translationOf": "ui:news-title:en"
+      },
+      {
+        "id": "ui:news-description:zh-TW",
+        "slug": "news-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.description",
+          "text": "計畫、著作與新文章的最新動態。"
+        },
+        "translationOf": "ui:news-description:en"
+      },
+      {
+        "id": "ui:news-eyebrow:zh-TW",
+        "slug": "news-eyebrow",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.eyebrow",
+          "text": "最新消息"
+        },
+        "translationOf": "ui:news-eyebrow:en"
+      },
+      {
+        "id": "ui:news-lead:zh-TW",
+        "slug": "news-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.lead",
+          "text": "最新動態，由新到舊。"
+        },
+        "translationOf": "ui:news-lead:en"
+      },
+      {
+        "id": "ui:news-none:zh-TW",
+        "slug": "news-none",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.none",
+          "text": "尚無消息"
+        },
+        "translationOf": "ui:news-none:en"
+      },
+      {
+        "id": "ui:news-none-text:zh-TW",
+        "slug": "news-none-text",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.noneText",
+          "text": "發布後的消息會顯示在這裡。"
+        },
+        "translationOf": "ui:news-none-text:en"
+      },
+      {
+        "id": "ui:news-no-more:zh-TW",
+        "slug": "news-no-more",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "news.noMore",
+          "text": "沒有更多消息"
+        },
+        "translationOf": "ui:news-no-more:en"
+      },
+      {
         "id": "ui:widgets-search:zh-TW",
         "slug": "widgets-search",
         "status": "published",
@@ -6021,6 +6204,119 @@
           "text": "網路錯誤，請稍後再試。"
         },
         "translationOf": "ui:comments-network-error:en"
+      }
+    ],
+    "news": [
+      {
+        "id": "news-jiangcui",
+        "slug": "jiangcui-atlanta",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "Jiangcui community planning project presented in Atlanta",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=750&fit=crop",
+              "alt": "Residents at a community workshop",
+              "filename": "news-jiangcui.jpg"
+            }
+          },
+          "excerpt": "The AI-assisted place-making work on reserved public facility land was presented at the 2026 international planning conference.",
+          "link": "/posts/jiangcui-green-boundary-ai-place-making"
+        }
+      },
+      {
+        "id": "news-utrecht",
+        "slug": "utrecht-field-note",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "New field note: Utrecht Central Station area",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1200&h=750&fit=crop",
+              "alt": "Canal and historic buildings in Utrecht",
+              "filename": "news-utrecht.jpg"
+            }
+          },
+          "excerpt": "How the city reopened its canal ring and built the world’s largest bicycle parking facility.",
+          "link": "/posts/utrecht-central-station-area-regeneration"
+        }
+      },
+      {
+        "id": "news-barcelona",
+        "slug": "barcelona-field-note",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "New field note: Barcelona Superblocks",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&h=750&fit=crop",
+              "alt": "Aerial view of Barcelona’s Eixample grid",
+              "filename": "news-barcelona.jpg"
+            }
+          },
+          "excerpt": "From Cerdà’s grid to pedestrian-priority Superilles and green axes.",
+          "link": "/posts/barcelona-green-urban-fabric-superblocks"
+        }
+      },
+      {
+        "id": "news-jiangcui-zh",
+        "slug": "jiangcui-atlanta",
+        "status": "published",
+        "locale": "zh-TW",
+        "translationOf": "news-jiangcui",
+        "data": {
+          "title": "江翠社區規劃計畫於亞特蘭大發表",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=750&fit=crop",
+              "alt": "社區工作坊中的居民",
+              "filename": "news-jiangcui.jpg"
+            }
+          },
+          "excerpt": "以 AI 輔助公共設施保留地場所營造的成果，於 2026 年國際規劃研討會發表。",
+          "link": "/posts/jiangcui-green-boundary-ai-place-making"
+        }
+      },
+      {
+        "id": "news-utrecht-zh",
+        "slug": "utrecht-field-note",
+        "status": "published",
+        "locale": "zh-TW",
+        "translationOf": "news-utrecht",
+        "data": {
+          "title": "新文章：烏特勒支中央車站地區",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1200&h=750&fit=crop",
+              "alt": "烏特勒支的運河與歷史建築",
+              "filename": "news-utrecht.jpg"
+            }
+          },
+          "excerpt": "城市如何重新開通運河環，並打造全球最大的自行車停車設施。",
+          "link": "/posts/utrecht-central-station-area-regeneration"
+        }
+      },
+      {
+        "id": "news-barcelona-zh",
+        "slug": "barcelona-field-note",
+        "status": "published",
+        "locale": "zh-TW",
+        "translationOf": "news-barcelona",
+        "data": {
+          "title": "新文章：巴塞隆納超級街區",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&h=750&fit=crop",
+              "alt": "巴塞隆納擴建區街廓鳥瞰",
+              "filename": "news-barcelona.jpg"
+            }
+          },
+          "excerpt": "從塞爾達方格到行人優先的超級街區與綠軸。",
+          "link": "/posts/barcelona-green-urban-fabric-superblocks"
+        }
       }
     ]
   },

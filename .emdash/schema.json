@@ -21,32 +21,15 @@
           "unique": false
         },
         {
-          "slug": "layout",
-          "label": "Page Layout 區塊佈局",
-          "type": "blocks",
+          "slug": "hero_content",
+          "label": "Hero 橫幅區段 (自由編輯大標題、副標題、引言與焦點)",
+          "type": "portableText",
           "required": false,
-          "unique": false,
-          "defaultValue": [],
-          "validation": {
-            "allowedTypes": [
-              "hero_block",
-              "stats_grid",
-              "info_card",
-              "recent_posts",
-              "callout_box",
-              "contact_item",
-              "rich_text",
-              "feature_cards",
-              "contact_cards",
-              "page_hero",
-              "profile_section"
-            ],
-            "maxItems": 50
-          }
+          "unique": false
         },
         {
           "slug": "content",
-          "label": "Content 內文編輯器",
+          "label": "Content 頁面正文區段 (章節標題、數據、卡片與功能區塊)",
           "type": "portableText",
           "required": false,
           "unique": false
@@ -110,7 +93,31 @@
           "unique": false
         }
       ]
+    },
+    {
+      "slug": "ui_strings",
+      "label": "UI Text",
+      "labelSingular": "UI Text",
+      "description": "Fixed site text: navigation, buttons, labels and empty states. Edit the text of each entry; the title is the stable key.",
+      "supports": [],
+      "hidden": false,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Key",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "text",
+          "label": "Text",
+          "type": "text",
+          "required": true,
+          "unique": false
+        }
+      ]
     }
   ],
-  "version": "6a6af26c4846d908"
+  "version": "914665e5f5cfeada"
 }

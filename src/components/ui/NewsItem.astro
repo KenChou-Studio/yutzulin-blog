@@ -3,9 +3,12 @@
  * News item: image, title and description; the whole card is one link.
  * Edited in place in the admin (see src/plugins/block-nodeviews.ts).
  */
+import { Image } from "emdash/ui";
 import { getLocale, localizeUrl } from "../../i18n";
 
 interface Props {
+	/** Image field value (news entries); `imageUrl` is used by the block. */
+	image?: any;
 	imageUrl?: string;
 	imageAlt?: string;
 	title?: string;
@@ -24,6 +27,7 @@ const data =
 			? props.value
 			: props;
 
+const image = data.image ?? props.image;
 const imageUrl: string | undefined = data.imageUrl ?? props.imageUrl;
 const imageAlt: string = data.imageAlt ?? props.imageAlt ?? "";
 const title: string | undefined = data.title ?? props.title;
@@ -43,7 +47,7 @@ const Tag = link ? "a" : "article";
 	rel={external ? "noopener noreferrer" : undefined}
 >
 	<div class="news-card__media">
-		{imageUrl ? <img src={imageUrl} alt={imageAlt} loading="lazy" decoding="async" /> : <div class="news-card__placeholder" />}
+		{image ? <Image image={image} alt={imageAlt || image.alt || ""} sizes="(min-width: 980px) 360px, (min-width: 600px) 45vw, 100vw" /> : imageUrl ? <img src={imageUrl} alt={imageAlt} loading="lazy" decoding="async" /> : <div class="news-card__placeholder" />}
 	</div>
 	<div class="news-card__body">
 		{title && <h3 class="news-card__title">{title}</h3>}

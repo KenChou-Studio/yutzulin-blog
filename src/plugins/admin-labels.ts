@@ -28,6 +28,11 @@ export const ADMIN_LABELS: Record<SupportedLocale, Record<string, Labels>> = {
 			labelSingular: "Post",
 			fields: { title: "Title", featured_image: "Featured image", content: "Content", excerpt: "Excerpt" },
 		},
+		news: {
+			label: "News",
+			labelSingular: "News item",
+			fields: { title: "Title", featured_image: "Image", excerpt: "Description", link: "Link URL" },
+		},
 		ui_strings: {
 			label: "UI Text",
 			labelSingular: "UI Text",
@@ -50,6 +55,11 @@ export const ADMIN_LABELS: Record<SupportedLocale, Record<string, Labels>> = {
 			label: "文章",
 			labelSingular: "文章",
 			fields: { title: "標題", featured_image: "代表圖片", content: "內文", excerpt: "摘要" },
+		},
+		news: {
+			label: "最新消息",
+			labelSingular: "消息",
+			fields: { title: "標題", featured_image: "圖片", excerpt: "敘述", link: "連結網址" },
 		},
 		ui_strings: {
 			label: "介面文字",

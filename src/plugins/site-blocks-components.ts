@@ -7,6 +7,7 @@ import HeroBlock from "../components/ui/HeroBlock.astro";
 import InfoCard from "../components/ui/InfoCard.astro";
 import NewsGrid from "../components/ui/NewsGrid.astro";
 import NewsItem from "../components/ui/NewsItem.astro";
+import RecentNewsBlock from "../components/ui/RecentNewsBlock.astro";
 import RecentPostsBlock from "../components/ui/RecentPostsBlock.astro";
 import RichTextBlock from "../components/ui/RichTextBlock.astro";
 import StatsBlock from "../components/ui/StatsBlock.astro";
@@ -26,6 +27,7 @@ export const blockComponents = {
 	contact_list: ContactList,
 	hero_block: HeroBlock,
 	recent_posts: RecentPostsBlock,
+	recent_news: RecentNewsBlock,
 	stats_grid: StatsBlock,
 	rich_text: RichTextBlock,
 	feature_cards: FeatureCardsBlock,

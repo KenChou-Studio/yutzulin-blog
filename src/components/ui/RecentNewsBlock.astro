@@ -1,0 +1,145 @@
+---
+/**
+ * Latest entries of the `news` collection as cards, for the home page (the
+ * news counterpart of RecentPostsBlock). Edited in place in the admin editor.
+ */
+import { getEmDashCollection } from "emdash";
+import NewsItem from "./NewsItem.astro";
+import { getLocale, getTranslator, localizeUrl } from "../../i18n";
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	lead?: string;
+	actionText?: string;
+	actionUrl?: string;
+	limit?: string | number;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const locale = getLocale(Astro);
+const t = await getTranslator(Astro, locale);
+
+const eyebrow = data.eyebrow ?? props.eyebrow ?? t("blocks.newsEyebrow");
+const title = data.title ?? props.title ?? t("blocks.newsTitle");
+const lead = data.lead ?? props.lead ?? t("blocks.newsLead");
+const actionText = data.actionText ?? props.actionText ?? t("blocks.newsAction");
+const actionUrl = localizeUrl(locale, data.actionUrl ?? props.actionUrl ?? "/news");
+const rawLimit = Number(data.limit ?? props.limit);
+const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 24) : 3;
+const className = props.class ?? "";
+
+let items: any[] = [];
+try {
+	const result = await getEmDashCollection("news", {
+		locale,
+		limit,
+		orderBy: { published_at: "desc" },
+	});
+	if (Astro.cache?.enabled && result?.cacheHint) Astro.cache.set(result.cacheHint);
+	items = result.entries ?? [];
+} catch (error) {
+	console.error("[RecentNewsBlock] Failed to fetch news:", error);
+}
+---
+
+<section class={`modular-recent-news ${className}`} data-emdash-block="recent_news">
+	<div class="section-head">
+		<div>
+			{eyebrow && <div class="eyebrow">{eyebrow}</div>}
+			{title && <h2>{title}</h2>}
+		</div>
+		{(lead || actionText) && (
+			<div class="section-head__action">
+				{lead && <p>{lead}</p>}
+				{actionText && (
+					<div style="margin-top: 14px;">
+						<a href={actionUrl} class="btn btn--sm">{actionText}</a>
+					</div>
+				)}
+			</div>
+		)}
+	</div>
+
+	{items.length > 0 ? (
+		<div class="news-grid">
+			{items.map((item) => (
+				<NewsItem
+					node={{
+						image: item.data.featured_image,
+						imageAlt: (item.data.featured_image as { alt?: string } | undefined)?.alt,
+						title: item.data.title,
+						description: item.data.excerpt,
+						link: item.data.link,
+					}}
+				/>
+			))}
+		</div>
+	) : (
+		<div class="posts-empty-hint"><p>{t("news.none")}</p></div>
+	)}
+</section>
+
+<style>
+	.modular-recent-news {
+		width: 100%;
+		max-width: 100% !important;
+		margin-block: clamp(2.5rem, 3.5vw, 4rem);
+	}
+	.section-head {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 32px;
+		margin-bottom: 28px;
+		align-items: start;
+	}
+	@media (max-width: 768px) {
+		.section-head {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+	}
+	.section-head h2 {
+		font-family: var(--font-heading);
+		font-size: clamp(26px, 3vw, 36px);
+		line-height: 1.15;
+		margin: 4px 0 0;
+		color: var(--color-text);
+	}
+	.section-head__action {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	.section-head__action p {
+		margin: 0;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		font-size: 0.98rem;
+	}
+	.news-grid {
+		display: grid;
+		gap: clamp(16px, 2vw, 24px);
+		margin-top: 16px;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+	}
+	.posts-empty-hint {
+		padding: 2.5rem;
+		text-align: center;
+		background: var(--color-fill);
+		border-radius: var(--radius);
+		color: var(--color-muted);
+		border: 1px dashed var(--color-border);
+		margin-top: 16px;
+	}
+</style>

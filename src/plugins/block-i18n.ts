@@ -23,7 +23,8 @@ export type CustomBlockType =
 	| "hero_block"
 	| "recent_posts"
 	| "stats_grid"
-	| "news_item";
+	| "news_item"
+	| "recent_news";
 
 export interface FieldI18n {
 	label: string;
@@ -50,6 +51,45 @@ export interface BlockDefinition {
 }
 
 export const BLOCKS: Record<CustomBlockType, BlockDefinition> = {
+	recent_news: {
+		type: "recent_news",
+		icon: "newspaper",
+		category: "Sections",
+		zh: {
+			name: "最新消息列表",
+			description: "顯示最新幾則消息（來自「最新消息」集合），可放在首頁。",
+			titleFallback: "最新消息",
+			descFallback: "設定專欄標題、篇數...",
+			editTooltip: "編輯最新消息列表",
+			dialogTitleEdit: "編輯 最新消息列表",
+			dialogTitleInsert: "插入 最新消息列表",
+			fields: {
+				eyebrow: { label: "專欄眉標", placeholder: "例：最新消息" },
+				title: { label: "專欄標題", placeholder: "例：最新動態" },
+				lead: { label: "導言說明", placeholder: "例：計畫、著作與新文章的最新消息。" },
+				actionText: { label: "按鈕文字", placeholder: "預設: 查看所有消息" },
+				actionUrl: { label: "按鈕連結", placeholder: "預設: /news" },
+				limit: { label: "顯示篇數", placeholder: "預設: 3" },
+			},
+		},
+		en: {
+			name: "Recent News",
+			description: "Shows the latest entries of the News collection; use it on the home page.",
+			titleFallback: "Latest News",
+			descFallback: "Set the title, number of items...",
+			editTooltip: "Edit recent news",
+			dialogTitleEdit: "Edit Recent News",
+			dialogTitleInsert: "Insert Recent News",
+			fields: {
+				eyebrow: { label: "Eyebrow", placeholder: "e.g. Latest News" },
+				title: { label: "Title", placeholder: "e.g. News & Updates" },
+				lead: { label: "Lead Text", placeholder: "e.g. Updates on projects and publications." },
+				actionText: { label: "Action Label", placeholder: "Default: View all news" },
+				actionUrl: { label: "Action URL", placeholder: "Default: /news" },
+				limit: { label: "Limit", placeholder: "Default: 3" },
+			},
+		},
+	},
 	news_item: {
 		type: "news_item",
 		icon: "newspaper",
@@ -879,6 +919,19 @@ export function getPortableTextBlocks(locale: SupportedLocale = "zh"): PortableT
 					placeholder: BLOCKS.news_item[locale].fields[field].placeholder,
 				})),
 			],
+		},
+		{
+			type: BLOCKS.recent_news.type,
+			label: BLOCKS.recent_news[locale].name,
+			icon: BLOCKS.recent_news.icon,
+			description: BLOCKS.recent_news[locale].description,
+			category: BLOCKS.recent_news.category,
+			fields: (["eyebrow", "title", "lead", "actionText", "actionUrl", "limit"] as const).map((field) => ({
+				type: "text_input" as const,
+				action_id: field,
+				label: BLOCKS.recent_news[locale].fields[field].label,
+				placeholder: BLOCKS.recent_news[locale].fields[field].placeholder,
+			})),
 		},
 	] as PortableTextBlockConfig[];
 }
