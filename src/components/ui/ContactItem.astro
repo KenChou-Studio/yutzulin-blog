@@ -1,0 +1,116 @@
+---
+interface Props {
+	label?: string;
+	value?: string;
+	detail?: string;
+	link?: string;
+	node?: any;
+	valueProp?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const isBlockObj = (val: unknown): val is Record<string, any> =>
+	Boolean(val && typeof val === "object" && ("label" in val || "detail" in val || "link" in val || "_type" in val));
+
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: isBlockObj((props as any).value)
+			? (props as any).value
+			: props;
+
+const label = data.label ?? props.label ?? "";
+const rawValue = typeof data.value === "string" ? data.value : typeof (props as any).value === "string" ? (props as any).value : "";
+const value = rawValue ?? "";
+const detail = data.detail ?? props.detail ?? "";
+const link = data.link ?? props.link ?? "";
+const className = props.class ?? "";
+
+// Detect if value or link is an email address
+const isEmail = link?.startsWith("mailto:") || (!link && value && value.includes("@") && !value.includes(" "));
+const href = link || (isEmail ? `mailto:${value.trim()}` : "");
+---
+
+<div class={`editorial-contact-item ${className}`} data-emdash-block="contact_item">
+	<div class="contact-item__label">
+		{label}
+	</div>
+	<div class="contact-item__content">
+		{value && (
+			<div class="contact-item__value">
+				{href ? (
+					<a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+						{value}
+					</a>
+				) : (
+					<span>{value}</span>
+				)}
+			</div>
+		)}
+		{detail && <p class="contact-item__detail">{detail}</p>}
+		<slot />
+	</div>
+</div>
+
+<style>
+	.editorial-contact-item {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.5rem 2.5rem;
+		padding-block: 1.5rem;
+		border-bottom: 1px solid var(--color-border);
+		transition: background-color 0.15s ease;
+	}
+
+	@media (min-width: 680px) {
+		.editorial-contact-item {
+			grid-template-columns: 240px 1fr;
+			align-items: baseline;
+		}
+	}
+
+	.contact-item__label {
+		font-family: var(--font-mono, monospace);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-accent, #466f70);
+		line-height: 1.5;
+	}
+
+	.contact-item__content {
+		min-width: 0;
+	}
+
+	.contact-item__value {
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: var(--color-text);
+		margin: 0;
+		line-height: 1.4;
+		word-break: break-word;
+	}
+
+	.contact-item__value a {
+		color: var(--color-text);
+		text-decoration: underline;
+		text-decoration-color: var(--color-border-strong);
+		text-underline-offset: 4px;
+		transition: color 0.15s ease, text-decoration-color 0.15s ease;
+	}
+
+	.contact-item__value a:hover {
+		color: var(--color-accent, #466f70);
+		text-decoration-color: var(--color-accent, #466f70);
+	}
+
+	.contact-item__detail {
+		font-size: 0.925rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin-top: 6px;
+		margin-bottom: 0;
+	}
+</style>

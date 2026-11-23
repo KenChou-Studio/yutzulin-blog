@@ -1,0 +1,34 @@
+---
+import NewsItem from "./NewsItem.astro";
+
+interface Props {
+	items?: any[];
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+const items: any[] = data.items ?? props.items ?? [];
+const className = props.class ?? "";
+---
+
+<div class={`news-grid ${className}`} data-emdash-block="news_grid">
+	{items.map((item) => <NewsItem node={item} />)}
+</div>
+
+<style>
+	.news-grid {
+		display: grid;
+		gap: clamp(16px, 2vw, 24px);
+		margin-block: 28px;
+		width: 100%;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+	}
+</style>

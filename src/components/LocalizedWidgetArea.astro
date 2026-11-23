@@ -1,0 +1,253 @@
+---
+/**
+ * Widget area renderer that works in every locale.
+ *
+ * EmDash widgets are not per-locale (titles, content and the built-in
+ * components' English strings are stored once), so `<WidgetArea>` would show
+ * English text on the zh-TW pages and its search form posts to `/search`
+ * instead of `/zh-TW/search`. This renders the same editor-managed areas with
+ * the same class names (so existing CSS keeps working):
+ *
+ *  - default locale: titles and content come from the Widgets admin screen;
+ *  - other locales: titles come from UI Text (`widgets.*`) and the footer
+ *    "about" content widget from `widgets.aboutTitle/aboutText1/aboutText2`.
+ *
+ * Supported widgets: content, menu, and the core search / categories / tags /
+ * recent-posts components. Anything else (e.g. core:archives) is skipped.
+ */
+import {
+	getEmDashCollection,
+	getMenu,
+	getTaxonomyTerms,
+	getWidgetAreaWithCacheHint,
+} from "emdash";
+import type { Widget } from "emdash";
+import { PortableText } from "emdash/ui";
+import {
+	DEFAULT_LOCALE,
+	formatDate,
+	getLocale,
+	getTranslator,
+	localePath,
+	localizeUrl,
+} from "../i18n";
+import type { UiKey } from "../i18n/ui";
+
+interface Props {
+	name: string;
+	class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const locale = getLocale(Astro);
+const isDefault = locale === DEFAULT_LOCALE;
+const t = await getTranslator(Astro, locale);
+
+const { data: area, cacheHint } = await getWidgetAreaWithCacheHint(name);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const TITLE_KEYS: Record<string, UiKey> = {
+	"core:search": "widgets.search",
+	"core:categories": "widgets.categories",
+	"core:tags": "widgets.tags",
+	"core:recent-posts": "widgets.recentPosts",
+};
+
+function text(value: string, key: string) {
+	return {
+		_type: "block",
+		_key: key,
+		style: "normal",
+		markDefs: [],
+		children: [{ _type: "span", _key: `${key}s`, text: value, marks: [] }],
+	};
+}
+
+// Outside the default locale a widget takes its text from UI Text entries named
+// by position, so any widget an editor adds can be translated without code:
+//   widget-<area>-<n>-title   and   widget-<area>-<n>-text  (n = 1-based position;
+//   blank lines in -text separate paragraphs).
+// The built-in set (core widgets' titles, the first content widget) also has
+// ready-made keys as a fallback.
+let contentIndex = 0;
+const widgets = (area?.widgets ?? []).flatMap((widget: Widget, index: number) => {
+	const base = `widget-${name}-${index + 1}`;
+	const titleOverride = isDefault ? undefined : t.extra(`${base}-title`);
+	const textOverride = isDefault ? undefined : t.extra(`${base}-text`);
+	const paragraphs = (value: string) =>
+		value
+			.split(/\n\s*\n/)
+			.map((part, i) => text(part.trim(), `${base}-${i}`))
+			.filter((block) => block.children[0].text);
+
+	if (widget.type === "content") {
+		const first = contentIndex++ === 0;
+		if (isDefault) return [{ widget, title: widget.title, content: widget.content }];
+		const fallbackContent = first
+			? [text(t("widgets.aboutText1"), "about-1"), text(t("widgets.aboutText2"), "about-2")]
+			: widget.content;
+		return [
+			{
+				widget,
+				title: titleOverride ?? (first ? t("widgets.aboutTitle") : widget.title),
+				content: textOverride ? paragraphs(textOverride) : fallbackContent,
+			},
+		];
+	}
+	const titleKey = widget.componentId ? TITLE_KEYS[widget.componentId] : undefined;
+	const title = isDefault
+		? (widget.title ?? (titleKey && t(titleKey)))
+		: (titleOverride ?? (titleKey ? t(titleKey) : widget.title));
+	return [{ widget, title, content: undefined }];
+});
+
+const props = (widget: Widget) => (widget.componentProps ?? {}) as Record<string, unknown>;
+const num = (value: unknown, fallback: number) => (typeof value === "number" ? value : fallback);
+const flag = (value: unknown, fallback: boolean) => (typeof value === "boolean" ? value : fallback);
+
+// Per-widget data, fetched in parallel.
+const data = await Promise.all(
+	widgets.map(async ({ widget }) => {
+		const p = props(widget);
+		switch (widget.componentId) {
+			case "core:categories":
+				return getTaxonomyTerms("category", { locale, includeCounts: flag(p.showCount, true) });
+			case "core:tags":
+				return (await getTaxonomyTerms("tag", { locale, includeCounts: flag(p.showCount, false) })).slice(
+					0,
+					num(p.limit, 20),
+				);
+			case "core:recent-posts":
+				return (
+					await getEmDashCollection("posts", {
+						locale,
+						limit: num(p.count, 5),
+						orderBy: { published_at: "desc" },
+					})
+				).entries;
+			default:
+				return widget.type === "menu" && widget.menuName
+					? getMenu(widget.menuName, { locale })
+					: null;
+		}
+	}),
+);
+---
+
+{
+	widgets.length > 0 && (
+		<div class:list={["widget-area", className]} data-widget-area={name}>
+			{widgets.map(({ widget, title, content }, index) => {
+				const p = props(widget);
+				const items: any = data[index];
+				return (
+					<div class="widget" data-widget-id={widget.id} data-widget-type={widget.type}>
+						{title && <h3 class="widget__title">{title}</h3>}
+						<div class="widget__content">
+							{widget.type === "content" && content && <PortableText value={content} />}
+
+							{widget.type === "menu" && items && (
+								<nav class="widget__menu">
+									<ul>
+										{items.items.map((item: any) => (
+											<li>
+												<a href={localizeUrl(locale, item.url)} title={item.titleAttr || undefined}>
+													{item.label}
+												</a>
+											</li>
+										))}
+									</ul>
+								</nav>
+							)}
+
+							{widget.componentId === "core:search" && (
+								<form method="get" action={localePath(locale, "/search")} class="widget-search">
+									<input
+										type="search"
+										name="q"
+										placeholder={
+											isDefault && typeof p.placeholder === "string"
+												? p.placeholder
+												: t("widgets.searchPlaceholder")
+										}
+										aria-label={t("search.title")}
+										class="widget-search__input"
+									/>
+									<button type="submit" class="widget-search__button">
+										{t("search.submit")}
+									</button>
+								</form>
+							)}
+
+							{widget.componentId === "core:categories" && (
+								<ul class="widget-categories">
+									{items.length > 0 ? (
+										items.map((category: any) => (
+											<li>
+												<a
+													href={localePath(locale, `/category/${category.slug}`)}
+													class="widget-categories__link"
+												>
+													{category.label}
+												</a>
+												{flag(p.showCount, true) && category.count !== undefined && (
+													<span class="widget-categories__count">({category.count})</span>
+												)}
+											</li>
+										))
+									) : (
+										<li class="widget-categories__empty">{t("widgets.noCategories")}</li>
+									)}
+								</ul>
+							)}
+
+							{widget.componentId === "core:tags" && (
+								<div class="widget-tags">
+									{items.length > 0 ? (
+										<ul class="widget-tags__cloud">
+											{items.map((tag: any) => (
+												<li>
+													<a href={localePath(locale, `/tag/${tag.slug}`)} class="widget-tags__link">
+														{tag.label}
+													</a>
+													{flag(p.showCount, false) && tag.count !== undefined && (
+														<span class="widget-tags__count">({tag.count})</span>
+													)}
+												</li>
+											))}
+										</ul>
+									) : (
+										<p class="widget-tags__empty">{t("widgets.noTags")}</p>
+									)}
+								</div>
+							)}
+
+							{widget.componentId === "core:recent-posts" && (
+								<ul class="widget-recent-posts">
+									{items.map((post: any) => {
+										const publishedAt: Date | null = post.data.publishedAt ?? null;
+										return (
+											<li>
+												<a
+													href={localePath(locale, `/posts/${post.data.slug ?? post.id}`)}
+													class="widget-recent-posts__link"
+												>
+													{post.data.title}
+												</a>
+												{flag(p.showDate, true) && publishedAt && (
+													<time datetime={publishedAt.toISOString()} class="widget-recent-posts__date">
+														{formatDate(publishedAt, locale, "short")}
+													</time>
+												)}
+											</li>
+										);
+									})}
+								</ul>
+							)}
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	)
+}

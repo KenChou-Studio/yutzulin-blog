@@ -1,0 +1,51 @@
+---
+interface Props {
+	title?: string;
+	text?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const title = data.title ?? props.title;
+const text = data.text ?? props.text;
+const className = props.class ?? "";
+---
+
+<div class={`callout-box ${className}`} data-emdash-block="callout_box">
+	{title && <h4 class="callout-title">{title}</h4>}
+	{text ? <p class="callout-text">{text}</p> : <slot />}
+</div>
+
+<style>
+	.callout-box {
+		background: var(--color-fill);
+		border-left: 3px solid var(--color-brand);
+		border-radius: 0 var(--radius) var(--radius) 0;
+		padding: 1.25rem 1.5rem;
+		margin-block: 1.5rem;
+	}
+
+	.callout-title {
+		font-family: var(--font-heading);
+		font-size: 1.15rem;
+		margin: 0 0 6px;
+		color: var(--color-text);
+	}
+
+	.callout-text,
+	.callout-box :global(p) {
+		font-size: 0.98rem;
+		line-height: 1.65;
+		margin: 0;
+		color: var(--color-text-secondary);
+	}
+</style>

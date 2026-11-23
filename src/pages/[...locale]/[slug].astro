@@ -1,0 +1,150 @@
+---
+import {
+	getEmDashEntry,
+	getSeoMeta,
+	decodeSlug,
+	getSiteSettings,
+} from "emdash";
+import { PortableText } from "emdash/ui";
+import { getTranslator, localePath, resolveRouteLocale } from "../../i18n";
+import { getContentAlternates } from "../../i18n/alternates";
+import Base from "../../layouts/Base.astro";
+import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import PageHero from "../../components/ui/PageHero.astro";
+import ProfileMedia from "../../components/ui/ProfileMedia.astro";
+import { blockComponents } from "../../plugins/site-blocks-components";
+import { groupContentBlocks } from "../../utils/group-blocks";
+import "../../styles/prose.css";
+
+const locale = resolveRouteLocale(Astro.params.locale);
+if (!locale) {
+	return Astro.rewrite("/404");
+}
+const slug = decodeSlug(Astro.params.slug);
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+// Redirect /home to root /
+if (slug === "home") {
+	return Astro.redirect(localePath(locale, "/"), 308);
+}
+
+const reservedSlugs = [
+	"posts",
+	"search",
+	"category",
+	"tag",
+	"rss.xml",
+	"_emdash",
+	"favicon.ico",
+	"api",
+];
+if (reservedSlugs.includes(slug)) {
+	return Astro.rewrite("/404");
+}
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", slug, { locale });
+
+if (!page) {
+	return Astro.rewrite("/404");
+}
+
+if (Astro.cache?.enabled && cacheHint) {
+	Astro.cache.set(cacheHint);
+}
+
+const { siteTitle } = resolveBlogSiteIdentity(
+	await getSiteSettings(),
+	locale,
+	await getTranslator(Astro, locale),
+);
+const alternates = await getContentAlternates("pages", page.data.id, (s) => `/${s}`);
+const seo = getSeoMeta(page, {
+	siteTitle,
+	siteUrl: Astro.url.origin,
+	path: localePath(locale, `/${slug}`),
+});
+
+const hasFeaturedImage = Boolean(page.data.featured_image);
+const processedContent = groupContentBlocks(page.data.content);
+const heroContent = groupContentBlocks(page.data.hero_content);
+---
+
+<Base
+	title={seo.title}
+	pageTitle={seo.ogTitle}
+	description={seo.description}
+	canonical={seo.canonical}
+	robots={seo.robots}
+	content={{ collection: "pages", id: page.data.id, slug }}
+	alternates={alternates}
+>
+	<PageHero
+		title={page.data.title}
+		eyebrow={siteTitle}
+		lead={page.data.excerpt}
+		breadcrumb={page.data.title}
+		editTitle={page.edit.title}
+		editLead={page.edit.excerpt}
+	/>
+
+	<section class="band section">
+		<div class={`frame ${hasFeaturedImage ? "page-layout--two-col" : "page-layout--standard"}`}>
+			{hasFeaturedImage && (
+				<ProfileMedia
+					image={page.data.featured_image}
+					alt={page.data.title}
+					editImage={page.edit.featured_image}
+				/>
+			)}
+
+			{
+				heroContent.length > 0 && (
+					<div class="prose page-body" {...page.edit.hero_content}>
+						<PortableText value={heroContent} components={{ type: blockComponents }} />
+					</div>
+				)
+			}
+
+			{
+				processedContent && processedContent.length > 0 && (
+					<div class="prose page-body" {...page.edit.content}>
+						<PortableText value={processedContent} components={{ type: blockComponents }} />
+					</div>
+				)
+			}
+			<script is:inline id="emdash-page-blocks" type="application/json" set:html={JSON.stringify(page.data.content || [])} />
+		</div>
+	</section>
+</Base>
+
+<style>
+	/* Two-column layout for About: portrait on left, bio text on right */
+	.page-layout--two-col {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(2rem, 3.5vw, 4rem);
+		align-items: start;
+		max-width: 1080px;
+		margin-inline: auto;
+	}
+
+	@media (min-width: 820px) {
+		.page-layout--two-col {
+			grid-template-columns: minmax(280px, 340px) 1fr;
+		}
+	}
+
+	/* Standard layout for content pages: centered, constrained to 1080px */
+	.page-layout--standard {
+		max-width: 1080px;
+		margin-inline: auto;
+		width: 100%;
+	}
+
+	.page-body {
+		width: 100%;
+	}
+</style>

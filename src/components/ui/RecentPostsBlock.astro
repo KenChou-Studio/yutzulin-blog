@@ -1,0 +1,169 @@
+---
+import { getEmDashCollection, getTermsForEntries } from "emdash";
+import PostCard from "../PostCard.astro";
+import { getLocale, getTranslator, localizeUrl } from "../../i18n";
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	lead?: string;
+	actionText?: string;
+	actionUrl?: string;
+	limit?: string | number;
+	tag?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const locale = getLocale(Astro);
+const t = await getTranslator(Astro, locale);
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const eyebrow = data.eyebrow ?? props.eyebrow ?? t("blocks.recentEyebrow");
+const title = data.title ?? props.title ?? t("blocks.recentTitle");
+const lead = data.lead ?? props.lead ?? t("blocks.recentLead");
+const actionText = data.actionText ?? data.action_text ?? props.actionText ?? t("blocks.recentAction");
+const actionUrl = localizeUrl(
+	locale,
+	data.actionUrl ?? data.action_url ?? props.actionUrl ?? "/posts",
+);
+const rawLimit = Number(data.limit ?? props.limit);
+const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 24) : 6;
+const tag = data.tag ? String(data.tag).trim() : "";
+const className = props.class ?? "";
+
+const queryOptions: any = {
+	locale,
+	orderBy: { published_at: "desc" },
+	limit,
+};
+if (tag) {
+	queryOptions.where = { tag };
+}
+
+let posts: any[] = [];
+let tagsByEntry = new Map();
+
+try {
+	const result = await getEmDashCollection("posts", queryOptions);
+	if (Astro.cache?.enabled && result?.cacheHint) {
+		Astro.cache.set(result.cacheHint);
+	}
+	posts = result.entries || [];
+	const tagEntryIds = posts.map((p) => p.data.id);
+	if (tagEntryIds.length > 0) {
+		tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag", { locale });
+	}
+} catch (err) {
+	console.error("[RecentPostsBlock] Failed to fetch posts:", err);
+}
+
+const postsWithTags = posts.map((post) => ({
+	post,
+	tags: (tagsByEntry.get(post.data.id) ?? []).map((t: any) => ({
+		slug: t.slug,
+		label: t.label,
+	})),
+}));
+---
+
+<section class={`modular-recent-posts ${className}`} data-emdash-block="recent_posts">
+	<div class="section-head">
+		<div>
+			{eyebrow && <div class="eyebrow">{eyebrow}</div>}
+			{title && <h2>{title}</h2>}
+		</div>
+		{(lead || actionText) && (
+			<div class="section-head__action">
+				{lead && <p>{lead}</p>}
+				{actionText && (
+					<div style="margin-top: 14px;">
+						<a href={actionUrl} class="btn btn--sm">
+							{actionText}
+						</a>
+					</div>
+				)}
+			</div>
+		)}
+	</div>
+
+	{postsWithTags.length > 0 ? (
+		<div class="post-grid">
+			{postsWithTags.map(({ post, tags }) => (
+				<PostCard post={post} tags={tags} variant="card" locale={locale} />
+			))}
+		</div>
+	) : (
+		<div class="posts-empty-hint">
+			<p>{t("posts.noneRelated")}</p>
+		</div>
+	)}
+</section>
+
+<style>
+	.modular-recent-posts {
+		width: 100%;
+		max-width: 100% !important;
+		margin-block: clamp(2.5rem, 3.5vw, 4rem);
+	}
+
+	.section-head {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 32px;
+		margin-bottom: 28px;
+		align-items: start;
+	}
+
+	@media (max-width: 768px) {
+		.section-head {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+	}
+
+	.section-head h2 {
+		font-family: var(--font-heading);
+		font-size: clamp(26px, 3vw, 36px);
+		line-height: 1.15;
+		margin: 4px 0 0;
+		color: var(--color-text);
+	}
+
+	.section-head__action {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.section-head__action p {
+		margin: 0;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		font-size: 0.98rem;
+	}
+
+	.post-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+		gap: clamp(16px, 2vw, 24px);
+		margin-top: 16px;
+	}
+
+	.posts-empty-hint {
+		padding: 2.5rem;
+		text-align: center;
+		background: var(--color-fill);
+		border-radius: var(--radius);
+		color: var(--color-muted);
+		border: 1px dashed var(--color-border);
+		margin-top: 16px;
+	}
+</style>

@@ -1,0 +1,56 @@
+---
+import CardGrid from "./CardGrid.astro";
+
+interface Props {
+	node?: any;
+	value?: any;
+	heading?: string;
+	subheading?: string;
+	cards?: any[];
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const heading = data.heading ?? props.heading;
+const subheading = data.subheading ?? props.subheading;
+const cards = data.cards ?? props.cards ?? [];
+const className = props.class ?? "";
+---
+
+<section class={`feature-cards-section ${className}`} data-emdash-block="feature_cards">
+	{heading && <h2 class="feature-heading">{heading}</h2>}
+	{subheading && <p class="feature-subheading">{subheading}</p>}
+	{cards.length > 0 && <CardGrid cards={cards} />}
+</section>
+
+<style>
+	.feature-cards-section {
+		width: 100%;
+		max-width: var(--wide-width, 1200px);
+		margin-inline: auto;
+		margin-block: 32px;
+	}
+
+	.feature-heading {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.25rem);
+		font-weight: var(--font-weight-heading, 600);
+		letter-spacing: -0.02em;
+		margin-bottom: 8px;
+	}
+
+	.feature-subheading {
+		color: var(--color-text-secondary);
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		max-width: var(--content-width, 680px);
+		margin-bottom: 24px;
+	}
+</style>

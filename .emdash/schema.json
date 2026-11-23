@@ -1,0 +1,116 @@
+{
+  "collections": [
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "search",
+        "seo"
+      ],
+      "hidden": false,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title 頁面標題",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "layout",
+          "label": "Page Layout 區塊佈局",
+          "type": "blocks",
+          "required": false,
+          "unique": false,
+          "defaultValue": [],
+          "validation": {
+            "allowedTypes": [
+              "hero_block",
+              "stats_grid",
+              "info_card",
+              "recent_posts",
+              "callout_box",
+              "contact_item",
+              "rich_text",
+              "feature_cards",
+              "contact_cards",
+              "page_hero",
+              "profile_section"
+            ],
+            "maxItems": 50
+          }
+        },
+        {
+          "slug": "content",
+          "label": "Content 內文編輯器",
+          "type": "portableText",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image 代表照片/肖像",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt 副標題與引言",
+          "type": "text",
+          "required": false,
+          "unique": false
+        }
+      ]
+    },
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "scheduling",
+        "search",
+        "seo"
+      ],
+      "hidden": false,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "unique": false
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image",
+          "type": "image",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "required": false,
+          "unique": false
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text",
+          "required": false,
+          "unique": false
+        }
+      ]
+    }
+  ],
+  "version": "6a6af26c4846d908"
+}

@@ -1,0 +1,12 @@
+---
+/**
+ * Home page for the zh-TW locale root (`/zh-TW`).
+ *
+ * `/zh-TW` would otherwise be captured by `[...locale]/[slug].astro` as a page
+ * slug, so each non-default locale needs this one static entry. Every other
+ * route is shared through `[...locale]/`. Adding a locale: copy this folder.
+ */
+import HomePage from "../../components/HomePage.astro";
+---
+
+<HomePage locale="zh-TW" />

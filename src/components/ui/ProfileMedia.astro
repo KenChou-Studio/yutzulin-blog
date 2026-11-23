@@ -1,0 +1,54 @@
+---
+import { Image } from "emdash/ui";
+
+interface Props {
+	image?: any;
+	alt?: string;
+	fallbackSrc?: string;
+	editImage?: Record<string, unknown>;
+}
+
+const {
+	image,
+	alt = "",
+	fallbackSrc = "/images/yu-tzu-lin.jpg",
+	editImage = {},
+} = Astro.props;
+---
+
+<aside class="profile-media-aside" {...editImage}>
+	<div class="profile-media-sticky">
+		{image ? (
+			<Image image={image} class="profile-portrait" />
+		) : (
+			<img
+				class="profile-portrait"
+				src={fallbackSrc}
+				alt={alt}
+				loading="eager"
+			/>
+		)}
+	</div>
+</aside>
+
+<style>
+	.profile-media-aside {
+		width: 100%;
+	}
+
+	.profile-media-sticky {
+		position: sticky;
+		top: calc(var(--nav-height) + 2rem);
+	}
+
+	:global(.profile-portrait),
+	.profile-portrait {
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		border-radius: var(--radius);
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-card);
+		display: block;
+	}
+</style>

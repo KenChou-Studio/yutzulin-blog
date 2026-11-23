@@ -1,0 +1,254 @@
+---
+import { Image, PortableText } from "emdash/ui";
+import { getLocale, localizeUrl } from "../../i18n";
+
+interface HeroAction {
+	label: string;
+	url: string;
+	variant?: "primary" | "ghost" | string;
+}
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	lead?: string;
+	focusline?: string;
+	content?: any;
+	actions?: HeroAction[];
+	primaryText?: string;
+	primaryUrl?: string;
+	secondaryText?: string;
+	secondaryUrl?: string;
+	imageUrl?: string;
+	imageAlt?: string;
+	image?: any;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const locale = getLocale(Astro);
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const content = data.content ?? props.content;
+const hasContent = Array.isArray(content) && content.length > 0;
+
+const eyebrow = data.eyebrow ?? props.eyebrow;
+const title = data.title ?? props.title ?? undefined;
+const lead = data.lead ?? props.lead;
+const focusline = data.focusline ?? props.focusline;
+
+const primaryText = data.primaryText ?? data.primary_text ?? data.primaryActionLabel ?? props.primaryText;
+const primaryUrl = data.primaryUrl ?? data.primary_url ?? data.primaryActionUrl ?? props.primaryUrl ?? "/research";
+const secondaryText = data.secondaryText ?? data.secondary_text ?? data.secondaryActionLabel ?? props.secondaryText;
+const secondaryUrl = data.secondaryUrl ?? data.secondary_url ?? data.secondaryActionUrl ?? props.secondaryUrl ?? "/about";
+
+const explicitActions: HeroAction[] = Array.isArray(data.actions) && data.actions.length > 0
+	? data.actions
+	: Array.isArray(props.actions) && props.actions.length > 0
+		? props.actions
+		: [];
+
+const actions: HeroAction[] = explicitActions.length > 0
+	? explicitActions
+	: [
+			...(primaryText ? [{ label: primaryText, url: primaryUrl, variant: "primary" }] : []),
+			...(secondaryText ? [{ label: secondaryText, url: secondaryUrl, variant: "ghost" }] : []),
+	  ];
+
+const image = data.image ?? props.image;
+const imageSrc = data.imageUrl ?? data.image_url ?? (typeof image === "string" ? image : image?.src) ?? props.imageUrl;
+const imageAlt = data.imageAlt ?? data.image_alt ?? (typeof image === "object" ? image?.alt : undefined) ?? props.imageAlt ?? "";
+const hasMedia = !!(imageSrc || (image && typeof image === "object" && image.src));
+const className = props.class ?? "";
+---
+
+<section class={`modular-hero-section ${className}`} data-emdash-block="hero_block">
+	<div class={`hero-grid ${hasMedia ? "has-media" : "no-media"}`}>
+		<div class="hero-content">
+			{hasContent ? (
+				<div class="hero-prose prose">
+					<PortableText value={content} />
+				</div>
+			) : (
+				<>
+					{eyebrow && <div class="eyebrow">{eyebrow}</div>}
+					{title && <h1 class="hero__title">{title}</h1>}
+					{lead && <p class="lead">{lead}</p>}
+					{focusline && <p class="focusline">{focusline}</p>}
+				</>
+			)}
+			{actions.length > 0 && (
+				<div class="actions">
+					{actions.map((act) => (
+						<a class={`btn ${act.variant === "ghost" ? "btn--ghost" : "primary"}`} href={localizeUrl(locale, act.url)}>
+							{act.label}
+						</a>
+					))}
+				</div>
+			)}
+		</div>
+		{hasMedia && (
+			<div class="hero-media">
+				<Image
+					image={image || imageSrc}
+					alt={imageAlt}
+					class="portrait"
+					priority
+				/>
+			</div>
+		)}
+	</div>
+</section>
+
+<style>
+	.modular-hero-section {
+		width: 100%;
+		max-width: 100% !important;
+		padding: clamp(1.5rem, 1.25rem + 1vw, 2.5rem) 0 clamp(1.25rem, 1rem + 0.5vw, 2rem);
+		border-bottom: 1px solid var(--color-border);
+		margin-bottom: clamp(1.5rem, 2vw, 2.5rem);
+	}
+
+	.hero-grid {
+		display: grid;
+		gap: 48px;
+		align-items: center;
+	}
+
+	.hero-grid.has-media {
+		grid-template-columns: 1.15fr 0.85fr;
+	}
+
+	.hero-grid.no-media {
+		grid-template-columns: 1fr;
+		max-width: 900px;
+	}
+
+	@media (max-width: 860px) {
+		.hero-grid.has-media {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+
+		.hero-media {
+			order: -1;
+			max-width: 320px;
+		}
+	}
+
+	.hero__title {
+		font-family: var(--font-heading);
+		font-size: clamp(40px, 5.5vw, 72px);
+		line-height: 1.1;
+		letter-spacing: -0.035em;
+		margin: 0 0 16px;
+		color: var(--color-text);
+		white-space: pre-line;
+	}
+
+	.lead {
+		font-size: 20px;
+		max-width: 760px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 16px 0;
+	}
+
+	.focusline {
+		font-weight: 700;
+		margin: 20px 0;
+		color: var(--focusline-color, var(--color-brand));
+		font-size: 16px;
+		letter-spacing: 0.01em;
+	}
+
+	/* Hero Freeform Prose Styling */
+	.hero-prose :global(h1),
+	.hero-prose :global(h2) {
+		font-family: var(--font-heading);
+		font-size: clamp(38px, 5.2vw, 68px);
+		line-height: 1.1;
+		letter-spacing: -0.035em;
+		margin: 0 0 16px;
+		color: var(--color-text);
+	}
+
+	.hero-prose :global(h3),
+	.hero-prose :global(h4) {
+		font-family: var(--font-mono, monospace);
+		font-size: 0.8125rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-muted);
+		margin: 0 0 12px;
+	}
+
+	.hero-prose :global(p) {
+		font-size: 1.15rem;
+		color: var(--color-text-secondary);
+		line-height: 1.55;
+		margin: 14px 0;
+	}
+
+	.hero-prose :global(strong) {
+		color: var(--focusline-color, var(--color-brand));
+		font-weight: 700;
+	}
+
+	.hero-prose :global(ul),
+	.hero-prose :global(ol) {
+		margin: 14px 0;
+		padding-left: 20px;
+		color: var(--color-text-secondary);
+	}
+
+	.actions {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		margin-top: 24px;
+	}
+
+	.actions .btn {
+		color: var(--color-on-brand) !important;
+		background: var(--color-brand);
+		text-decoration: none !important;
+	}
+
+	.actions .btn:hover {
+		color: var(--color-on-brand) !important;
+		background: var(--color-brand-hover);
+		text-decoration: none !important;
+	}
+
+	.actions .btn--ghost {
+		color: var(--color-text) !important;
+		background: var(--color-surface) !important;
+		box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
+		text-decoration: none !important;
+	}
+
+	.actions .btn--ghost:hover {
+		color: var(--color-text) !important;
+		background: var(--color-surface) !important;
+		box-shadow: inset 0 0 0 1px var(--color-border-strong), var(--shadow-sm);
+		text-decoration: none !important;
+	}
+
+	:global(.portrait),
+	.portrait {
+		width: 100%;
+		max-height: min(480px, 60vh);
+		object-fit: cover;
+		object-position: center 30%;
+		border-radius: var(--radius-sm, 4px);
+		box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.08));
+	}
+</style>

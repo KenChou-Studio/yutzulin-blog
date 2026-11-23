@@ -1,0 +1,178 @@
+---
+interface StatItem {
+	num?: string;
+	label?: string;
+}
+
+interface Props {
+	items?: StatItem[];
+	item1_num?: string;
+	item1_label?: string;
+	item2_num?: string;
+	item2_label?: string;
+	item3_num?: string;
+	item3_label?: string;
+	item4_num?: string;
+	item4_label?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const explicitArray = Array.isArray(data.items)
+	? data.items
+	: Array.isArray(props.items)
+		? props.items
+		: null;
+
+const rawItems = explicitArray ?? [
+	{ num: data.item1_num ?? props.item1_num, label: data.item1_label ?? props.item1_label },
+	{ num: data.item2_num ?? props.item2_num, label: data.item2_label ?? props.item2_label },
+	{ num: data.item3_num ?? props.item3_num, label: data.item3_label ?? props.item3_label },
+	{ num: data.item4_num ?? props.item4_num, label: data.item4_label ?? props.item4_label },
+];
+
+const hasExplicitItems = rawItems.some((i: StatItem) => Boolean(i.num || i.label));
+
+const items: StatItem[] = hasExplicitItems ? rawItems.filter((i: StatItem) => Boolean(i.num || i.label)) : [];
+
+const cols = Math.min(items.length, 4);
+const className = props.class ?? "";
+---
+
+<div class={`modular-stats-bar cols-${cols} ${className}`} data-emdash-block="stats_grid">
+	{items.map((item) => (
+		<div class="stat-cell">
+			<div class="stat-num">{item.num}</div>
+			<div class="stat-label">{item.label}</div>
+		</div>
+	))}
+</div>
+
+<style>
+	.modular-stats-bar {
+		display: grid;
+		width: 100%;
+		max-width: 100% !important;
+		margin-block: clamp(2rem, 3vw, 3rem);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		box-shadow: var(--shadow-card);
+		overflow: hidden;
+	}
+
+	.modular-stats-bar.cols-1 {
+		grid-template-columns: 1fr;
+	}
+
+	.modular-stats-bar.cols-2 {
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 600px) {
+		.modular-stats-bar.cols-2 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.modular-stats-bar.cols-3 {
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 600px) {
+		.modular-stats-bar.cols-3 {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.modular-stats-bar.cols-4 {
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 540px) {
+		.modular-stats-bar.cols-4 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 860px) {
+		.modular-stats-bar.cols-4 {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	.stat-cell {
+		padding: clamp(20px, 2.5vw, 28px) clamp(16px, 2vw, 24px);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		position: relative;
+		border-bottom: 1px solid var(--color-border);
+		transition: background-color 0.15s ease;
+	}
+
+	.stat-cell:last-child {
+		border-bottom: none;
+	}
+
+	@media (min-width: 600px) {
+		.modular-stats-bar.cols-2 .stat-cell:nth-child(1),
+		.modular-stats-bar.cols-3 .stat-cell:nth-child(1),
+		.modular-stats-bar.cols-3 .stat-cell:nth-child(2) {
+			border-bottom: none;
+			border-right: 1px solid var(--color-border);
+		}
+		.modular-stats-bar.cols-3 .stat-cell:nth-child(3) {
+			border-bottom: none;
+		}
+	}
+
+	@media (min-width: 540px) and (max-width: 859px) {
+		.modular-stats-bar.cols-4 .stat-cell:nth-child(odd) {
+			border-right: 1px solid var(--color-border);
+		}
+		.modular-stats-bar.cols-4 .stat-cell:nth-child(3),
+		.modular-stats-bar.cols-4 .stat-cell:nth-child(4) {
+			border-bottom: none;
+		}
+	}
+
+	@media (min-width: 860px) {
+		.modular-stats-bar.cols-4 .stat-cell {
+			border-bottom: none;
+			border-right: 1px solid var(--color-border);
+		}
+		.modular-stats-bar.cols-4 .stat-cell:last-child {
+			border-right: none;
+		}
+	}
+
+	.stat-cell:hover {
+		background: color-mix(in srgb, var(--color-brand) 3%, transparent);
+	}
+
+	.stat-num {
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 3vw, 2.75rem);
+		font-weight: 700;
+		color: var(--color-brand);
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+
+	.stat-label {
+		font-family: var(--font-mono, monospace);
+		font-size: 0.78rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-text-secondary);
+		margin-top: 8px;
+		line-height: 1.45;
+	}
+</style>

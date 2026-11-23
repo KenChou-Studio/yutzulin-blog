@@ -1,0 +1,112 @@
+---
+/**
+ * News item: image, title and description; the whole card is one link.
+ * Edited in place in the admin (see src/plugins/block-nodeviews.ts).
+ */
+import { getLocale, localizeUrl } from "../../i18n";
+
+interface Props {
+	imageUrl?: string;
+	imageAlt?: string;
+	title?: string;
+	description?: string;
+	link?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const imageUrl: string | undefined = data.imageUrl ?? props.imageUrl;
+const imageAlt: string = data.imageAlt ?? props.imageAlt ?? "";
+const title: string | undefined = data.title ?? props.title;
+const description: string | undefined = data.description ?? props.description;
+const rawLink: string | undefined = data.link ?? props.link;
+const link = rawLink ? localizeUrl(getLocale(Astro), rawLink) : undefined;
+const external = !!link && /^https?:\/\//.test(link);
+const className = props.class ?? "";
+const Tag = link ? "a" : "article";
+---
+
+<Tag
+	class={`news-card ${className}`}
+	data-emdash-block="news_item"
+	href={link}
+	target={external ? "_blank" : undefined}
+	rel={external ? "noopener noreferrer" : undefined}
+>
+	<div class="news-card__media">
+		{imageUrl ? <img src={imageUrl} alt={imageAlt} loading="lazy" decoding="async" /> : <div class="news-card__placeholder" />}
+	</div>
+	<div class="news-card__body">
+		{title && <h3 class="news-card__title">{title}</h3>}
+		{description && <p class="news-card__desc">{description}</p>}
+	</div>
+</Tag>
+
+<style>
+	.news-card {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		box-shadow: var(--shadow-card);
+		color: inherit;
+		text-decoration: none;
+		transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+	}
+	a.news-card:hover {
+		border-color: var(--color-brand);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-card-hover, var(--shadow-card));
+	}
+	.news-card__media {
+		aspect-ratio: 16 / 10;
+		background: var(--color-fill);
+		overflow: hidden;
+	}
+	.news-card__media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.news-card__placeholder {
+		width: 100%;
+		height: 100%;
+		background: repeating-linear-gradient(45deg, var(--color-fill), var(--color-fill) 10px, var(--color-fill-strong) 10px, var(--color-fill-strong) 20px);
+	}
+	.news-card__body {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: clamp(16px, 2.2vw, 22px);
+	}
+	.news-card__title {
+		font-family: var(--font-heading);
+		font-size: clamp(18px, 2vw, 21px);
+		line-height: 1.3;
+		margin: 0;
+		color: var(--color-text);
+	}
+	a.news-card:hover .news-card__title {
+		color: var(--color-brand);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+	.news-card__desc {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+	}
+</style>

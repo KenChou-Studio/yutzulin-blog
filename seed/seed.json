@@ -1,0 +1,6464 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "Yu-Tzu Lin Blog & Academic Portfolio",
+    "description": "Bilingual (English / 繁體中文) website and blog of Yu-Tzu Lin, urban planner, educator and researcher.",
+    "author": "Yu-Tzu Lin"
+  },
+  "settings": {
+    "title": "Yu-Tzu Lin 林育慈",
+    "tagline": "Urban Planner · Educator · Researcher"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "urlPattern": "/posts/{slug}",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "scheduling",
+        "search",
+        "seo"
+      ],
+      "commentsEnabled": true,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured Image",
+          "type": "image"
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "urlPattern": "/{slug}",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "search",
+        "seo"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "hero_content",
+          "label": "Hero (headline, subtitle, lead and focus line)",
+          "type": "portableText"
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt (subtitle and lead)",
+          "type": "text"
+        },
+        {
+          "slug": "featured_image",
+          "label": "Featured image / portrait",
+          "type": "image"
+        },
+        {
+          "slug": "content",
+          "label": "Content (sections, stats, cards and feature blocks)",
+          "type": "portableText",
+          "searchable": true
+        }
+      ]
+    },
+    {
+      "slug": "ui_strings",
+      "label": "UI Text",
+      "labelSingular": "UI Text",
+      "description": "Fixed site text: navigation, buttons, labels and empty states. Edit the text of each entry; the title is the stable key. To translate a widget, add an entry with the slug widget-<area>-<position>-title or widget-<area>-<position>-text (for example widget-footer-1-title).",
+      "supports": [],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Key",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "text",
+          "label": "Text",
+          "type": "text",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "id": "tax:category:en",
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": true,
+      "collections": [
+        "posts"
+      ],
+      "locale": "en",
+      "terms": [
+        {
+          "id": "term:category:urban-insights:en",
+          "slug": "urban-insights",
+          "label": "Urban Insights",
+          "locale": "en"
+        },
+        {
+          "id": "term:category:projects:en",
+          "slug": "projects",
+          "label": "Selected Projects",
+          "locale": "en"
+        },
+        {
+          "id": "term:category:research:en",
+          "slug": "research",
+          "label": "Research & Expertise",
+          "locale": "en"
+        },
+        {
+          "id": "term:category:publications:en",
+          "slug": "publications",
+          "label": "Publications",
+          "locale": "en"
+        }
+      ]
+    },
+    {
+      "id": "tax:category:zh-TW",
+      "name": "category",
+      "label": "分類",
+      "labelSingular": "分類",
+      "locale": "zh-TW",
+      "translationOf": "tax:category:en",
+      "terms": [
+        {
+          "id": "term:category:urban-insights:zh-TW",
+          "slug": "urban-insights",
+          "label": "城市觀察",
+          "locale": "zh-TW",
+          "translationOf": "term:category:urban-insights:en"
+        },
+        {
+          "id": "term:category:projects:zh-TW",
+          "slug": "projects",
+          "label": "精選實務專案",
+          "locale": "zh-TW",
+          "translationOf": "term:category:projects:en"
+        },
+        {
+          "id": "term:category:research:zh-TW",
+          "slug": "research",
+          "label": "研究專題",
+          "locale": "zh-TW",
+          "translationOf": "term:category:research:en"
+        },
+        {
+          "id": "term:category:publications:zh-TW",
+          "slug": "publications",
+          "label": "學術著作",
+          "locale": "zh-TW",
+          "translationOf": "term:category:publications:en"
+        }
+      ]
+    },
+    {
+      "id": "tax:tag:en",
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": [
+        "posts"
+      ],
+      "locale": "en",
+      "terms": [
+        {
+          "id": "term:tag:urban-regeneration:en",
+          "slug": "urban-regeneration",
+          "label": "Urban Regeneration",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:climate-resilience:en",
+          "slug": "climate-resilience",
+          "label": "Climate Resilience",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:social-housing:en",
+          "slug": "social-housing",
+          "label": "Social Housing",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:community-planning:en",
+          "slug": "community-planning",
+          "label": "Community Planning",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:ai-planning:en",
+          "slug": "ai-planning",
+          "label": "AI-assisted Planning",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:utrecht:en",
+          "slug": "utrecht",
+          "label": "Utrecht",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:barcelona:en",
+          "slug": "barcelona",
+          "label": "Barcelona",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:vienna:en",
+          "slug": "vienna",
+          "label": "Vienna",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:amsterdam:en",
+          "slug": "amsterdam",
+          "label": "Amsterdam",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:delft:en",
+          "slug": "delft",
+          "label": "Delft",
+          "locale": "en"
+        },
+        {
+          "id": "term:tag:taiwan:en",
+          "slug": "taiwan",
+          "label": "Taiwan",
+          "locale": "en"
+        }
+      ]
+    },
+    {
+      "id": "tax:tag:zh-TW",
+      "name": "tag",
+      "label": "標籤",
+      "labelSingular": "標籤",
+      "locale": "zh-TW",
+      "translationOf": "tax:tag:en",
+      "terms": [
+        {
+          "id": "term:tag:urban-regeneration:zh-TW",
+          "slug": "urban-regeneration",
+          "label": "都市再生",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:urban-regeneration:en"
+        },
+        {
+          "id": "term:tag:climate-resilience:zh-TW",
+          "slug": "climate-resilience",
+          "label": "氣候韌性",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:climate-resilience:en"
+        },
+        {
+          "id": "term:tag:social-housing:zh-TW",
+          "slug": "social-housing",
+          "label": "社會住宅",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:social-housing:en"
+        },
+        {
+          "id": "term:tag:community-planning:zh-TW",
+          "slug": "community-planning",
+          "label": "社區規劃",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:community-planning:en"
+        },
+        {
+          "id": "term:tag:ai-planning:zh-TW",
+          "slug": "ai-planning",
+          "label": "生成式 AI 輔助規劃",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:ai-planning:en"
+        },
+        {
+          "id": "term:tag:utrecht:zh-TW",
+          "slug": "utrecht",
+          "label": "烏特勒支",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:utrecht:en"
+        },
+        {
+          "id": "term:tag:barcelona:zh-TW",
+          "slug": "barcelona",
+          "label": "巴塞隆納",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:barcelona:en"
+        },
+        {
+          "id": "term:tag:vienna:zh-TW",
+          "slug": "vienna",
+          "label": "維也納",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:vienna:en"
+        },
+        {
+          "id": "term:tag:amsterdam:zh-TW",
+          "slug": "amsterdam",
+          "label": "阿姆斯特丹",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:amsterdam:en"
+        },
+        {
+          "id": "term:tag:delft:zh-TW",
+          "slug": "delft",
+          "label": "台夫特",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:delft:en"
+        },
+        {
+          "id": "term:tag:taiwan:zh-TW",
+          "slug": "taiwan",
+          "label": "臺灣",
+          "locale": "zh-TW",
+          "translationOf": "term:tag:taiwan:en"
+        }
+      ]
+    }
+  ],
+  "bylines": [
+    {
+      "id": "byline-lin-yutzu",
+      "slug": "yu-tzu-lin",
+      "displayName": "林育慈 Yu-Tzu Lin",
+      "bio": "Urban planner, educator and researcher. Assistant Professor at Chihlee University of Technology and PhD Candidate at TU Delft."
+    }
+  ],
+  "menus": [
+    {
+      "id": "menu:primary:en",
+      "name": "primary",
+      "label": "Primary Navigation",
+      "locale": "en",
+      "items": [
+        {
+          "id": "item:primary:about:en",
+          "type": "custom",
+          "label": "About",
+          "url": "/about",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:research:en",
+          "type": "custom",
+          "label": "Research",
+          "url": "/research",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:projects:en",
+          "type": "custom",
+          "label": "Projects",
+          "url": "/projects",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:publications:en",
+          "type": "custom",
+          "label": "Publications",
+          "url": "/publications",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:insights:en",
+          "type": "custom",
+          "label": "Urban Insights",
+          "url": "/insights",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:blog:en",
+          "type": "custom",
+          "label": "Blog",
+          "url": "/posts",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:news:en",
+          "type": "custom",
+          "label": "News",
+          "url": "/news",
+          "locale": "en"
+        },
+        {
+          "id": "item:primary:contact:en",
+          "type": "custom",
+          "label": "Contact",
+          "url": "/contact",
+          "locale": "en"
+        }
+      ]
+    },
+    {
+      "id": "menu:primary:zh-TW",
+      "name": "primary",
+      "label": "主選單",
+      "locale": "zh-TW",
+      "translationOf": "menu:primary:en",
+      "items": [
+        {
+          "id": "item:primary:about:zh-TW",
+          "type": "custom",
+          "label": "關於",
+          "url": "/about",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:about:en"
+        },
+        {
+          "id": "item:primary:research:zh-TW",
+          "type": "custom",
+          "label": "研究",
+          "url": "/research",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:research:en"
+        },
+        {
+          "id": "item:primary:projects:zh-TW",
+          "type": "custom",
+          "label": "專案",
+          "url": "/projects",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:projects:en"
+        },
+        {
+          "id": "item:primary:publications:zh-TW",
+          "type": "custom",
+          "label": "著作",
+          "url": "/publications",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:publications:en"
+        },
+        {
+          "id": "item:primary:insights:zh-TW",
+          "type": "custom",
+          "label": "城市觀察",
+          "url": "/insights",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:insights:en"
+        },
+        {
+          "id": "item:primary:blog:zh-TW",
+          "type": "custom",
+          "label": "部落格",
+          "url": "/posts",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:blog:en"
+        },
+        {
+          "id": "item:primary:news:zh-TW",
+          "type": "custom",
+          "label": "最新消息",
+          "url": "/news",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:news:en"
+        },
+        {
+          "id": "item:primary:contact:zh-TW",
+          "type": "custom",
+          "label": "聯絡",
+          "url": "/contact",
+          "locale": "zh-TW",
+          "translationOf": "item:primary:contact:en"
+        }
+      ]
+    }
+  ],
+  "widgetAreas": [
+    {
+      "name": "sidebar",
+      "label": "Sidebar",
+      "description": "Widget area displayed on single post pages",
+      "widgets": [
+        {
+          "type": "component",
+          "componentId": "core:search",
+          "title": "Search"
+        },
+        {
+          "type": "component",
+          "componentId": "core:categories",
+          "title": "Categories"
+        },
+        {
+          "type": "component",
+          "componentId": "core:tags",
+          "title": "Tags"
+        },
+        {
+          "type": "component",
+          "componentId": "core:recent-posts",
+          "title": "Recent Posts",
+          "props": {
+            "count": 5,
+            "showDate": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "footer",
+      "label": "Footer",
+      "description": "Widget area displayed in the site footer",
+      "widgets": [
+        {
+          "type": "content",
+          "title": "About Yu-Tzu Lin 林育慈",
+          "content": [
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Connecting urban planning research, professional practice and education across Taiwan, the Netherlands and European cities.",
+                  "_key": "f1_s"
+                }
+              ],
+              "_key": "f1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Urban Regeneration · Climate Resilience · Social Housing · AI-assisted Community Planning",
+                  "_key": "f2_s"
+                }
+              ],
+              "_key": "f2"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "slug": "about-author",
+      "title": "About the Author",
+      "description": "Brief author bio for Yu-Tzu Lin",
+      "keywords": [
+        "author",
+        "bio",
+        "yutzu",
+        "lin"
+      ],
+      "source": "theme",
+      "content": [
+        {
+          "_type": "block",
+          "style": "normal",
+          "children": [
+            {
+              "_type": "span",
+              "text": "Yu-Tzu Lin is an Assistant Professor at Chihlee University of Technology and PhD Candidate at Delft University of Technology, focusing on urban regeneration, climate resilience, and AI-assisted community planning.",
+              "_key": "s1_s"
+            }
+          ],
+          "_key": "s1"
+        }
+      ]
+    }
+  ],
+  "content": {
+    "pages": [
+      {
+        "id": "home",
+        "slug": "home",
+        "status": "published",
+        "data": {
+          "title": "Yu-Tzu Lin 林育慈",
+          "excerpt": "Connecting urban planning research, professional practice and education across Taiwan, the Netherlands and European cities.",
+          "featured_image": {
+            "src": "/images/yu-tzu-lin.jpg",
+            "alt": "Portrait of Yu-Tzu Lin"
+          },
+          "content": [
+            {
+              "_type": "hero_block",
+              "_key": "h_hero_showcase_01",
+              "eyebrow": "Urban Planner · Educator · Researcher",
+              "title": "Yu-Tzu Lin 林育慈",
+              "lead": "Connecting urban planning research, professional practice and education across Taiwan, the Netherlands and European cities.",
+              "focusline": "Urban Regeneration · Climate Resilience · Social Housing · AI-assisted Community Planning",
+              "primaryText": "Explore My Work",
+              "primaryUrl": "/research",
+              "secondaryText": "About Yu-Tzu",
+              "secondaryUrl": "/about",
+              "imageUrl": "/images/yu-tzu-lin.jpg",
+              "imageAlt": "Portrait of Yu-Tzu Lin"
+            },
+            {
+              "_type": "stats_grid",
+              "_key": "h_stats_grid_01",
+              "item1_num": "15+",
+              "item1_label": "Years of Urban Research & Practice",
+              "item2_num": "3",
+              "item2_label": "Global Regions (Taiwan, NL, UK)",
+              "item3_num": "20+",
+              "item3_label": "Publications & Studio Courses",
+              "item4_num": "10+",
+              "item4_label": "Community & Municipal Initiatives"
+            },
+            {
+              "_type": "block",
+              "_key": "h_exp_head",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "h_exp_head_s",
+                  "text": "Explore Research, practice and urban knowledge."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "h_exp_desc",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "h_exp_desc_s",
+                  "text": "This site brings together Yu-Tzu Lin’s research themes, applied projects, publications and international urban observations in a structure designed for both readers and search systems."
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c1",
+              "badge": "RESEARCH",
+              "title": "Five Research Themes",
+              "description": "Urban regeneration, resilience, housing, AI-assisted community planning and comparative planning.",
+              "link": "/research",
+              "linkText": "Explore Research →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c2",
+              "badge": "PROJECTS",
+              "title": "Selected Practice",
+              "description": "Community planning, social housing, urban renewal, circular economy and spatial planning.",
+              "link": "/projects",
+              "linkText": "View Projects →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c3",
+              "badge": "URBAN INSIGHTS",
+              "title": "Cities as a Planning Library",
+              "description": "Utrecht, Amsterdam, Delft, Vienna, Barcelona, Taiwan and more.",
+              "link": "/insights",
+              "linkText": "Read Insights →"
+            },
+            {
+              "_type": "recent_posts",
+              "_key": "h_recent_posts_01",
+              "eyebrow": "Urban Insights & Case Studies",
+              "title": "Articles & Publications",
+              "lead": "In-depth observations on transit hubs, public housing models, green infrastructure, and community co-creation.",
+              "actionText": "View all articles",
+              "actionUrl": "/posts",
+              "limit": "6",
+              "tag": ""
+            }
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "home-zh",
+        "slug": "home",
+        "status": "published",
+        "data": {
+          "title": "林育慈",
+          "excerpt": "串連臺灣、荷蘭與歐洲城市，結合都市規劃研究、專業實務與教育。",
+          "featured_image": {
+            "src": "/images/yu-tzu-lin.jpg",
+            "alt": "林育慈肖像"
+          },
+          "content": [
+            {
+              "_type": "hero_block",
+              "_key": "h_hero_showcase_01",
+              "eyebrow": "都市規劃師 · 教育者 · 研究者",
+              "title": "林育慈",
+              "lead": "串連臺灣、荷蘭與歐洲城市，結合都市規劃研究、專業實務與教育。",
+              "focusline": "都市再生 · 氣候韌性 · 社會住宅 · 生成式 AI 輔助社區規劃",
+              "primaryText": "探索我的工作",
+              "primaryUrl": "/research",
+              "secondaryText": "關於育慈",
+              "secondaryUrl": "/about",
+              "imageUrl": "/images/yu-tzu-lin.jpg",
+              "imageAlt": "林育慈肖像"
+            },
+            {
+              "_type": "stats_grid",
+              "_key": "h_stats_grid_01",
+              "item1_num": "15+",
+              "item1_label": "年都市研究與實務經驗",
+              "item2_num": "3",
+              "item2_label": "個全球區域（臺灣、荷蘭、英國）",
+              "item3_num": "20+",
+              "item3_label": "篇出版與設計課程",
+              "item4_num": "10+",
+              "item4_label": "項社區與市府計畫"
+            },
+            {
+              "_type": "block",
+              "_key": "h_exp_head",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "h_exp_head_s",
+                  "text": "探索研究、實務與都市知識。"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "h_exp_desc",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "h_exp_desc_s",
+                  "text": "本網站彙整林育慈的研究主題、實務專案、學術著作與國際都市觀察，兼顧讀者閱讀與搜尋系統的結構設計。"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c1",
+              "badge": "研究",
+              "title": "五大研究主軸",
+              "description": "都市再生、韌性、住宅、AI 輔助社區規劃與比較規劃。",
+              "link": "/research",
+              "linkText": "探索研究 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c2",
+              "badge": "實務專案",
+              "title": "精選實務",
+              "description": "社區規劃、社會住宅、都市更新、循環經濟與空間規劃。",
+              "link": "/projects",
+              "linkText": "檢視專案 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "h_c3",
+              "badge": "城市觀察",
+              "title": "以城市作為規劃的圖書館",
+              "description": "烏特勒支、阿姆斯特丹、台夫特、維也納、巴塞隆納、臺灣等。",
+              "link": "/insights",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "recent_posts",
+              "_key": "h_recent_posts_01",
+              "eyebrow": "城市觀察與案例研究",
+              "title": "文章與出版",
+              "lead": "深入觀察交通樞紐、公共住宅模式、綠色基盤設施與社區共創。",
+              "actionText": "查看所有文章",
+              "actionUrl": "/posts",
+              "limit": "6",
+              "tag": ""
+            }
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "home"
+      },
+      {
+        "id": "about",
+        "slug": "about",
+        "status": "published",
+        "data": {
+          "title": "About Yu-Tzu Lin",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "ab_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_h1_s",
+                  "text": "Research · Practice · Education"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p1",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p1_s",
+                  "text": "Yu-Tzu Lin is an urban planner, educator and researcher based in Taiwan. She is an Assistant Professor in the Department of Finance, College of Business and Management, Chihlee University of Technology, and a PhD Candidate at the Faculty of Architecture and the Built Environment, Delft University of Technology."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p2",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p2_s",
+                  "text": "Her academic background spans urban planning and land economics, including graduate training in urban planning at National Chung Hsing University and studies in Land Economics at National Chengchi University."
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p3",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p3_s",
+                  "text": "Her work focuses on urban regeneration, climate adaptation and resilience, disaster-prevention planning, land use and development, social housing, circular construction, public-private partnerships and comparative planning between Taiwan and the Netherlands."
+                }
+              ]
+            }
+          ],
+          "excerpt": "Urban planner, educator and researcher connecting academic inquiry with real-world planning practice.",
+          "featured_image": {
+            "src": "/images/yu-tzu-lin.jpg",
+            "alt": "Yu-Tzu Lin"
+          }
+        },
+        "locale": "en"
+      },
+      {
+        "id": "about-zh",
+        "slug": "about",
+        "status": "published",
+        "data": {
+          "title": "關於林育慈",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "ab_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_h1_s",
+                  "text": "研究 · 實務 · 教育"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p1",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p1_s",
+                  "text": "林育慈是一位在臺灣工作的都市規劃師、教育者與研究者。她現任致理科技大學商務管理學院財務金融系助理教授，同時為荷蘭台夫特理工大學建築與建成環境學院博士候選人。"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p2",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p2_s",
+                  "text": "她的學術背景橫跨都市規劃與土地經濟，曾於國立中興大學接受都市規劃研究所訓練，並於國立政治大學修習地政學。"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ab_p3",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p3_s",
+                  "text": "她的研究聚焦於都市再生、氣候調適與韌性、防災規劃、土地使用與開發、社會住宅、循環營建、公私協力夥伴關係，以及臺灣與荷蘭之間的比較規劃。"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "about_zh_h2b",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_h1_s",
+                  "text": "研究關懷"
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "about_zh_p4",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ab_p1_s",
+                  "text": "林育慈長期投入都市規劃、都市再生、氣候調適與都市防災、社會住宅及社區規劃等研究與實務工作，並關注生成式 AI 在場所營造、社區參與、都市分析與規劃教育中的應用。"
+                }
+              ]
+            }
+          ],
+          "excerpt": "結合學術探究與規劃實務的都市規劃師、教育者與研究者。",
+          "featured_image": {
+            "src": "/images/yu-tzu-lin.jpg",
+            "alt": "林育慈"
+          }
+        },
+        "locale": "zh-TW",
+        "translationOf": "about"
+      },
+      {
+        "id": "research",
+        "slug": "research",
+        "status": "published",
+        "data": {
+          "title": "Research & Expertise",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "r_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "r_h1_s",
+                  "text": "Five Core Research Pillars"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c1",
+              "badge": "01 / Regeneration",
+              "title": "Urban Regeneration & Urban Renewal",
+              "description": "Focusing on brownfield redevelopment, high-density station areas, and innovative public-private partnerships.",
+              "link": "/research",
+              "linkText": "Learn more →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c2",
+              "badge": "02 / Resilience",
+              "title": "Climate Resilience & Disaster Planning",
+              "description": "Integrating environmental risk modeling, disaster-prevention parks, and multilevel governance.",
+              "link": "/research",
+              "linkText": "Learn more →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c3",
+              "badge": "03 / Housing",
+              "title": "Social Housing & Inclusive Cities",
+              "description": "Synthesizing Taipei and European social housing guidelines and circular construction.",
+              "link": "/projects",
+              "linkText": "View projects →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c4",
+              "badge": "04 / AI & Planning",
+              "title": "AI-assisted Community Planning",
+              "description": "Empowering residents with participatory AI image synthesis and co-design.",
+              "link": "/projects",
+              "linkText": "View projects →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c5",
+              "badge": "05 / Comparative",
+              "title": "Taiwan–Netherlands & European Planning",
+              "description": "Comparative analyses of planning institutions, transit integration, and sustainable urban transformation.",
+              "link": "/research",
+              "linkText": "Learn more →"
+            }
+          ],
+          "excerpt": "Bridging institutional planning mechanisms with technical modeling and community co-design across Taiwanese and European cities."
+        },
+        "locale": "en"
+      },
+      {
+        "id": "research-zh",
+        "slug": "research",
+        "status": "published",
+        "data": {
+          "title": "研究與專長",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "r_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "r_h1_s",
+                  "text": "五大研究核心"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c1",
+              "badge": "01 / 都市再生",
+              "title": "都市再生與都市更新",
+              "description": "聚焦棕地再開發、高密度車站地區、公共空間活化，以及創新的公私協力夥伴關係。",
+              "link": "/research",
+              "linkText": "了解更多 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c2",
+              "badge": "02 / 韌性",
+              "title": "氣候韌性與防災規劃",
+              "description": "氣候調適、都市韌性、防災公園、洪水風險與空間規劃治理；整合環境風險模型與多層級治理。",
+              "link": "/research",
+              "linkText": "了解更多 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c3",
+              "badge": "03 / 住宅",
+              "title": "社會住宅與包容性城市",
+              "description": "社會住宅政策、公共性、建築設計、循環經濟與包容性城市；彙整臺北與歐洲的社宅指引及循環營建。",
+              "link": "/projects",
+              "linkText": "檢視專案 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c4",
+              "badge": "04 / AI 與規劃",
+              "title": "AI 輔助社區規劃",
+              "description": "生成式 AI、場所營造、社區參與，以及數位工具在都市規劃與教育中的應用；以參與式 AI 圖像生成與共同設計賦能居民。",
+              "link": "/projects",
+              "linkText": "檢視專案 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "r_c5",
+              "badge": "05 / 比較研究",
+              "title": "臺荷與歐洲規劃比較",
+              "description": "臺荷空間規劃制度比較，以及荷蘭、奧地利、西班牙等歐洲城市案例；分析規劃制度、運輸整合與永續都市轉型。",
+              "link": "/research",
+              "linkText": "了解更多 →"
+            }
+          ],
+          "excerpt": "連結制度性規劃機制、技術模型與社區共同設計，橫跨臺灣與歐洲城市。"
+        },
+        "locale": "zh-TW",
+        "translationOf": "research"
+      },
+      {
+        "id": "projects",
+        "slug": "projects",
+        "status": "published",
+        "data": {
+          "title": "Selected Projects",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "p_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "p_h1_s",
+                  "text": "Featured Initiatives"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c1",
+              "badge": "AI + Community Planning",
+              "title": "Jiangcui Green Boundary: Stone Rhythm Reborn",
+              "description": "New Taipei community planning implementation project; project lead, 2025. Introducing generative AI tools to empower resident co-creation and activate reserved public facility land in Banqiao.",
+              "link": "/posts/jiangcui-green-boundary-ai-place-making",
+              "linkText": "Read documentation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c2",
+              "badge": "Urban Renewal USR",
+              "title": "Secure Homes, Better Housing: Integrated Urban Renewal Innovation Services in Taipei and New Taipei",
+              "description": "University Social Responsibility (USR) project; co-principal investigator, 2025–2027. Partnering with communities across Taipei and New Taipei to assist seismic safety upgrades and consultations.",
+              "link": "/posts/urban-renewal-innovation-usr",
+              "linkText": "Read documentation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c3",
+              "badge": "Social Housing Guidelines",
+              "title": "Social Housing Practice Guidelines — Taipei Experience",
+              "description": "Four-volume publication and e-book project; project lead and chief editor, 2021–2023. Synthesizing municipal policies, design criteria, construction innovations, and tenant management principles.",
+              "link": "/posts/taipei-social-housing-guidelines",
+              "linkText": "Read documentation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c4",
+              "badge": "Circular Economy",
+              "title": "Circular Economy and Net-zero Building Strategy Research",
+              "description": "Comparative assessment of European circular construction frameworks, material passports, and adaptable social housing typologies for Taiwan’s subtropical climate.",
+              "link": "/posts/taipei-social-housing-guidelines",
+              "linkText": "Read documentation →"
+            }
+          ],
+          "excerpt": "Selected urban planning, housing, resilience and community projects led or co-led by Yu-Tzu Lin."
+        },
+        "locale": "en"
+      },
+      {
+        "id": "projects-zh",
+        "slug": "projects",
+        "status": "published",
+        "data": {
+          "title": "精選實務計畫",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "p_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "p_h1_s",
+                  "text": "代表性專案"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c1",
+              "badge": "AI + 社區規劃",
+              "title": "江翠綠界・石韻新生",
+              "description": "新北市社區規劃實踐計畫；計畫主持人，2025。導入生成式 AI 工具促進居民共創，活化板橋公共設施保留地。",
+              "link": "/posts/jiangcui-green-boundary-ai-place-making",
+              "linkText": "閱讀紀錄 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c2",
+              "badge": "都市更新 USR",
+              "title": "安心住好宅—雙北都更整合創新服務計畫",
+              "description": "大學社會責任（USR）計畫；共同主持人，2025–2027。與臺北及新北社區合作，協助耐震安全升級與諮詢。",
+              "link": "/posts/urban-renewal-innovation-usr",
+              "linkText": "閱讀紀錄 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c3",
+              "badge": "社會住宅指引",
+              "title": "社會住宅實踐指引：臺北經驗",
+              "description": "四冊專書與電子書出版計畫；計畫主持人暨總編輯，2021–2023。彙整市府政策、設計準則、營造創新與租戶管理原則。",
+              "link": "/posts/taipei-social-housing-guidelines",
+              "linkText": "閱讀紀錄 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "p_c4",
+              "badge": "循環經濟",
+              "title": "循環經濟與淨零建築策略研究",
+              "description": "比較歐洲循環營建框架、材料護照與可適應的社會住宅類型，評估其於臺灣亞熱帶氣候的適用性。",
+              "link": "/posts/taipei-social-housing-guidelines",
+              "linkText": "閱讀紀錄 →"
+            }
+          ],
+          "excerpt": "林育慈主持或共同主持的都市規劃、住宅、韌性與社區精選計畫。"
+        },
+        "locale": "zh-TW",
+        "translationOf": "projects"
+      },
+      {
+        "id": "publications",
+        "slug": "publications",
+        "status": "published",
+        "data": {
+          "title": "Publications & Papers",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "pub_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "pub_h1_s",
+                  "text": "Recent Academic Papers & Articles"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c1",
+              "badge": "2026 · Atlanta",
+              "title": "AI-Supported Place-Making on Community Planning for Reserved Public Facility Land in New Taipei City",
+              "description": "International Planning and Academic Conference Paper.",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c2",
+              "badge": "2023 · New Taipei",
+              "title": "Green Mobility in Practice: The Evolution and Planning Strategies of Amsterdam’s Cycling-friendly Environment (in Chinese)",
+              "description": "Proceedings of the joint annual conference of the Taiwan Planning Association and others; conference paper.",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c3",
+              "badge": "2021 · Public Affairs Review 19(2)",
+              "title": "Industrial Land Supply in the Netherlands under Public Land Development Models (in Chinese)",
+              "description": "Public Affairs Review, journal article, pp. 45–56.",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c4",
+              "badge": "2018 · Yokohama",
+              "title": "Urban governance, planning culture and colonial history in East Asia Cities (EAC)",
+              "description": "18th International Planning History Society Conference.",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c5",
+              "badge": "2018 · Yokohama",
+              "title": "Exploring current constraints of land-use planning practices for governing flood risk in Taipei",
+              "description": "18th International Planning History Society Conference.",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c6",
+              "badge": "2015 · Prague",
+              "title": "The Gap of Climate Adaptation Development of the Spatial Planning System in Taiwan",
+              "description": "29th Annual Congress of the Association of European Schools of Planning (AESOP).",
+              "link": "",
+              "linkText": ""
+            }
+          ],
+          "excerpt": "Journal articles, peer-reviewed conference papers, policy practice guidelines and research reports."
+        },
+        "locale": "en"
+      },
+      {
+        "id": "publications-zh",
+        "slug": "publications",
+        "status": "published",
+        "data": {
+          "title": "學術著作與論文",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "pub_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "pub_h1_s",
+                  "text": "近期著作"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c1",
+              "badge": "2026 · 亞特蘭大",
+              "title": "AI-Supported Place-Making on Community Planning for Reserved Public Facility Land in New Taipei City",
+              "description": "國際規劃學術研討會論文。",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c2",
+              "badge": "2023 · 新北",
+              "title": "綠色交通實踐：阿姆斯特丹自行車友善環境的演進與規劃策略",
+              "description": "中華民國都市計劃學會等聯合年會論文集；研討會論文。",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c3",
+              "badge": "2021 · 公共事務評論 19(2)",
+              "title": "公有地開發模式的荷蘭工業用地供給",
+              "description": "《公共事務評論》期刊論文，第 45–56 頁。",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c4",
+              "badge": "2018 · 橫濱",
+              "title": "Urban governance, planning culture and colonial history in East Asia Cities (EAC)",
+              "description": "第十八屆國際規劃史學會研討會。",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c5",
+              "badge": "2018 · 橫濱",
+              "title": "Exploring current constraints of land-use planning practices for governing flood risk in Taipei",
+              "description": "第十八屆國際規劃史學會研討會。",
+              "link": "",
+              "linkText": ""
+            },
+            {
+              "_type": "info_card",
+              "_key": "pub_c6",
+              "badge": "2015 · 布拉格",
+              "title": "The Gap of Climate Adaptation Development of the Spatial Planning System in Taiwan",
+              "description": "歐洲規劃學院協會（AESOP）第 29 屆年會。",
+              "link": "",
+              "linkText": ""
+            }
+          ],
+          "excerpt": "期刊論文、同儕審查研討會論文、政策實務指引與研究報告。"
+        },
+        "locale": "zh-TW",
+        "translationOf": "publications"
+      },
+      {
+        "id": "insights",
+        "slug": "insights",
+        "status": "published",
+        "data": {
+          "title": "Urban Insights",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "in_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "in_h1_s",
+                  "text": "Field Observations"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c1",
+              "badge": "UTRECHT",
+              "title": "Central Station Area Regeneration",
+              "description": "Reconnecting old and new districts, restoring the canal blue-green network and transforming a major transport hub into a human-centered mobility core.",
+              "link": "/posts/utrecht-central-station-area-regeneration",
+              "linkText": "Read observation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c2",
+              "badge": "BARCELONA",
+              "title": "Planning Transformation & Green Urban Fabric",
+              "description": "From the nineteenth-century Cerdà grid to contemporary greening of the central city and Superblocks (Superilles) pedestrian transformation.",
+              "link": "/posts/barcelona-green-urban-fabric-superblocks",
+              "linkText": "Read observation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c3",
+              "badge": "VIENNA",
+              "title": "Railway Brownfields & Social Housing",
+              "description": "Brownfield regeneration, livable districts and the evolution of Vienna’s world-renowned social-housing model at Sonnwendviertel and Aspern Seestadt.",
+              "link": "/posts/vienna-railway-brownfields-social-housing",
+              "linkText": "Read observation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c4",
+              "badge": "AMSTERDAM",
+              "title": "Cycling & Low-carbon Communities",
+              "description": "Human-centered mobility, ecological housing, grade-separated cycle networks, and low-carbon circular planning in emerging waterfront districts.",
+              "link": "/posts/amsterdam-cycling-low-carbon-communities",
+              "linkText": "Read observation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c5",
+              "badge": "DELFT",
+              "title": "Station-area Regeneration & Adaptive Reuse",
+              "description": "Railway corridor undergrounding, civic integration in Spoorzone Delft, and the adaptive reuse of historic academic architecture on TU Delft campus.",
+              "link": "/posts/delft-station-area-adaptive-reuse",
+              "linkText": "Read observation →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c6",
+              "badge": "TAIWAN",
+              "title": "Taiwan & European Planning Comparison",
+              "description": "Reflections on high-density living, climate adaptation, institutional capacity, and collaborative governance across Taiwanese and European contexts.",
+              "link": "/posts/taiwan-resilience-housing-community-planning",
+              "linkText": "Read observation →"
+            }
+          ],
+          "excerpt": "Comparative perspectives and firsthand planning observations across European and Taiwanese cities."
+        },
+        "locale": "en"
+      },
+      {
+        "id": "insights-zh",
+        "slug": "insights",
+        "status": "published",
+        "data": {
+          "title": "城市觀察",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "in_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "in_h1_s",
+                  "text": "實地踏查與案例解析"
+                }
+              ]
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c1",
+              "badge": "烏特勒支",
+              "title": "中央車站地區再生",
+              "description": "重新連結新舊街區、恢復運河藍綠網絡，並將大型運輸樞紐轉型為以人為本的移動核心。",
+              "link": "/posts/utrecht-central-station-area-regeneration",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c2",
+              "badge": "巴塞隆納",
+              "title": "規劃轉型與綠色都市肌理",
+              "description": "從十九世紀的塞爾達方格，到當代市中心綠化與超級街區（Superilles）的行人化轉型。",
+              "link": "/posts/barcelona-green-urban-fabric-superblocks",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c3",
+              "badge": "維也納",
+              "title": "鐵道棕地與社會住宅",
+              "description": "以索恩文德爾區與阿斯彭湖城為例，探討棕地再生、宜居街區，以及維也納舉世聞名的社宅模式演進。",
+              "link": "/posts/vienna-railway-brownfields-social-housing",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c4",
+              "badge": "阿姆斯特丹",
+              "title": "自行車與低碳社區",
+              "description": "以人為本的移動、生態住宅、立體分隔的自行車網絡，以及新興水岸街區的低碳循環規劃。",
+              "link": "/posts/amsterdam-cycling-low-carbon-communities",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c5",
+              "badge": "台夫特",
+              "title": "車站地區再生與適應性再利用",
+              "description": "鐵道廊帶地下化、Spoorzone 的公民整合，以及台夫特理工大學校園歷史學術建築的適應性再利用。",
+              "link": "/posts/delft-station-area-adaptive-reuse",
+              "linkText": "閱讀觀察 →"
+            },
+            {
+              "_type": "info_card",
+              "_key": "in_c6",
+              "badge": "臺灣",
+              "title": "臺灣與歐洲規劃比較",
+              "description": "對臺灣與歐洲脈絡下高密度居住、氣候調適、制度能量與協力治理的反思。",
+              "link": "/posts/taiwan-resilience-housing-community-planning",
+              "linkText": "閱讀觀察 →"
+            }
+          ],
+          "excerpt": "橫跨歐洲與臺灣城市的比較觀點與第一手規劃觀察。"
+        },
+        "locale": "zh-TW",
+        "translationOf": "insights"
+      },
+      {
+        "id": "news",
+        "slug": "news",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "News",
+          "excerpt": "Updates on projects, publications and new field notes.",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "n_h",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "n_hs",
+                  "text": "Latest News"
+                }
+              ]
+            },
+            {
+              "_type": "news_item",
+              "_key": "n1",
+              "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=500&fit=crop",
+              "imageAlt": "Residents at a community workshop",
+              "title": "Jiangcui community planning project presented in Atlanta",
+              "description": "The AI-assisted place-making work on reserved public facility land was presented at the 2026 international planning conference.",
+              "link": "/posts/jiangcui-green-boundary-ai-place-making"
+            },
+            {
+              "_type": "news_item",
+              "_key": "n2",
+              "imageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=500&fit=crop",
+              "imageAlt": "Canal and historic buildings in Utrecht",
+              "title": "New field note: Utrecht Central Station area",
+              "description": "How the city reopened its canal ring and built the world’s largest bicycle parking facility.",
+              "link": "/posts/utrecht-central-station-area-regeneration"
+            },
+            {
+              "_type": "news_item",
+              "_key": "n3",
+              "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=500&fit=crop",
+              "imageAlt": "Aerial view of Barcelona’s Eixample grid",
+              "title": "New field note: Barcelona Superblocks",
+              "description": "From Cerdà’s grid to pedestrian-priority Superilles and green axes.",
+              "link": "/posts/barcelona-green-urban-fabric-superblocks"
+            }
+          ]
+        }
+      },
+      {
+        "id": "news-zh",
+        "slug": "news",
+        "status": "published",
+        "locale": "zh-TW",
+        "translationOf": "news",
+        "data": {
+          "title": "最新消息",
+          "excerpt": "計畫、著作與新文章的最新動態。",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "n_h",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "n_hs",
+                  "text": "最新消息"
+                }
+              ]
+            },
+            {
+              "_type": "news_item",
+              "_key": "n1",
+              "imageUrl": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=500&fit=crop",
+              "imageAlt": "社區工作坊中的居民",
+              "title": "江翠社區規劃計畫於亞特蘭大發表",
+              "description": "以 AI 輔助公共設施保留地場所營造的成果，於 2026 年國際規劃研討會發表。",
+              "link": "/posts/jiangcui-green-boundary-ai-place-making"
+            },
+            {
+              "_type": "news_item",
+              "_key": "n2",
+              "imageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&h=500&fit=crop",
+              "imageAlt": "烏特勒支的運河與歷史建築",
+              "title": "新文章：烏特勒支中央車站地區",
+              "description": "城市如何重新開通運河環，並打造全球最大的自行車停車設施。",
+              "link": "/posts/utrecht-central-station-area-regeneration"
+            },
+            {
+              "_type": "news_item",
+              "_key": "n3",
+              "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&h=500&fit=crop",
+              "imageAlt": "巴塞隆納擴建區街廓鳥瞰",
+              "title": "新文章：巴塞隆納超級街區",
+              "description": "從塞爾達方格到行人優先的超級街區與綠軸。",
+              "link": "/posts/barcelona-green-urban-fabric-superblocks"
+            }
+          ]
+        }
+      },
+      {
+        "id": "contact",
+        "slug": "contact",
+        "status": "published",
+        "data": {
+          "title": "Contact & CV",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "c_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c_h1_s",
+                  "text": "Contact Information"
+                }
+              ]
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c1",
+              "label": "Academic Email",
+              "value": "keats0704@mail.chihlee.edu.tw",
+              "detail": "Department of Finance, College of Business and Management, Chihlee University of Technology, Taiwan",
+              "link": "mailto:keats0704@mail.chihlee.edu.tw"
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c2",
+              "label": "General & Collaboration",
+              "value": "keats0704@gmail.com",
+              "detail": "For general correspondence, research inquiries, collaboration and speaking invitations",
+              "link": "mailto:keats0704@gmail.com"
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c3",
+              "label": "Affiliation & Office",
+              "value": "Department of Finance, College of Business and Management, Chihlee University of Technology",
+              "detail": "No. 313, Sec. 1, Wenhua Rd., Banqiao Dist., New Taipei City — Comprehensive Teaching Building",
+              "link": "https://chihlee.edu.tw"
+            },
+            {
+              "_type": "block",
+              "_key": "c_h2",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c_h2_s",
+                  "text": "CV & Verified Profiles"
+                }
+              ]
+            },
+            {
+              "_type": "callout_box",
+              "_key": "c_callout_1",
+              "title": "Verified Academic Identifiers",
+              "text": "The public CV download and verified academic profile links (for example ORCID, Google Scholar, ResearchGate and institutional profile) will be updated here after final verification. Verified identity links strengthen consistency for search engines, scholarly aggregators and AI systems."
+            }
+          ],
+          "excerpt": "For academic exchange, planning research, teaching and professional collaboration."
+        },
+        "locale": "en"
+      },
+      {
+        "id": "contact-zh",
+        "slug": "contact",
+        "status": "published",
+        "data": {
+          "title": "聯絡方式與學術檔案",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "c_h1",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c_h1_s",
+                  "text": "聯絡方式"
+                }
+              ]
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c1",
+              "label": "學術信箱",
+              "value": "keats0704@mail.chihlee.edu.tw",
+              "detail": "致理科技大學 商務管理學院 財務金融系",
+              "link": "mailto:keats0704@mail.chihlee.edu.tw"
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c2",
+              "label": "一般與合作信箱",
+              "value": "keats0704@gmail.com",
+              "detail": "學術交流、研究合作、專案諮詢與演講邀約",
+              "link": "mailto:keats0704@gmail.com"
+            },
+            {
+              "_type": "contact_item",
+              "_key": "c_c3",
+              "label": "現職單位與研究室",
+              "value": "致理科技大學 商務管理學院 財務金融系",
+              "detail": "新北市板橋區文化路一段313號 綜合教學大樓",
+              "link": "https://chihlee.edu.tw"
+            },
+            {
+              "_type": "block",
+              "_key": "c_h2",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "c_h2_s",
+                  "text": "學術檔案與履歷"
+                }
+              ]
+            },
+            {
+              "_type": "callout_box",
+              "_key": "c_callout_1",
+              "title": "已驗證學術身分",
+              "text": "公開履歷下載與已驗證的學術檔案連結（如 ORCID、Google Scholar、ResearchGate 與機構個人頁面）將於最終驗證後更新於此。已驗證的身分連結有助於搜尋引擎、學術索引服務與 AI 系統辨識的一致性。"
+            }
+          ],
+          "excerpt": "歡迎學術交流、研究合作、教學與專業諮詢。"
+        },
+        "locale": "zh-TW",
+        "translationOf": "contact"
+      }
+    ],
+    "posts": [
+      {
+        "id": "post-utrecht",
+        "slug": "utrecht-central-station-area-regeneration",
+        "status": "published",
+        "data": {
+          "title": "Utrecht: Central Station Area Regeneration",
+          "excerpt": "Reconnecting old and new districts, restoring the canal blue-green network and transforming a major transport hub.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1200&h=800&fit=crop",
+              "alt": "Canal and historic urban area in the Netherlands",
+              "filename": "utrecht-regeneration.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Reconnecting Old and New Districts",
+                  "_key": "u1_s"
+                }
+              ],
+              "_key": "u1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Utrecht Centraal station area represents one of Europe’s most ambitious urban regeneration initiatives (Stationsgebied). In the 1970s, urban planners filled the historic Catharijnesingel canal with concrete to build a multi-lane motorway. Decades later, the city took the bold decision to reverse this modernist mistake.",
+                  "_key": "u2_s"
+                }
+              ],
+              "_key": "u2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Restoring the Blue-Green Canal Network",
+                  "_key": "u3_s"
+                }
+              ],
+              "_key": "u3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "By excavating the concrete highway and restoring the historic water ring around the old city, Utrecht not only reconnected historic waterways for boaters and wildlife, but also created high-value public spaces that cool the city and absorb stormwater.",
+                  "_key": "u4_s"
+                }
+              ],
+              "_key": "u4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Multimodal Transit and Cycling Super-Hub",
+                  "_key": "u5_s"
+                }
+              ],
+              "_key": "u5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Beneath the newly expanded station square sits the world’s largest bicycle parking facility with capacity for 12,500 bicycles. It seamlessly stitches together heavy rail, light rail, buses, and active mobility, setting a global benchmark for transit-oriented regeneration.",
+                  "_key": "u6_s"
+                }
+              ],
+              "_key": "u6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "utrecht",
+            "urban-regeneration",
+            "climate-resilience"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-utrecht-zh",
+        "slug": "utrecht-central-station-area-regeneration",
+        "status": "published",
+        "data": {
+          "title": "烏特勒支：中央車站地區再生",
+          "excerpt": "重新連結新舊街區、恢復運河藍綠網絡，並轉型大型運輸樞紐。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1200&h=800&fit=crop",
+              "alt": "Canal and historic urban area in the Netherlands",
+              "filename": "utrecht-regeneration.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "重新連結新舊街區",
+                  "_key": "u1_s"
+                }
+              ],
+              "_key": "u1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "烏特勒支中央車站地區（Stationsgebied）是歐洲最具雄心的都市再生計畫之一。1970 年代，規劃者為興建多線道高速公路，以混凝土填平了歷史悠久的 Catharijnesingel 運河。數十年後，這座城市大膽決定逆轉這項現代主義的錯誤。",
+                  "_key": "u2_s"
+                }
+              ],
+              "_key": "u2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "恢復藍綠運河網絡",
+                  "_key": "u3_s"
+                }
+              ],
+              "_key": "u3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "透過拆除混凝土高速公路並恢復老城環繞的歷史水環，烏特勒支不僅為船隻與野生動物重新連通了歷史水道，也創造出高價值的公共空間，為城市降溫並吸納雨水。",
+                  "_key": "u4_s"
+                }
+              ],
+              "_key": "u4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "複合運輸與自行車超級樞紐",
+                  "_key": "u5_s"
+                }
+              ],
+              "_key": "u5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "新擴建的車站廣場地下，設有全球最大的自行車停車設施，可容納 12,500 輛自行車。它將重軌、輕軌、公車與主動運輸無縫串接，為大眾運輸導向的都市再生樹立了全球標竿。",
+                  "_key": "u6_s"
+                }
+              ],
+              "_key": "u6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "utrecht",
+            "urban-regeneration",
+            "climate-resilience"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-utrecht"
+      },
+      {
+        "id": "post-barcelona",
+        "slug": "barcelona-green-urban-fabric-superblocks",
+        "status": "published",
+        "data": {
+          "title": "Barcelona: Planning Transformation & Green Urban Fabric",
+          "excerpt": "From the nineteenth-century Cerdà grid to contemporary greening of the central city and Superblocks (Superilles).",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&h=800&fit=crop",
+              "alt": "Barcelona Eixample grid aerial architecture",
+              "filename": "barcelona-grid.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "From Cerdà’s Grid to Contemporary Living",
+                  "_key": "b1_s"
+                }
+              ],
+              "_key": "b1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Ildefons Cerdà’s 1859 Eixample plan established Barcelona’s world-famous octagonal street grid with chamfered corners, designed with egalitarian access to sunlight, ventilation, and green open courtyards.",
+                  "_key": "b2_s"
+                }
+              ],
+              "_key": "b2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Superblocks (Superilles) Revolution",
+                  "_key": "b3_s"
+                }
+              ],
+              "_key": "b3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "In response to automobile dominance, noise, and air pollution, Barcelona introduced the Superblocks concept. By clustering 3x3 block grids, internal streets are restricted to pedestrian-priority shared spaces (10 km/h) with greenery, outdoor seating, and playgrounds, while perimeter streets absorb through-traffic.",
+                  "_key": "b4_s"
+                }
+              ],
+              "_key": "b4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Green Axes and Climate Shelters",
+                  "_key": "b5_s"
+                }
+              ],
+              "_key": "b5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The transformation of streets like Consell de Cent into Green Axes demonstrates how existing roadway asphalt can be converted into permeable, tree-lined civic corridors that combat the urban heat island effect and strengthen neighborhood cohesion.",
+                  "_key": "b6_s"
+                }
+              ],
+              "_key": "b6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "barcelona",
+            "climate-resilience",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-barcelona-zh",
+        "slug": "barcelona-green-urban-fabric-superblocks",
+        "status": "published",
+        "data": {
+          "title": "巴塞隆納：規劃轉型與綠色都市肌理",
+          "excerpt": "從十九世紀的塞爾達方格，到當代市中心綠化與超級街區（Superilles）。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&h=800&fit=crop",
+              "alt": "Barcelona Eixample grid aerial architecture",
+              "filename": "barcelona-grid.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "從塞爾達方格到當代生活",
+                  "_key": "b1_s"
+                }
+              ],
+              "_key": "b1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "伊爾德豐斯・塞爾達（Ildefons Cerdà）1859 年的擴建區（Eixample）計畫，確立了巴塞隆納聞名世界的八角形切角街廓，設計理念是讓每個人都能平等取得陽光、通風與綠意盎然的開放中庭。",
+                  "_key": "b2_s"
+                }
+              ],
+              "_key": "b2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "超級街區（Superilles）革命",
+                  "_key": "b3_s"
+                }
+              ],
+              "_key": "b3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "面對汽車主導、噪音與空氣污染，巴塞隆納提出超級街區概念。將 3×3 的街廓組合成一個單元，內部街道限制為行人優先的共享空間（時速 10 公里），配置綠化、戶外座椅與遊戲場，外圍街道則承接通過性交通。",
+                  "_key": "b4_s"
+                }
+              ],
+              "_key": "b4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "綠軸與氣候庇護所",
+                  "_key": "b5_s"
+                }
+              ],
+              "_key": "b5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "將 Consell de Cent 等街道轉型為綠軸，顯示既有道路瀝青如何轉化為透水、林蔭密布的公共廊道，對抗都市熱島效應並強化鄰里凝聚力。",
+                  "_key": "b6_s"
+                }
+              ],
+              "_key": "b6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "barcelona",
+            "climate-resilience",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-barcelona"
+      },
+      {
+        "id": "post-vienna",
+        "slug": "vienna-railway-brownfields-social-housing",
+        "status": "published",
+        "data": {
+          "title": "Vienna: Railway Brownfields & Social Housing",
+          "excerpt": "Brownfield regeneration, livable districts and the evolution of Vienna’s world-renowned social-housing model.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=1200&h=800&fit=crop",
+              "alt": "Vienna urban architecture and public space",
+              "filename": "vienna-housing.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The Vienna Social Housing Model",
+                  "_key": "v1_s"
+                }
+              ],
+              "_key": "v1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Vienna is widely recognized as one of the world’s most livable cities, largely attributable to its centurylong commitment to social housing. Over 60% of the city’s population lives in municipal housing (Gemeindebauten) or subsidized cooperative housing.",
+                  "_key": "v2_s"
+                }
+              ],
+              "_key": "v2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Regenerating Railway Brownfields: Sonnwendviertel",
+                  "_key": "v3_s"
+                }
+              ],
+              "_key": "v3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The redevelopment of the former Südbahnhof rail freight yard into the new Central Station and adjacent Sonnwendviertel district created thousands of energy-efficient apartments surrounding the central Helmut-Zilk-Park, integrating schools, community facilities, and commercial ground floors.",
+                  "_key": "v4_s"
+                }
+              ],
+              "_key": "v4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Aspern Seestadt: Smart City Innovation",
+                  "_key": "v5_s"
+                }
+              ],
+              "_key": "v5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Aspern Seestadt, built on a former airfield, represents an urban laboratory for low-carbon living, 50/50 gender-equitable street naming and design, geothermal energy grids, and high-density subsidized housing for diverse socioeconomic backgrounds.",
+                  "_key": "v6_s"
+                }
+              ],
+              "_key": "v6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "vienna",
+            "social-housing",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-vienna-zh",
+        "slug": "vienna-railway-brownfields-social-housing",
+        "status": "published",
+        "data": {
+          "title": "維也納：鐵道棕地與社宅典範",
+          "excerpt": "棕地再生、宜居街區，以及維也納舉世聞名的社會住宅模式之演進。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=1200&h=800&fit=crop",
+              "alt": "Vienna urban architecture and public space",
+              "filename": "vienna-housing.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "維也納社會住宅模式",
+                  "_key": "v1_s"
+                }
+              ],
+              "_key": "v1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "維也納被公認為全球最宜居的城市之一，這在很大程度上歸功於其長達一世紀的社會住宅承諾。全市超過 60% 的人口居住於市政住宅（Gemeindebauten）或補貼合作住宅。",
+                  "_key": "v2_s"
+                }
+              ],
+              "_key": "v2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "鐵道棕地再生：索恩文德爾區（Sonnwendviertel）",
+                  "_key": "v3_s"
+                }
+              ],
+              "_key": "v3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "將舊南站（Südbahnhof）貨運場改建為新中央車站與鄰近的索恩文德爾區，創造了數千戶節能住宅，環繞中央的 Helmut-Zilk 公園，並整合學校、社區設施與一樓商業空間。",
+                  "_key": "v4_s"
+                }
+              ],
+              "_key": "v4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "阿斯彭湖城（Aspern Seestadt）：智慧城市創新",
+                  "_key": "v5_s"
+                }
+              ],
+              "_key": "v5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "阿斯彭湖城建於舊機場之上，是低碳生活的都市實驗室，包含 50/50 性別平等的街道命名與設計、地熱能源網絡，以及服務多元社經背景的高密度補貼住宅。",
+                  "_key": "v6_s"
+                }
+              ],
+              "_key": "v6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "vienna",
+            "social-housing",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-vienna"
+      },
+      {
+        "id": "post-amsterdam",
+        "slug": "amsterdam-cycling-low-carbon-communities",
+        "status": "published",
+        "data": {
+          "title": "Amsterdam: Cycling & Low-carbon Communities",
+          "excerpt": "Human-centered mobility, ecological housing and low-carbon planning strategies.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=1200&h=800&fit=crop",
+              "alt": "Amsterdam canals and bicycle bridge",
+              "filename": "amsterdam-cycling.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Evolution of Amsterdam’s Bicycle Infrastructure",
+                  "_key": "a1_s"
+                }
+              ],
+              "_key": "a1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Amsterdam’s cycling dominance is not a historical accident but the product of deliberate grassroots campaigning and urban planning policies starting from the 1970s Stop de Kindermoord movement.",
+                  "_key": "a2_s"
+                }
+              ],
+              "_key": "a2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Continuous Protected Networks",
+                  "_key": "a3_s"
+                }
+              ],
+              "_key": "a3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "By prioritizing physically separated cycle tracks, grade-separated intersections, dedicated traffic signals, and traffic calming across residential streets, cycling became the quickest, safest, and most convenient mode of daily transit for all ages.",
+                  "_key": "a4_s"
+                }
+              ],
+              "_key": "a4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Circular Neighborhoods: Buiksloterham and IJburg",
+                  "_key": "a5_s"
+                }
+              ],
+              "_key": "a5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Across the IJ river, brownfield transformations like Buiksloterham demonstrate circular economy principles in urban regeneration, where soil remediation, bio-based construction materials, and local energy cooperatives shape a resilient urban future.",
+                  "_key": "a6_s"
+                }
+              ],
+              "_key": "a6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "amsterdam",
+            "climate-resilience",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-amsterdam-zh",
+        "slug": "amsterdam-cycling-low-carbon-communities",
+        "status": "published",
+        "data": {
+          "title": "阿姆斯特丹：自行車與低碳社區",
+          "excerpt": "以人為本的移動、生態住宅與低碳規劃策略。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=1200&h=800&fit=crop",
+              "alt": "Amsterdam canals and bicycle bridge",
+              "filename": "amsterdam-cycling.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "阿姆斯特丹自行車基礎設施的演進",
+                  "_key": "a1_s"
+                }
+              ],
+              "_key": "a1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "阿姆斯特丹的自行車優勢並非歷史偶然，而是源自 1970 年代「停止殺害孩童（Stop de Kindermoord）」運動，由基層倡議與都市規劃政策共同刻意推動的成果。",
+                  "_key": "a2_s"
+                }
+              ],
+              "_key": "a2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "連續且受保護的網絡",
+                  "_key": "a3_s"
+                }
+              ],
+              "_key": "a3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "藉由優先設置實體分隔的自行車道、立體分隔的路口、專用號誌，以及住宅街道的交通寧靜化，自行車成為各年齡層最快速、最安全、最便利的日常交通方式。",
+                  "_key": "a4_s"
+                }
+              ],
+              "_key": "a4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "循環社區：Buiksloterham 與 IJburg",
+                  "_key": "a5_s"
+                }
+              ],
+              "_key": "a5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "在 IJ 河對岸，Buiksloterham 等棕地轉型展現了都市再生中的循環經濟原則：土壤整治、生物基營建材料與在地能源合作社，共同塑造具韌性的都市未來。",
+                  "_key": "a6_s"
+                }
+              ],
+              "_key": "a6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "amsterdam",
+            "climate-resilience",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-amsterdam"
+      },
+      {
+        "id": "post-delft",
+        "slug": "delft-station-area-adaptive-reuse",
+        "status": "published",
+        "data": {
+          "title": "Delft: Station-area Regeneration & Adaptive Reuse",
+          "excerpt": "Railway land redevelopment and the reuse of historic academic architecture.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?w=1200&h=800&fit=crop",
+              "alt": "Historic Dutch city canal and modern architecture",
+              "filename": "delft-station.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The Spoorzone Delft Project",
+                  "_key": "d1_s"
+                }
+              ],
+              "_key": "d1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "For decades, an elevated rail viaduct sliced through Delft, severing historic quarters from modern neighborhoods with constant noise and vibration. The Spoorzone project buried the four-track railway into a subterranean tunnel, freeing up valuable surface land.",
+                  "_key": "d2_s"
+                }
+              ],
+              "_key": "d2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Civic Integration: Station and City Hall",
+                  "_key": "d3_s"
+                }
+              ],
+              "_key": "d3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Designed by Mecanoo, the new station hall integrates the municipal government offices directly above the transit concourse. The vaulted ceiling features an historic 1877 map of Delft in ceramic blue tiles, bridging the city’s heritage with modern civic accessibility.",
+                  "_key": "d4_s"
+                }
+              ],
+              "_key": "d4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Adaptive Reuse on the TU Delft Campus",
+                  "_key": "d5_s"
+                }
+              ],
+              "_key": "d5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Alongside station redevelopment, TU Delft campus has led European practices in transforming historic academic buildings and botanical gardens into collaborative incubators and resilient public realms.",
+                  "_key": "d6_s"
+                }
+              ],
+              "_key": "d6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "delft",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-delft-zh",
+        "slug": "delft-station-area-adaptive-reuse",
+        "status": "published",
+        "data": {
+          "title": "台夫特：車站地區再生與適應性再利用",
+          "excerpt": "鐵道用地再開發與歷史學術建築的再利用。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?w=1200&h=800&fit=crop",
+              "alt": "Historic Dutch city canal and modern architecture",
+              "filename": "delft-station.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "台夫特 Spoorzone 計畫",
+                  "_key": "d1_s"
+                }
+              ],
+              "_key": "d1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "數十年來，一座高架鐵路橋穿越台夫特，以持續的噪音與震動將歷史街區與現代鄰里切割開來。Spoorzone 計畫將四線鐵道埋入地下隧道，釋放出珍貴的地面土地。",
+                  "_key": "d2_s"
+                }
+              ],
+              "_key": "d2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "公民整合：車站與市政廳",
+                  "_key": "d3_s"
+                }
+              ],
+              "_key": "d3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "新車站大廳由 Mecanoo 設計，將市府辦公室直接整合於運輸大廳上方。拱形天花板以陶瓷藍磚呈現 1877 年的台夫特歷史地圖，將城市遺產與現代公民可及性相連結。",
+                  "_key": "d4_s"
+                }
+              ],
+              "_key": "d4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "台夫特理工大學校園的適應性再利用",
+                  "_key": "d5_s"
+                }
+              ],
+              "_key": "d5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "在車站再開發的同時，台夫特理工大學校園引領歐洲實務，將歷史學術建築與植物園轉化為協作孵化器與具韌性的公共領域。",
+                  "_key": "d6_s"
+                }
+              ],
+              "_key": "d6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "delft",
+            "urban-regeneration"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-delft"
+      },
+      {
+        "id": "post-taiwan",
+        "slug": "taiwan-resilience-housing-community-planning",
+        "status": "published",
+        "data": {
+          "title": "Taiwan: Resilience, Housing & Community Planning",
+          "excerpt": "Climate adaptation, disaster planning, social housing and AI-assisted community practice.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=800&fit=crop",
+              "alt": "Taiwan landscape and urban scenery",
+              "filename": "taiwan-landscape.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Planning in an Era of Compound Risks",
+                  "_key": "t1_s"
+                }
+              ],
+              "_key": "t1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Taiwan faces high vulnerability to typhoons, extreme rainfall, earthquakes, and heat stress. Addressing these challenges requires integrating climate risk assessment directly into master spatial planning and neighborhood disaster-prevention networks.",
+                  "_key": "t2_s"
+                }
+              ],
+              "_key": "t2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Social Housing and Spatial Equity",
+                  "_key": "t3_s"
+                }
+              ],
+              "_key": "t3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Taiwan’s social housing program has expanded rapidly in recent years, evolving beyond basic sheltering toward neighborhood community catalysts that provide social welfare facilities, kindergartens, public open space, and circular construction standards.",
+                  "_key": "t4_s"
+                }
+              ],
+              "_key": "t4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "AI-Assisted Community Planning",
+                  "_key": "t5_s"
+                }
+              ],
+              "_key": "t5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Emerging applications of generative AI provide powerful tools to bridge professional planners and community residents, democratizing 3D visualization, scenario testing, and participatory co-creation for neglected public lands.",
+                  "_key": "t6_s"
+                }
+              ],
+              "_key": "t6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "taiwan",
+            "climate-resilience",
+            "social-housing",
+            "community-planning",
+            "ai-planning"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-taiwan-zh",
+        "slug": "taiwan-resilience-housing-community-planning",
+        "status": "published",
+        "data": {
+          "title": "臺灣：韌性、社宅與社區實踐",
+          "excerpt": "氣候調適、防災規劃、社會住宅與 AI 輔助社區實踐。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=800&fit=crop",
+              "alt": "Taiwan landscape and urban scenery",
+              "filename": "taiwan-landscape.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "複合風險時代的規劃",
+                  "_key": "t1_s"
+                }
+              ],
+              "_key": "t1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "臺灣面臨颱風、極端降雨、地震與熱壓力的高度脆弱性。因應這些挑戰，需將氣候風險評估直接整合進空間總體規劃與鄰里防災網絡。",
+                  "_key": "t2_s"
+                }
+              ],
+              "_key": "t2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "社會住宅與空間公平",
+                  "_key": "t3_s"
+                }
+              ],
+              "_key": "t3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "近年臺灣的社會住宅計畫快速擴張，已從基本的庇護功能，演進為鄰里社區的催化者，提供社福設施、幼兒園、公共開放空間與循環營建標準。",
+                  "_key": "t4_s"
+                }
+              ],
+              "_key": "t4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "AI 輔助社區規劃",
+                  "_key": "t5_s"
+                }
+              ],
+              "_key": "t5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "生成式 AI 的新興應用，為專業規劃者與社區居民搭起強大的橋梁，使 3D 視覺化、情境測試與參與式共創對閒置公有地更加普及。",
+                  "_key": "t6_s"
+                }
+              ],
+              "_key": "t6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "urban-insights"
+          ],
+          "tag": [
+            "taiwan",
+            "climate-resilience",
+            "social-housing",
+            "community-planning",
+            "ai-planning"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-taiwan"
+      },
+      {
+        "id": "post-jiangcui",
+        "slug": "jiangcui-green-boundary-ai-place-making",
+        "status": "published",
+        "data": {
+          "title": "Jiangcui Green Boundary, Stone Rhythm Reborn: AI-empowered Community Planning and Place-making on Reserved Public Facility Land",
+          "excerpt": "New Taipei City community planner programme; generative AI supports resident participation and the revitalisation of reserved public facility land. Project lead, 2025.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=800&fit=crop",
+              "alt": "Community workshop and collaborative planning",
+              "filename": "community-planning.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Project Background: The Reserved Public Facility Land Dilemma",
+                  "_key": "j1_s"
+                }
+              ],
+              "_key": "j1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The New Taipei metropolitan area has long struggled with reserved public facility land that remains unacquired and undeveloped, leaving sites vacant, dilapidated and tangled in complex ownership. Using reserved land in Banqiao’s Jiangcui district as a pilot, this project explores how community planning mechanisms can give such spaces public value without a large land-acquisition budget.",
+                  "_key": "j2_s"
+                }
+              ],
+              "_key": "j2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Bringing Generative AI into Community Workshops",
+                  "_key": "j3_s"
+                }
+              ],
+              "_key": "j3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Traditional community workshops are often limited by residents’ difficulty in drawing spatial ideas. This project introduced generative AI image-translation tools that instantly turn residents’ spoken ideas for green paths, resting stones and pocket parks into realistic scenes, greatly improving how efficiently and how deeply residents build consensus.",
+                  "_key": "j4_s"
+                }
+              ],
+              "_key": "j4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Outcomes and Institutional Reflections",
+                  "_key": "j5_s"
+                }
+              ],
+              "_key": "j5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Residents reshaped the green boundary and stone landscape themselves and set up a long-term, self-managed maintenance mechanism. The work was presented at the 2026 international academic conference in Atlanta, showcasing Taiwan’s forward-looking results in AI-assisted community planning.",
+                  "_key": "j6_s"
+                }
+              ],
+              "_key": "j6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "community-planning",
+            "ai-planning",
+            "taiwan"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-jiangcui-zh",
+        "slug": "jiangcui-green-boundary-ai-place-making",
+        "status": "published",
+        "data": {
+          "title": "江翠綠界・石韻新生：AI 賦能社區規劃與公保地場所營造",
+          "excerpt": "新北市社區規劃師實踐計畫；以生成式 AI 輔助民眾參與與公共設施保留地場所活化，計畫主持人（2025）。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&h=800&fit=crop",
+              "alt": "Community workshop and collaborative planning",
+              "filename": "community-planning.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "計畫背景與公保地困境",
+                  "_key": "j1_s"
+                }
+              ],
+              "_key": "j1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "新北市都會區長期面臨公共設施保留地未徵收開闢所衍生的閒置、窳陋及產權複雜等議題。本案以板橋江翠地區公保地為試點，探討如何在不涉及龐大土地徵收預算前提下，透過社區規劃機制賦予空間公共價值。",
+                  "_key": "j2_s"
+                }
+              ],
+              "_key": "j2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "生成式 AI 導入社區參與工作坊",
+                  "_key": "j3_s"
+                }
+              ],
+              "_key": "j3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "傳統社區工作坊常受限於民眾空間繪圖能力的門檻，本計畫創新導入生成式 AI 圖像轉譯工具，將在地居民對於綠意步道、休憩石韻、口袋公園的口述想法，即時轉化為高品質擬真場景圖，大幅提高居民凝聚共識的效率與共感。",
+                  "_key": "j4_s"
+                }
+              ],
+              "_key": "j4"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "實踐成果與制度性省思",
+                  "_key": "j5_s"
+                }
+              ],
+              "_key": "j5"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "透過民眾自主動手改造綠帶邊界與石材地景，建立社區自主維護長效管理機制，並發表於 2026 年亞特蘭大國際學術研討會，展現臺灣在 AI 輔助社區規劃的國際前瞻成果。",
+                  "_key": "j6_s"
+                }
+              ],
+              "_key": "j6"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "community-planning",
+            "ai-planning",
+            "taiwan"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-jiangcui"
+      },
+      {
+        "id": "post-taipei-housing",
+        "slug": "taipei-social-housing-guidelines",
+        "status": "published",
+        "data": {
+          "title": "Social Housing Practice Guidelines: The Taipei Experience",
+          "excerpt": "A four-volume book and e-book project; project lead and chief editor, 2021–2023. A systematic account of social housing planning, construction and management guidelines.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop",
+              "alt": "Modern architectural facade and housing development",
+              "filename": "social-housing-taipei.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "A Systematic Review of Taipei’s Social Housing Journey",
+                  "_key": "th1_s"
+                }
+              ],
+              "_key": "th1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Since 2014, Taipei has pursued the large-scale construction of ten thousand social housing units, accumulating first-hand experience in land acquisition, community communication, mixed-use development and smart management. Yu-Tzu Lin served as project lead and chief editor of this commissioned study, drawing on two years of systematic interviews and literature compilation.",
+                  "_key": "th2_s"
+                }
+              ],
+              "_key": "th2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The Four-Volume Structure and Core Values",
+                  "_key": "th3_s"
+                }
+              ],
+              "_key": "th3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The guidelines span four volumes: Volume 1, Policy and Planning Thinking; Volume 2, Architectural Planning and Design Practice; Volume 3, Smart Buildings and Circular Construction Technology; Volume 4, Community Operation and Property Management Standards. They have become an important reference for governments at every level promoting social housing.",
+                  "_key": "th4_s"
+                }
+              ],
+              "_key": "th4"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "social-housing",
+            "taiwan"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-taipei-housing-zh",
+        "slug": "taipei-social-housing-guidelines",
+        "status": "published",
+        "data": {
+          "title": "臺北市社會住宅實踐指引 — 臺北經驗 (Social Housing Practice Guidelines)",
+          "excerpt": "四冊專書與電子書出版計畫；計畫主持人與總編輯（2021–2023）。系統性梳理社會住宅規劃、營造與經營指引。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop",
+              "alt": "Modern architectural facade and housing development",
+              "filename": "social-housing-taipei.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "系統化回顧臺北社會住宅推進歷程",
+                  "_key": "th1_s"
+                }
+              ],
+              "_key": "th1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "自 2014 年起，臺北市大規模推動萬戶社會住宅興建，在土地取得、社區溝通、多目標使用、智慧化管理等方面累積了龐大的第一手實務經驗。本研究受託由林育慈擔任計畫主持人與總編輯，歷經兩年系統化訪談與文獻彙編。",
+                  "_key": "th2_s"
+                }
+              ],
+              "_key": "th2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "四冊指引架構與核心價值",
+                  "_key": "th3_s"
+                }
+              ],
+              "_key": "th3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "全套指引分為四冊，涵蓋：第一冊「政策與規劃思維」、第二冊「建築規劃與設計實務」、第三冊「智慧建築與循環營建技術」、第四冊「社區經營與物業管理準則」，成為各級政府推動社會住宅的重要參考典範。",
+                  "_key": "th4_s"
+                }
+              ],
+              "_key": "th4"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "social-housing",
+            "taiwan"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-taipei-housing"
+      },
+      {
+        "id": "post-usr-renewal",
+        "slug": "urban-renewal-innovation-usr",
+        "status": "published",
+        "data": {
+          "title": "Secure Homes, Better Housing: Integrated Urban Renewal Innovation Services in Taipei and New Taipei (USR)",
+          "excerpt": "Ministry of Education University Social Responsibility programme; co-principal investigator, 2025–2027. Linking industry, government, academia and communities to advance integrated urban renewal and disaster resilience.",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1448630360428-65456885c650?w=1200&h=800&fit=crop",
+              "alt": "Urban renewal buildings and community",
+              "filename": "urban-renewal.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Ageing Buildings and Disaster Resilience in Greater Taipei",
+                  "_key": "u_usr1_s"
+                }
+              ],
+              "_key": "u_usr1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "More than seventy percent of buildings in Taipei and New Taipei are over thirty years old. With an ageing population and seismic risk, urban renewal has become an unavoidable public-safety issue, yet information asymmetry and low trust are often the biggest obstacles to integration.",
+                  "_key": "u_usr2_s"
+                }
+              ],
+              "_key": "u_usr2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "The University as a Neutral Third-party Integrator",
+                  "_key": "u_usr3_s"
+                }
+              ],
+              "_key": "u_usr3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "Through the USR programme, the Chihlee University of Technology team, with Yu-Tzu Lin as co-principal investigator, combines financial analysis, regulatory consultation, architectural design and community communication expertise to offer neutral advice in local communities, helping owners understand rights-transformation mechanisms and build safe, secure living environments together.",
+                  "_key": "u_usr4_s"
+                }
+              ],
+              "_key": "u_usr4"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "urban-regeneration",
+            "taiwan"
+          ]
+        },
+        "locale": "en"
+      },
+      {
+        "id": "post-usr-renewal-zh",
+        "slug": "urban-renewal-innovation-usr",
+        "status": "published",
+        "data": {
+          "title": "安心住好宅：雙北都更整合創新服務計畫 (USR)",
+          "excerpt": "教育部大學社會責任實踐計畫；共同主持人（2025–2027）。串聯產官學與社區推動都更整合與防災韌性。",
+          "featured_image": {
+            "$media": {
+              "url": "https://images.unsplash.com/photo-1448630360428-65456885c650?w=1200&h=800&fit=crop",
+              "alt": "Urban renewal buildings and community",
+              "filename": "urban-renewal.jpg"
+            }
+          },
+          "content": [
+            {
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "雙北高齡老屋與防災整合挑戰",
+                  "_key": "u_usr1_s"
+                }
+              ],
+              "_key": "u_usr1"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "雙北地區三十年以上老舊建築比例超過七成，伴隨人口高齡化與耐震防災風險，推動都市更新已成為不可忽視的公共安全課題。然而資訊不對稱與信任度不足往往是整合的最大瓶頸。",
+                  "_key": "u_usr2_s"
+                }
+              ],
+              "_key": "u_usr2"
+            },
+            {
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "大學智庫作為中立整合第三方",
+                  "_key": "u_usr3_s"
+                }
+              ],
+              "_key": "u_usr3"
+            },
+            {
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_type": "span",
+                  "text": "致理科技大學團隊透過 USR 計畫，由林育慈副教授擔任共同主持人，結合財務分析、法規諮詢、建築設計與社區溝通專業，進入在地社區提供中立諮詢，協助地主釐清都更權利變換機制，共同營造安全安心的居住環境。",
+                  "_key": "u_usr4_s"
+                }
+              ],
+              "_key": "u_usr4"
+            }
+          ]
+        },
+        "bylines": [
+          {
+            "byline": "byline-lin-yutzu"
+          }
+        ],
+        "taxonomies": {
+          "category": [
+            "projects"
+          ],
+          "tag": [
+            "urban-regeneration",
+            "taiwan"
+          ]
+        },
+        "locale": "zh-TW",
+        "translationOf": "post-usr-renewal"
+      }
+    ],
+    "ui_strings": [
+      {
+        "id": "ui:a11y-skip:en",
+        "slug": "a11y-skip",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "a11y.skip",
+          "text": "Skip to content"
+        }
+      },
+      {
+        "id": "ui:nav-main:en",
+        "slug": "nav-main",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.main",
+          "text": "Main"
+        }
+      },
+      {
+        "id": "ui:nav-mobile:en",
+        "slug": "nav-mobile",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.mobile",
+          "text": "Mobile navigation"
+        }
+      },
+      {
+        "id": "ui:nav-home:en",
+        "slug": "nav-home",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.home",
+          "text": "Home"
+        }
+      },
+      {
+        "id": "ui:nav-open-menu:en",
+        "slug": "nav-open-menu",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.openMenu",
+          "text": "Open navigation menu"
+        }
+      },
+      {
+        "id": "ui:nav-close-menu:en",
+        "slug": "nav-close-menu",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.closeMenu",
+          "text": "Close navigation menu"
+        }
+      },
+      {
+        "id": "ui:nav-admin:en",
+        "slug": "nav-admin",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.admin",
+          "text": "Admin"
+        }
+      },
+      {
+        "id": "ui:nav-admin-dashboard:en",
+        "slug": "nav-admin-dashboard",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "nav.adminDashboard",
+          "text": "Admin Dashboard"
+        }
+      },
+      {
+        "id": "ui:search-title:en",
+        "slug": "search-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.title",
+          "text": "Search"
+        }
+      },
+      {
+        "id": "ui:search-placeholder:en",
+        "slug": "search-placeholder",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.placeholder",
+          "text": "Search"
+        }
+      },
+      {
+        "id": "ui:search-mobile:en",
+        "slug": "search-mobile",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.mobile",
+          "text": "Search articles & pages..."
+        }
+      },
+      {
+        "id": "ui:search-mobile-label:en",
+        "slug": "search-mobile-label",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.mobileLabel",
+          "text": "Search posts and pages"
+        }
+      },
+      {
+        "id": "ui:search-heading:en",
+        "slug": "search-heading",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.heading",
+          "text": "What are you looking for?"
+        }
+      },
+      {
+        "id": "ui:search-form-label:en",
+        "slug": "search-form-label",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.formLabel",
+          "text": "Posts"
+        }
+      },
+      {
+        "id": "ui:search-input-label:en",
+        "slug": "search-input-label",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.inputLabel",
+          "text": "Search posts"
+        }
+      },
+      {
+        "id": "ui:search-input-placeholder:en",
+        "slug": "search-input-placeholder",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.inputPlaceholder",
+          "text": "Search posts"
+        }
+      },
+      {
+        "id": "ui:search-submit:en",
+        "slug": "search-submit",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.submit",
+          "text": "Search"
+        }
+      },
+      {
+        "id": "ui:search-description:en",
+        "slug": "search-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.description",
+          "text": "Search blog posts"
+        }
+      },
+      {
+        "id": "ui:search-title-with-query:en",
+        "slug": "search-title-with-query",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.titleWithQuery",
+          "text": "Search: {query}"
+        }
+      },
+      {
+        "id": "ui:search-hint:en",
+        "slug": "search-hint",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.hint",
+          "text": "Searches post titles and full text. Not sure where to start?"
+        }
+      },
+      {
+        "id": "ui:search-browse-all:en",
+        "slug": "search-browse-all",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.browseAll",
+          "text": "Browse all posts"
+        }
+      },
+      {
+        "id": "ui:search-summary-top:en",
+        "slug": "search-summary-top",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.summaryTop",
+          "text": "Top {count} results"
+        }
+      },
+      {
+        "id": "ui:search-summary-one:en",
+        "slug": "search-summary-one",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.summaryOne",
+          "text": "{count} result"
+        }
+      },
+      {
+        "id": "ui:search-summary-many:en",
+        "slug": "search-summary-many",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.summaryMany",
+          "text": "{count} results"
+        }
+      },
+      {
+        "id": "ui:search-for:en",
+        "slug": "search-for",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.for",
+          "text": "for “{query}”"
+        }
+      },
+      {
+        "id": "ui:search-no-results:en",
+        "slug": "search-no-results",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.noResults",
+          "text": "No results for “{query}”"
+        }
+      },
+      {
+        "id": "ui:search-no-results-text:en",
+        "slug": "search-no-results-text",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.noResultsText",
+          "text": "Check the spelling, try fewer or different words, or browse every post instead."
+        }
+      },
+      {
+        "id": "ui:search-or-search:en",
+        "slug": "search-or-search",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.orSearch",
+          "text": "Or search posts"
+        }
+      },
+      {
+        "id": "ui:search-loading:en",
+        "slug": "search-loading",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.loading",
+          "text": "Searching..."
+        }
+      },
+      {
+        "id": "ui:search-no-results-live:en",
+        "slug": "search-no-results-live",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "search.noResultsLive",
+          "text": "No results found"
+        }
+      },
+      {
+        "id": "ui:theme-appearance:en",
+        "slug": "theme-appearance",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "theme.appearance",
+          "text": "Appearance"
+        }
+      },
+      {
+        "id": "ui:theme-group:en",
+        "slug": "theme-group",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "theme.group",
+          "text": "Color theme"
+        }
+      },
+      {
+        "id": "ui:theme-light:en",
+        "slug": "theme-light",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "theme.light",
+          "text": "Light"
+        }
+      },
+      {
+        "id": "ui:theme-dark:en",
+        "slug": "theme-dark",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "theme.dark",
+          "text": "Dark"
+        }
+      },
+      {
+        "id": "ui:theme-system:en",
+        "slug": "theme-system",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "theme.system",
+          "text": "System"
+        }
+      },
+      {
+        "id": "ui:footer-navigate:en",
+        "slug": "footer-navigate",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "footer.navigate",
+          "text": "Navigate"
+        }
+      },
+      {
+        "id": "ui:footer-connect:en",
+        "slug": "footer-connect",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "footer.connect",
+          "text": "Connect"
+        }
+      },
+      {
+        "id": "ui:footer-rss:en",
+        "slug": "footer-rss",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "footer.rss",
+          "text": "RSS feed"
+        }
+      },
+      {
+        "id": "ui:footer-rights:en",
+        "slug": "footer-rights",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "footer.rights",
+          "text": "© {year} {title}. All rights reserved."
+        }
+      },
+      {
+        "id": "ui:lang-switch:en",
+        "slug": "lang-switch",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "lang.switch",
+          "text": "Language"
+        }
+      },
+      {
+        "id": "ui:posts-all:en",
+        "slug": "posts-all",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.all",
+          "text": "All posts"
+        }
+      },
+      {
+        "id": "ui:posts-all-title:en",
+        "slug": "posts-all-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.allTitle",
+          "text": "All Posts"
+        }
+      },
+      {
+        "id": "ui:posts-description:en",
+        "slug": "posts-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.description",
+          "text": "Browse all blog posts"
+        }
+      },
+      {
+        "id": "ui:posts-archive:en",
+        "slug": "posts-archive",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.archive",
+          "text": "Archive"
+        }
+      },
+      {
+        "id": "ui:posts-archive-lead:en",
+        "slug": "posts-archive-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.archiveLead",
+          "text": "Every post, newest first."
+        }
+      },
+      {
+        "id": "ui:posts-none:en",
+        "slug": "posts-none",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.none",
+          "text": "No posts yet"
+        }
+      },
+      {
+        "id": "ui:posts-none-text:en",
+        "slug": "posts-none-text",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.noneText",
+          "text": "Published posts will show up here."
+        }
+      },
+      {
+        "id": "ui:posts-no-more:en",
+        "slug": "posts-no-more",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.noMore",
+          "text": "No more posts"
+        }
+      },
+      {
+        "id": "ui:posts-no-more-text:en",
+        "slug": "posts-no-more-text",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.noMoreText",
+          "text": "You have reached the end of the archive."
+        }
+      },
+      {
+        "id": "ui:posts-first-page:en",
+        "slug": "posts-first-page",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.firstPage",
+          "text": "First page"
+        }
+      },
+      {
+        "id": "ui:posts-untitled:en",
+        "slug": "posts-untitled",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.untitled",
+          "text": "Untitled"
+        }
+      },
+      {
+        "id": "ui:posts-read-article:en",
+        "slug": "posts-read-article",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.readArticle",
+          "text": "Read article"
+        }
+      },
+      {
+        "id": "ui:posts-continue:en",
+        "slug": "posts-continue",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.continue",
+          "text": "Continue reading"
+        }
+      },
+      {
+        "id": "ui:posts-tags:en",
+        "slug": "posts-tags",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.tags",
+          "text": "Tags"
+        }
+      },
+      {
+        "id": "ui:posts-author:en",
+        "slug": "posts-author",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.author",
+          "text": "Author"
+        }
+      },
+      {
+        "id": "ui:posts-authors:en",
+        "slug": "posts-authors",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.authors",
+          "text": "Authors"
+        }
+      },
+      {
+        "id": "ui:posts-published:en",
+        "slug": "posts-published",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.published",
+          "text": "Published"
+        }
+      },
+      {
+        "id": "ui:posts-reading-time:en",
+        "slug": "posts-reading-time",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.readingTime",
+          "text": "Reading time"
+        }
+      },
+      {
+        "id": "ui:posts-reading-time-value:en",
+        "slug": "posts-reading-time-value",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.readingTimeValue",
+          "text": "{minutes} min"
+        }
+      },
+      {
+        "id": "ui:posts-read-minutes:en",
+        "slug": "posts-read-minutes",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.readMinutes",
+          "text": "{minutes} min read"
+        }
+      },
+      {
+        "id": "ui:posts-discussion:en",
+        "slug": "posts-discussion",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.discussion",
+          "text": "Discussion"
+        }
+      },
+      {
+        "id": "ui:posts-toc:en",
+        "slug": "posts-toc",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.toc",
+          "text": "On this page"
+        }
+      },
+      {
+        "id": "ui:posts-more-from-blog:en",
+        "slug": "posts-more-from-blog",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.moreFromBlog",
+          "text": "More from the blog"
+        }
+      },
+      {
+        "id": "ui:posts-none-related:en",
+        "slug": "posts-none-related",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "posts.noneRelated",
+          "text": "No articles found."
+        }
+      },
+      {
+        "id": "ui:byline-and:en",
+        "slug": "byline-and",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "byline.and",
+          "text": " and "
+        }
+      },
+      {
+        "id": "ui:byline-sep:en",
+        "slug": "byline-sep",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "byline.sep",
+          "text": ", "
+        }
+      },
+      {
+        "id": "ui:byline-and-sr:en",
+        "slug": "byline-and-sr",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "byline.andSr",
+          "text": "and {names}"
+        }
+      },
+      {
+        "id": "ui:pager-label:en",
+        "slug": "pager-label",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "pager.label",
+          "text": "Pagination"
+        }
+      },
+      {
+        "id": "ui:pager-first:en",
+        "slug": "pager-first",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "pager.first",
+          "text": "First page"
+        }
+      },
+      {
+        "id": "ui:pager-next:en",
+        "slug": "pager-next",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "pager.next",
+          "text": "Next page"
+        }
+      },
+      {
+        "id": "ui:pager-first-back:en",
+        "slug": "pager-first-back",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "pager.firstBack",
+          "text": "Back to the first page"
+        }
+      },
+      {
+        "id": "ui:pager-past-last:en",
+        "slug": "pager-past-last",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "pager.pastLast",
+          "text": "This page is past the last post."
+        }
+      },
+      {
+        "id": "ui:category-eyebrow:en",
+        "slug": "category-eyebrow",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "category.eyebrow",
+          "text": "Category"
+        }
+      },
+      {
+        "id": "ui:category-title:en",
+        "slug": "category-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "category.title",
+          "text": "{label} posts"
+        }
+      },
+      {
+        "id": "ui:category-description:en",
+        "slug": "category-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "category.description",
+          "text": "All posts in {label}"
+        }
+      },
+      {
+        "id": "ui:category-lead:en",
+        "slug": "category-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "category.lead",
+          "text": "Posts filed under {label}, newest first."
+        }
+      },
+      {
+        "id": "ui:category-empty:en",
+        "slug": "category-empty",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "category.empty",
+          "text": "No posts have been filed under {label} so far."
+        }
+      },
+      {
+        "id": "ui:tag-eyebrow:en",
+        "slug": "tag-eyebrow",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "tag.eyebrow",
+          "text": "Tag"
+        }
+      },
+      {
+        "id": "ui:tag-title:en",
+        "slug": "tag-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "tag.title",
+          "text": "Posts tagged “{label}”"
+        }
+      },
+      {
+        "id": "ui:tag-description:en",
+        "slug": "tag-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "tag.description",
+          "text": "All posts tagged with {label}"
+        }
+      },
+      {
+        "id": "ui:tag-lead:en",
+        "slug": "tag-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "tag.lead",
+          "text": "Posts tagged {label}, newest first."
+        }
+      },
+      {
+        "id": "ui:tag-empty:en",
+        "slug": "tag-empty",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "tag.empty",
+          "text": "No posts have been tagged {label} so far."
+        }
+      },
+      {
+        "id": "ui:archive-nothing-yet:en",
+        "slug": "archive-nothing-yet",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "archive.nothingYet",
+          "text": "Nothing here yet"
+        }
+      },
+      {
+        "id": "ui:not-found-title:en",
+        "slug": "not-found-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "notFound.title",
+          "text": "Page not found"
+        }
+      },
+      {
+        "id": "ui:not-found-code:en",
+        "slug": "not-found-code",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "notFound.code",
+          "text": "Error 404"
+        }
+      },
+      {
+        "id": "ui:not-found-text:en",
+        "slug": "not-found-text",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "notFound.text",
+          "text": "The page you’re looking for doesn’t exist or may have moved."
+        }
+      },
+      {
+        "id": "ui:not-found-home:en",
+        "slug": "not-found-home",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "notFound.home",
+          "text": "Go home"
+        }
+      },
+      {
+        "id": "ui:not-found-browse:en",
+        "slug": "not-found-browse",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "notFound.browse",
+          "text": "Browse posts"
+        }
+      },
+      {
+        "id": "ui:page-home:en",
+        "slug": "page-home",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "page.home",
+          "text": "Home"
+        }
+      },
+      {
+        "id": "ui:rss-description:en",
+        "slug": "rss-description",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "rss.description",
+          "text": "Latest posts"
+        }
+      },
+      {
+        "id": "ui:blocks-recent-eyebrow:en",
+        "slug": "blocks-recent-eyebrow",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.recentEyebrow",
+          "text": "Urban Insights & Case Studies"
+        }
+      },
+      {
+        "id": "ui:blocks-recent-title:en",
+        "slug": "blocks-recent-title",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.recentTitle",
+          "text": "Articles & Publications"
+        }
+      },
+      {
+        "id": "ui:blocks-recent-lead:en",
+        "slug": "blocks-recent-lead",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.recentLead",
+          "text": "In-depth observations on transit hubs, public housing models, green infrastructure, and community co-creation."
+        }
+      },
+      {
+        "id": "ui:blocks-recent-action:en",
+        "slug": "blocks-recent-action",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.recentAction",
+          "text": "View all articles"
+        }
+      },
+      {
+        "id": "ui:blocks-card-link:en",
+        "slug": "blocks-card-link",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.cardLink",
+          "text": "Explore →"
+        }
+      },
+      {
+        "id": "ui:widgets-no-categories:en",
+        "slug": "widgets-no-categories",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "widgets.noCategories",
+          "text": "No categories yet"
+        }
+      },
+      {
+        "id": "ui:widgets-no-tags:en",
+        "slug": "widgets-no-tags",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "widgets.noTags",
+          "text": "No tags yet"
+        }
+      },
+      {
+        "id": "ui:widgets-search-placeholder:en",
+        "slug": "widgets-search-placeholder",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "widgets.searchPlaceholder",
+          "text": "Search..."
+        }
+      },
+      {
+        "id": "ui:comments-none:en",
+        "slug": "comments-none",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.none",
+          "text": "No comments yet"
+        }
+      },
+      {
+        "id": "ui:comments-one:en",
+        "slug": "comments-one",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.one",
+          "text": "1 Comment"
+        }
+      },
+      {
+        "id": "ui:comments-many:en",
+        "slug": "comments-many",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.many",
+          "text": "{count} Comments"
+        }
+      },
+      {
+        "id": "ui:comments-member:en",
+        "slug": "comments-member",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.member",
+          "text": "Site member"
+        }
+      },
+      {
+        "id": "ui:comments-like:en",
+        "slug": "comments-like",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.like",
+          "text": "Like"
+        }
+      },
+      {
+        "id": "ui:comments-name:en",
+        "slug": "comments-name",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.name",
+          "text": "Name"
+        }
+      },
+      {
+        "id": "ui:comments-email:en",
+        "slug": "comments-email",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.email",
+          "text": "Email"
+        }
+      },
+      {
+        "id": "ui:comments-comment:en",
+        "slug": "comments-comment",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.comment",
+          "text": "Comment"
+        }
+      },
+      {
+        "id": "ui:comments-submit:en",
+        "slug": "comments-submit",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.submit",
+          "text": "Post Comment"
+        }
+      },
+      {
+        "id": "ui:comments-submitting:en",
+        "slug": "comments-submitting",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.submitting",
+          "text": "Submitting..."
+        }
+      },
+      {
+        "id": "ui:comments-published:en",
+        "slug": "comments-published",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.published",
+          "text": "Comment published"
+        }
+      },
+      {
+        "id": "ui:comments-pending:en",
+        "slug": "comments-pending",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.pending",
+          "text": "Comment submitted for review"
+        }
+      },
+      {
+        "id": "ui:comments-network-error:en",
+        "slug": "comments-network-error",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "comments.networkError",
+          "text": "Network error. Please try again."
+        }
+      },
+      {
+        "id": "ui:site-title:zh-TW",
+        "slug": "site-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "site.title (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "林育慈"
+        }
+      },
+      {
+        "id": "ui:site-tagline:zh-TW",
+        "slug": "site-tagline",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "site.tagline (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "都市規劃師 · 教育者 · 研究者"
+        }
+      },
+      {
+        "id": "ui:a11y-skip:zh-TW",
+        "slug": "a11y-skip",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "a11y.skip",
+          "text": "跳至主要內容"
+        },
+        "translationOf": "ui:a11y-skip:en"
+      },
+      {
+        "id": "ui:nav-main:zh-TW",
+        "slug": "nav-main",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.main",
+          "text": "主選單"
+        },
+        "translationOf": "ui:nav-main:en"
+      },
+      {
+        "id": "ui:nav-mobile:zh-TW",
+        "slug": "nav-mobile",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.mobile",
+          "text": "行動版選單"
+        },
+        "translationOf": "ui:nav-mobile:en"
+      },
+      {
+        "id": "ui:nav-home:zh-TW",
+        "slug": "nav-home",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.home",
+          "text": "首頁"
+        },
+        "translationOf": "ui:nav-home:en"
+      },
+      {
+        "id": "ui:nav-open-menu:zh-TW",
+        "slug": "nav-open-menu",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.openMenu",
+          "text": "開啟選單"
+        },
+        "translationOf": "ui:nav-open-menu:en"
+      },
+      {
+        "id": "ui:nav-close-menu:zh-TW",
+        "slug": "nav-close-menu",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.closeMenu",
+          "text": "關閉選單"
+        },
+        "translationOf": "ui:nav-close-menu:en"
+      },
+      {
+        "id": "ui:nav-admin:zh-TW",
+        "slug": "nav-admin",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.admin",
+          "text": "管理後台"
+        },
+        "translationOf": "ui:nav-admin:en"
+      },
+      {
+        "id": "ui:nav-admin-dashboard:zh-TW",
+        "slug": "nav-admin-dashboard",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "nav.adminDashboard",
+          "text": "管理後台"
+        },
+        "translationOf": "ui:nav-admin-dashboard:en"
+      },
+      {
+        "id": "ui:search-title:zh-TW",
+        "slug": "search-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.title",
+          "text": "搜尋"
+        },
+        "translationOf": "ui:search-title:en"
+      },
+      {
+        "id": "ui:search-placeholder:zh-TW",
+        "slug": "search-placeholder",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.placeholder",
+          "text": "搜尋"
+        },
+        "translationOf": "ui:search-placeholder:en"
+      },
+      {
+        "id": "ui:search-mobile:zh-TW",
+        "slug": "search-mobile",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.mobile",
+          "text": "搜尋文章與頁面⋯"
+        },
+        "translationOf": "ui:search-mobile:en"
+      },
+      {
+        "id": "ui:search-mobile-label:zh-TW",
+        "slug": "search-mobile-label",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.mobileLabel",
+          "text": "搜尋文章與頁面"
+        },
+        "translationOf": "ui:search-mobile-label:en"
+      },
+      {
+        "id": "ui:search-heading:zh-TW",
+        "slug": "search-heading",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.heading",
+          "text": "想找什麼內容？"
+        },
+        "translationOf": "ui:search-heading:en"
+      },
+      {
+        "id": "ui:search-form-label:zh-TW",
+        "slug": "search-form-label",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.formLabel",
+          "text": "文章"
+        },
+        "translationOf": "ui:search-form-label:en"
+      },
+      {
+        "id": "ui:search-input-label:zh-TW",
+        "slug": "search-input-label",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.inputLabel",
+          "text": "搜尋文章"
+        },
+        "translationOf": "ui:search-input-label:en"
+      },
+      {
+        "id": "ui:search-input-placeholder:zh-TW",
+        "slug": "search-input-placeholder",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.inputPlaceholder",
+          "text": "搜尋文章"
+        },
+        "translationOf": "ui:search-input-placeholder:en"
+      },
+      {
+        "id": "ui:search-submit:zh-TW",
+        "slug": "search-submit",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.submit",
+          "text": "搜尋"
+        },
+        "translationOf": "ui:search-submit:en"
+      },
+      {
+        "id": "ui:search-description:zh-TW",
+        "slug": "search-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.description",
+          "text": "搜尋部落格文章"
+        },
+        "translationOf": "ui:search-description:en"
+      },
+      {
+        "id": "ui:search-title-with-query:zh-TW",
+        "slug": "search-title-with-query",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.titleWithQuery",
+          "text": "搜尋：{query}"
+        },
+        "translationOf": "ui:search-title-with-query:en"
+      },
+      {
+        "id": "ui:search-hint:zh-TW",
+        "slug": "search-hint",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.hint",
+          "text": "可搜尋文章標題與全文。不知從何開始？"
+        },
+        "translationOf": "ui:search-hint:en"
+      },
+      {
+        "id": "ui:search-browse-all:zh-TW",
+        "slug": "search-browse-all",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.browseAll",
+          "text": "瀏覽所有文章"
+        },
+        "translationOf": "ui:search-browse-all:en"
+      },
+      {
+        "id": "ui:search-summary-top:zh-TW",
+        "slug": "search-summary-top",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.summaryTop",
+          "text": "前 {count} 筆結果"
+        },
+        "translationOf": "ui:search-summary-top:en"
+      },
+      {
+        "id": "ui:search-summary-one:zh-TW",
+        "slug": "search-summary-one",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.summaryOne",
+          "text": "{count} 筆結果"
+        },
+        "translationOf": "ui:search-summary-one:en"
+      },
+      {
+        "id": "ui:search-summary-many:zh-TW",
+        "slug": "search-summary-many",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.summaryMany",
+          "text": "{count} 筆結果"
+        },
+        "translationOf": "ui:search-summary-many:en"
+      },
+      {
+        "id": "ui:search-for:zh-TW",
+        "slug": "search-for",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.for",
+          "text": "關鍵字「{query}」"
+        },
+        "translationOf": "ui:search-for:en"
+      },
+      {
+        "id": "ui:search-no-results:zh-TW",
+        "slug": "search-no-results",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.noResults",
+          "text": "找不到「{query}」的相關結果"
+        },
+        "translationOf": "ui:search-no-results:en"
+      },
+      {
+        "id": "ui:search-no-results-text:zh-TW",
+        "slug": "search-no-results-text",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.noResultsText",
+          "text": "請檢查拼字、改用較少或不同的關鍵字，或直接瀏覽所有文章。"
+        },
+        "translationOf": "ui:search-no-results-text:en"
+      },
+      {
+        "id": "ui:search-or-search:zh-TW",
+        "slug": "search-or-search",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.orSearch",
+          "text": "或搜尋文章"
+        },
+        "translationOf": "ui:search-or-search:en"
+      },
+      {
+        "id": "ui:search-loading:zh-TW",
+        "slug": "search-loading",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.loading",
+          "text": "搜尋中⋯"
+        },
+        "translationOf": "ui:search-loading:en"
+      },
+      {
+        "id": "ui:search-no-results-live:zh-TW",
+        "slug": "search-no-results-live",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "search.noResultsLive",
+          "text": "找不到結果"
+        },
+        "translationOf": "ui:search-no-results-live:en"
+      },
+      {
+        "id": "ui:theme-appearance:zh-TW",
+        "slug": "theme-appearance",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "theme.appearance",
+          "text": "外觀"
+        },
+        "translationOf": "ui:theme-appearance:en"
+      },
+      {
+        "id": "ui:theme-group:zh-TW",
+        "slug": "theme-group",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "theme.group",
+          "text": "色彩主題"
+        },
+        "translationOf": "ui:theme-group:en"
+      },
+      {
+        "id": "ui:theme-light:zh-TW",
+        "slug": "theme-light",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "theme.light",
+          "text": "淺色"
+        },
+        "translationOf": "ui:theme-light:en"
+      },
+      {
+        "id": "ui:theme-dark:zh-TW",
+        "slug": "theme-dark",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "theme.dark",
+          "text": "深色"
+        },
+        "translationOf": "ui:theme-dark:en"
+      },
+      {
+        "id": "ui:theme-system:zh-TW",
+        "slug": "theme-system",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "theme.system",
+          "text": "跟隨系統"
+        },
+        "translationOf": "ui:theme-system:en"
+      },
+      {
+        "id": "ui:footer-navigate:zh-TW",
+        "slug": "footer-navigate",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "footer.navigate",
+          "text": "網站導覽"
+        },
+        "translationOf": "ui:footer-navigate:en"
+      },
+      {
+        "id": "ui:footer-connect:zh-TW",
+        "slug": "footer-connect",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "footer.connect",
+          "text": "關注"
+        },
+        "translationOf": "ui:footer-connect:en"
+      },
+      {
+        "id": "ui:footer-rss:zh-TW",
+        "slug": "footer-rss",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "footer.rss",
+          "text": "RSS 訂閱"
+        },
+        "translationOf": "ui:footer-rss:en"
+      },
+      {
+        "id": "ui:footer-rights:zh-TW",
+        "slug": "footer-rights",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "footer.rights",
+          "text": "© {year} {title}。版權所有。"
+        },
+        "translationOf": "ui:footer-rights:en"
+      },
+      {
+        "id": "ui:lang-switch:zh-TW",
+        "slug": "lang-switch",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "lang.switch",
+          "text": "語言"
+        },
+        "translationOf": "ui:lang-switch:en"
+      },
+      {
+        "id": "ui:posts-all:zh-TW",
+        "slug": "posts-all",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.all",
+          "text": "所有文章"
+        },
+        "translationOf": "ui:posts-all:en"
+      },
+      {
+        "id": "ui:posts-all-title:zh-TW",
+        "slug": "posts-all-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.allTitle",
+          "text": "所有文章"
+        },
+        "translationOf": "ui:posts-all-title:en"
+      },
+      {
+        "id": "ui:posts-description:zh-TW",
+        "slug": "posts-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.description",
+          "text": "瀏覽所有部落格文章"
+        },
+        "translationOf": "ui:posts-description:en"
+      },
+      {
+        "id": "ui:posts-archive:zh-TW",
+        "slug": "posts-archive",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.archive",
+          "text": "文章列表"
+        },
+        "translationOf": "ui:posts-archive:en"
+      },
+      {
+        "id": "ui:posts-archive-lead:zh-TW",
+        "slug": "posts-archive-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.archiveLead",
+          "text": "所有文章，由新到舊。"
+        },
+        "translationOf": "ui:posts-archive-lead:en"
+      },
+      {
+        "id": "ui:posts-none:zh-TW",
+        "slug": "posts-none",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.none",
+          "text": "尚無文章"
+        },
+        "translationOf": "ui:posts-none:en"
+      },
+      {
+        "id": "ui:posts-none-text:zh-TW",
+        "slug": "posts-none-text",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.noneText",
+          "text": "發布後的文章會顯示在這裡。"
+        },
+        "translationOf": "ui:posts-none-text:en"
+      },
+      {
+        "id": "ui:posts-no-more:zh-TW",
+        "slug": "posts-no-more",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.noMore",
+          "text": "沒有更多文章"
+        },
+        "translationOf": "ui:posts-no-more:en"
+      },
+      {
+        "id": "ui:posts-no-more-text:zh-TW",
+        "slug": "posts-no-more-text",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.noMoreText",
+          "text": "已經到達文章列表的盡頭。"
+        },
+        "translationOf": "ui:posts-no-more-text:en"
+      },
+      {
+        "id": "ui:posts-first-page:zh-TW",
+        "slug": "posts-first-page",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.firstPage",
+          "text": "第一頁"
+        },
+        "translationOf": "ui:posts-first-page:en"
+      },
+      {
+        "id": "ui:posts-untitled:zh-TW",
+        "slug": "posts-untitled",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.untitled",
+          "text": "未命名"
+        },
+        "translationOf": "ui:posts-untitled:en"
+      },
+      {
+        "id": "ui:posts-read-article:zh-TW",
+        "slug": "posts-read-article",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.readArticle",
+          "text": "閱讀全文"
+        },
+        "translationOf": "ui:posts-read-article:en"
+      },
+      {
+        "id": "ui:posts-continue:zh-TW",
+        "slug": "posts-continue",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.continue",
+          "text": "繼續閱讀"
+        },
+        "translationOf": "ui:posts-continue:en"
+      },
+      {
+        "id": "ui:posts-tags:zh-TW",
+        "slug": "posts-tags",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.tags",
+          "text": "標籤"
+        },
+        "translationOf": "ui:posts-tags:en"
+      },
+      {
+        "id": "ui:posts-author:zh-TW",
+        "slug": "posts-author",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.author",
+          "text": "作者"
+        },
+        "translationOf": "ui:posts-author:en"
+      },
+      {
+        "id": "ui:posts-authors:zh-TW",
+        "slug": "posts-authors",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.authors",
+          "text": "作者"
+        },
+        "translationOf": "ui:posts-authors:en"
+      },
+      {
+        "id": "ui:posts-published:zh-TW",
+        "slug": "posts-published",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.published",
+          "text": "發布日期"
+        },
+        "translationOf": "ui:posts-published:en"
+      },
+      {
+        "id": "ui:posts-reading-time:zh-TW",
+        "slug": "posts-reading-time",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.readingTime",
+          "text": "閱讀時間"
+        },
+        "translationOf": "ui:posts-reading-time:en"
+      },
+      {
+        "id": "ui:posts-reading-time-value:zh-TW",
+        "slug": "posts-reading-time-value",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.readingTimeValue",
+          "text": "{minutes} 分鐘"
+        },
+        "translationOf": "ui:posts-reading-time-value:en"
+      },
+      {
+        "id": "ui:posts-read-minutes:zh-TW",
+        "slug": "posts-read-minutes",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.readMinutes",
+          "text": "閱讀約 {minutes} 分鐘"
+        },
+        "translationOf": "ui:posts-read-minutes:en"
+      },
+      {
+        "id": "ui:posts-discussion:zh-TW",
+        "slug": "posts-discussion",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.discussion",
+          "text": "討論"
+        },
+        "translationOf": "ui:posts-discussion:en"
+      },
+      {
+        "id": "ui:posts-toc:zh-TW",
+        "slug": "posts-toc",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.toc",
+          "text": "本頁內容"
+        },
+        "translationOf": "ui:posts-toc:en"
+      },
+      {
+        "id": "ui:posts-more-from-blog:zh-TW",
+        "slug": "posts-more-from-blog",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.moreFromBlog",
+          "text": "更多內容"
+        },
+        "translationOf": "ui:posts-more-from-blog:en"
+      },
+      {
+        "id": "ui:posts-none-related:zh-TW",
+        "slug": "posts-none-related",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "posts.noneRelated",
+          "text": "目前尚無相關文章。"
+        },
+        "translationOf": "ui:posts-none-related:en"
+      },
+      {
+        "id": "ui:byline-and:zh-TW",
+        "slug": "byline-and",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "byline.and",
+          "text": "與"
+        },
+        "translationOf": "ui:byline-and:en"
+      },
+      {
+        "id": "ui:byline-sep:zh-TW",
+        "slug": "byline-sep",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "byline.sep",
+          "text": "、"
+        },
+        "translationOf": "ui:byline-sep:en"
+      },
+      {
+        "id": "ui:byline-and-sr:zh-TW",
+        "slug": "byline-and-sr",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "byline.andSr",
+          "text": "與 {names}"
+        },
+        "translationOf": "ui:byline-and-sr:en"
+      },
+      {
+        "id": "ui:pager-label:zh-TW",
+        "slug": "pager-label",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "pager.label",
+          "text": "分頁"
+        },
+        "translationOf": "ui:pager-label:en"
+      },
+      {
+        "id": "ui:pager-first:zh-TW",
+        "slug": "pager-first",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "pager.first",
+          "text": "第一頁"
+        },
+        "translationOf": "ui:pager-first:en"
+      },
+      {
+        "id": "ui:pager-next:zh-TW",
+        "slug": "pager-next",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "pager.next",
+          "text": "下一頁"
+        },
+        "translationOf": "ui:pager-next:en"
+      },
+      {
+        "id": "ui:pager-first-back:zh-TW",
+        "slug": "pager-first-back",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "pager.firstBack",
+          "text": "回到第一頁"
+        },
+        "translationOf": "ui:pager-first-back:en"
+      },
+      {
+        "id": "ui:pager-past-last:zh-TW",
+        "slug": "pager-past-last",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "pager.pastLast",
+          "text": "此頁已超出最後一篇文章。"
+        },
+        "translationOf": "ui:pager-past-last:en"
+      },
+      {
+        "id": "ui:category-eyebrow:zh-TW",
+        "slug": "category-eyebrow",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "category.eyebrow",
+          "text": "分類"
+        },
+        "translationOf": "ui:category-eyebrow:en"
+      },
+      {
+        "id": "ui:category-title:zh-TW",
+        "slug": "category-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "category.title",
+          "text": "{label} 文章"
+        },
+        "translationOf": "ui:category-title:en"
+      },
+      {
+        "id": "ui:category-description:zh-TW",
+        "slug": "category-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "category.description",
+          "text": "「{label}」分類下的所有文章"
+        },
+        "translationOf": "ui:category-description:en"
+      },
+      {
+        "id": "ui:category-lead:zh-TW",
+        "slug": "category-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "category.lead",
+          "text": "歸類於「{label}」的文章，由新到舊。"
+        },
+        "translationOf": "ui:category-lead:en"
+      },
+      {
+        "id": "ui:category-empty:zh-TW",
+        "slug": "category-empty",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "category.empty",
+          "text": "「{label}」分類下目前尚無文章。"
+        },
+        "translationOf": "ui:category-empty:en"
+      },
+      {
+        "id": "ui:tag-eyebrow:zh-TW",
+        "slug": "tag-eyebrow",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "tag.eyebrow",
+          "text": "標籤"
+        },
+        "translationOf": "ui:tag-eyebrow:en"
+      },
+      {
+        "id": "ui:tag-title:zh-TW",
+        "slug": "tag-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "tag.title",
+          "text": "標籤「{label}」的文章"
+        },
+        "translationOf": "ui:tag-title:en"
+      },
+      {
+        "id": "ui:tag-description:zh-TW",
+        "slug": "tag-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "tag.description",
+          "text": "所有標記「{label}」的文章"
+        },
+        "translationOf": "ui:tag-description:en"
+      },
+      {
+        "id": "ui:tag-lead:zh-TW",
+        "slug": "tag-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "tag.lead",
+          "text": "標記「{label}」的文章，由新到舊。"
+        },
+        "translationOf": "ui:tag-lead:en"
+      },
+      {
+        "id": "ui:tag-empty:zh-TW",
+        "slug": "tag-empty",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "tag.empty",
+          "text": "目前尚無標記「{label}」的文章。"
+        },
+        "translationOf": "ui:tag-empty:en"
+      },
+      {
+        "id": "ui:archive-nothing-yet:zh-TW",
+        "slug": "archive-nothing-yet",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "archive.nothingYet",
+          "text": "目前還沒有內容"
+        },
+        "translationOf": "ui:archive-nothing-yet:en"
+      },
+      {
+        "id": "ui:not-found-title:zh-TW",
+        "slug": "not-found-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "notFound.title",
+          "text": "找不到頁面"
+        },
+        "translationOf": "ui:not-found-title:en"
+      },
+      {
+        "id": "ui:not-found-code:zh-TW",
+        "slug": "not-found-code",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "notFound.code",
+          "text": "錯誤 404"
+        },
+        "translationOf": "ui:not-found-code:en"
+      },
+      {
+        "id": "ui:not-found-text:zh-TW",
+        "slug": "not-found-text",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "notFound.text",
+          "text": "您要找的頁面不存在，或已經移動。"
+        },
+        "translationOf": "ui:not-found-text:en"
+      },
+      {
+        "id": "ui:not-found-home:zh-TW",
+        "slug": "not-found-home",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "notFound.home",
+          "text": "回到首頁"
+        },
+        "translationOf": "ui:not-found-home:en"
+      },
+      {
+        "id": "ui:not-found-browse:zh-TW",
+        "slug": "not-found-browse",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "notFound.browse",
+          "text": "瀏覽文章"
+        },
+        "translationOf": "ui:not-found-browse:en"
+      },
+      {
+        "id": "ui:page-home:zh-TW",
+        "slug": "page-home",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "page.home",
+          "text": "首頁"
+        },
+        "translationOf": "ui:page-home:en"
+      },
+      {
+        "id": "ui:rss-description:zh-TW",
+        "slug": "rss-description",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "rss.description",
+          "text": "最新文章"
+        },
+        "translationOf": "ui:rss-description:en"
+      },
+      {
+        "id": "ui:blocks-recent-eyebrow:zh-TW",
+        "slug": "blocks-recent-eyebrow",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.recentEyebrow",
+          "text": "城市觀察與案例研究"
+        },
+        "translationOf": "ui:blocks-recent-eyebrow:en"
+      },
+      {
+        "id": "ui:blocks-recent-title:zh-TW",
+        "slug": "blocks-recent-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.recentTitle",
+          "text": "文章與出版"
+        },
+        "translationOf": "ui:blocks-recent-title:en"
+      },
+      {
+        "id": "ui:blocks-recent-lead:zh-TW",
+        "slug": "blocks-recent-lead",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.recentLead",
+          "text": "深入觀察交通樞紐、公共住宅模式、綠色基盤設施與社區共創。"
+        },
+        "translationOf": "ui:blocks-recent-lead:en"
+      },
+      {
+        "id": "ui:blocks-recent-action:zh-TW",
+        "slug": "blocks-recent-action",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.recentAction",
+          "text": "查看所有文章"
+        },
+        "translationOf": "ui:blocks-recent-action:en"
+      },
+      {
+        "id": "ui:blocks-card-link:zh-TW",
+        "slug": "blocks-card-link",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.cardLink",
+          "text": "了解更多 →"
+        },
+        "translationOf": "ui:blocks-card-link:en"
+      },
+      {
+        "id": "ui:widgets-search:zh-TW",
+        "slug": "widgets-search",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.search (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "搜尋"
+        }
+      },
+      {
+        "id": "ui:widgets-categories:zh-TW",
+        "slug": "widgets-categories",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.categories (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "分類"
+        }
+      },
+      {
+        "id": "ui:widgets-tags:zh-TW",
+        "slug": "widgets-tags",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.tags (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "標籤"
+        }
+      },
+      {
+        "id": "ui:widgets-recent-posts:zh-TW",
+        "slug": "widgets-recent-posts",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.recentPosts (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "近期文章"
+        }
+      },
+      {
+        "id": "ui:widgets-no-categories:zh-TW",
+        "slug": "widgets-no-categories",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.noCategories",
+          "text": "尚無分類"
+        },
+        "translationOf": "ui:widgets-no-categories:en"
+      },
+      {
+        "id": "ui:widgets-no-tags:zh-TW",
+        "slug": "widgets-no-tags",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.noTags",
+          "text": "尚無標籤"
+        },
+        "translationOf": "ui:widgets-no-tags:en"
+      },
+      {
+        "id": "ui:widgets-search-placeholder:zh-TW",
+        "slug": "widgets-search-placeholder",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.searchPlaceholder",
+          "text": "搜尋⋯"
+        },
+        "translationOf": "ui:widgets-search-placeholder:en"
+      },
+      {
+        "id": "ui:widgets-about-title:zh-TW",
+        "slug": "widgets-about-title",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.aboutTitle (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "關於林育慈"
+        }
+      },
+      {
+        "id": "ui:widgets-about-text1:zh-TW",
+        "slug": "widgets-about-text1",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.aboutText1 (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "串連臺灣、荷蘭與歐洲城市，結合都市規劃研究、專業實務與教育。"
+        }
+      },
+      {
+        "id": "ui:widgets-about-text2:zh-TW",
+        "slug": "widgets-about-text2",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "widgets.aboutText2 (zh-TW only; English is edited in Settings / Widgets)",
+          "text": "都市再生 · 氣候韌性 · 社會住宅 · 生成式 AI 輔助社區規劃"
+        }
+      },
+      {
+        "id": "ui:comments-none:zh-TW",
+        "slug": "comments-none",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.none",
+          "text": "目前尚無留言"
+        },
+        "translationOf": "ui:comments-none:en"
+      },
+      {
+        "id": "ui:comments-one:zh-TW",
+        "slug": "comments-one",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.one",
+          "text": "1 則留言"
+        },
+        "translationOf": "ui:comments-one:en"
+      },
+      {
+        "id": "ui:comments-many:zh-TW",
+        "slug": "comments-many",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.many",
+          "text": "{count} 則留言"
+        },
+        "translationOf": "ui:comments-many:en"
+      },
+      {
+        "id": "ui:comments-member:zh-TW",
+        "slug": "comments-member",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.member",
+          "text": "站內會員"
+        },
+        "translationOf": "ui:comments-member:en"
+      },
+      {
+        "id": "ui:comments-like:zh-TW",
+        "slug": "comments-like",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.like",
+          "text": "讚"
+        },
+        "translationOf": "ui:comments-like:en"
+      },
+      {
+        "id": "ui:comments-name:zh-TW",
+        "slug": "comments-name",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.name",
+          "text": "姓名"
+        },
+        "translationOf": "ui:comments-name:en"
+      },
+      {
+        "id": "ui:comments-email:zh-TW",
+        "slug": "comments-email",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.email",
+          "text": "電子郵件"
+        },
+        "translationOf": "ui:comments-email:en"
+      },
+      {
+        "id": "ui:comments-comment:zh-TW",
+        "slug": "comments-comment",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.comment",
+          "text": "留言內容"
+        },
+        "translationOf": "ui:comments-comment:en"
+      },
+      {
+        "id": "ui:comments-submit:zh-TW",
+        "slug": "comments-submit",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.submit",
+          "text": "送出留言"
+        },
+        "translationOf": "ui:comments-submit:en"
+      },
+      {
+        "id": "ui:comments-submitting:zh-TW",
+        "slug": "comments-submitting",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.submitting",
+          "text": "送出中⋯"
+        },
+        "translationOf": "ui:comments-submitting:en"
+      },
+      {
+        "id": "ui:comments-published:zh-TW",
+        "slug": "comments-published",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.published",
+          "text": "留言已發布"
+        },
+        "translationOf": "ui:comments-published:en"
+      },
+      {
+        "id": "ui:comments-pending:zh-TW",
+        "slug": "comments-pending",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.pending",
+          "text": "留言已送出，等待審核"
+        },
+        "translationOf": "ui:comments-pending:en"
+      },
+      {
+        "id": "ui:comments-network-error:zh-TW",
+        "slug": "comments-network-error",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "comments.networkError",
+          "text": "網路錯誤，請稍後再試。"
+        },
+        "translationOf": "ui:comments-network-error:en"
+      }
+    ]
+  },
+  "blockTypes": [
+    {
+      "slug": "page_hero",
+      "label": "Page Hero 頁面橫幅",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "eyebrow",
+              "label": "小標題 / 分類 (Eyebrow)",
+              "type": "string"
+            },
+            {
+              "slug": "title",
+              "label": "主標題 (Title)",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "lead",
+              "label": "引言描述 (Lead Text)",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "contact_cards",
+      "label": "Contact Cards 聯絡與檔案卡片",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "items",
+              "label": "聯絡項目 (Contact Items)",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "label",
+                    "label": "標籤 (Label)",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "value",
+                    "label": "內容 (Value)",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "link",
+                    "label": "連結 (Link/Mailto)",
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "slug": "cv_title",
+              "label": "CV 區塊標題",
+              "type": "string"
+            },
+            {
+              "slug": "cv_description",
+              "label": "CV 與檔案說明",
+              "type": "text"
+            },
+            {
+              "slug": "cv_note",
+              "label": "註記補充 (Note)",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "feature_cards",
+      "label": "Feature Cards 特色探索卡片",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "heading",
+              "label": "區塊標題",
+              "type": "string"
+            },
+            {
+              "slug": "subheading",
+              "label": "區塊副標題",
+              "type": "string"
+            },
+            {
+              "slug": "cards",
+              "label": "卡片清單",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "badge",
+                    "label": "角標/編號",
+                    "type": "string"
+                  },
+                  {
+                    "slug": "title",
+                    "label": "標題",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "description",
+                    "label": "描述",
+                    "type": "text"
+                  },
+                  {
+                    "slug": "link",
+                    "label": "連結",
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rich_text",
+      "label": "Rich Text 富文本內容",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "content",
+              "label": "內文",
+              "type": "portableText",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "callout",
+      "label": "Callout 引言重點框",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "title",
+              "label": "標題",
+              "type": "string"
+            },
+            {
+              "slug": "text",
+              "label": "引言內容",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "profile_section",
+      "label": "Profile Section 個人簡介與肖像",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "name",
+              "label": "姓名 (Name)",
+              "type": "string"
+            },
+            {
+              "slug": "role",
+              "label": "職稱/頭銜 (Role/Title)",
+              "type": "string"
+            },
+            {
+              "slug": "image",
+              "label": "肖像照片 (Portrait Image)",
+              "type": "image"
+            },
+            {
+              "slug": "bio",
+              "label": "自傳內容 (Bio)",
+              "type": "portableText"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hero_block",
+      "label": "Hero Showcase 首頁英雄橫幅",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "content",
+              "label": "版面自由內容 (自由編輯標題、副標、引言段落與重點)",
+              "type": "portableText"
+            },
+            {
+              "slug": "image",
+              "label": "版面圖片 (選填，不放即為純文字滿版)",
+              "type": "image"
+            },
+            {
+              "slug": "actions",
+              "label": "行動按鈕組 (選填，可隨意增減按鈕)",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "label",
+                    "label": "按鈕文字",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "url",
+                    "label": "按鈕連結",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "variant",
+                    "label": "按鈕樣式",
+                    "type": "select",
+                    "options": [
+                      "primary",
+                      "ghost"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "stats_grid",
+      "label": "Stats Grid 關鍵數據與焦點",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "items",
+              "label": "關鍵數據指標清單 (可隨意增減數據)",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "num",
+                    "label": "指標數字 (如 15+)",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "label",
+                    "label": "說明標籤",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "recent_posts",
+      "label": "Recent Posts 文章專欄展示",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "eyebrow",
+              "label": "專欄眉標",
+              "type": "string"
+            },
+            {
+              "slug": "title",
+              "label": "專欄標題",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "lead",
+              "label": "導言說明",
+              "type": "text"
+            },
+            {
+              "slug": "action_text",
+              "label": "按鈕文字",
+              "type": "string"
+            },
+            {
+              "slug": "action_url",
+              "label": "按鈕連結",
+              "type": "string"
+            },
+            {
+              "slug": "limit",
+              "label": "顯示篇數",
+              "type": "string"
+            },
+            {
+              "slug": "tag",
+              "label": "標籤篩選",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "info_card",
+      "label": "Info Card 資訊卡",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "badge",
+              "label": "角標",
+              "type": "string"
+            },
+            {
+              "slug": "title",
+              "label": "卡片標題",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "description",
+              "label": "卡片內容",
+              "type": "text"
+            },
+            {
+              "slug": "link",
+              "label": "連結網址",
+              "type": "string"
+            },
+            {
+              "slug": "link_text",
+              "label": "按鈕文字",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "callout_box",
+      "label": "Callout Box 重點引言框",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "title",
+              "label": "引言標題",
+              "type": "string"
+            },
+            {
+              "slug": "text",
+              "label": "引言內容",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "contact_item",
+      "label": "Contact Item 聯絡項目",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "label",
+              "label": "項目標籤",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "value",
+              "label": "主要資訊",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "detail",
+              "label": "補充說明",
+              "type": "string"
+            },
+            {
+              "slug": "link",
+              "label": "連結網址",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "defaultLocale": "en"
+}

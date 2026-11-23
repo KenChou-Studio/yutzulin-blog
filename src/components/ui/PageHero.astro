@@ -1,0 +1,282 @@
+---
+import { Image } from "emdash/ui";
+import { getLocale, getTranslator, localePath, localizeUrl } from "../../i18n";
+
+interface Props {
+	title: string;
+	eyebrow?: string;
+	lead?: string;
+	focusline?: string;
+	breadcrumb?: string;
+	primaryActionLabel?: string;
+	primaryActionUrl?: string;
+	secondaryActionLabel?: string;
+	secondaryActionUrl?: string;
+	featuredImage?: any;
+	variant?: "standard" | "home" | "full";
+	editTitle?: Record<string, unknown>;
+	editLead?: Record<string, unknown>;
+	editEyebrow?: Record<string, unknown>;
+	editFocusline?: Record<string, unknown>;
+	editPrimaryActionLabel?: Record<string, unknown>;
+	editPrimaryActionUrl?: Record<string, unknown>;
+	editSecondaryActionLabel?: Record<string, unknown>;
+	editSecondaryActionUrl?: Record<string, unknown>;
+	editFeaturedImage?: Record<string, unknown>;
+}
+
+const {
+	title,
+	eyebrow,
+	lead,
+	focusline,
+	breadcrumb,
+	primaryActionLabel,
+	primaryActionUrl = "#",
+	secondaryActionLabel,
+	secondaryActionUrl = "#",
+	featuredImage,
+	variant = "standard",
+	editTitle = {},
+	editLead = {},
+	editEyebrow = {},
+	editFocusline = {},
+	editPrimaryActionLabel = {},
+	editPrimaryActionUrl = {},
+	editSecondaryActionLabel = {},
+	editSecondaryActionUrl = {},
+	editFeaturedImage = {},
+} = Astro.props;
+
+const locale = getLocale(Astro);
+const t = await getTranslator(Astro, locale);
+
+const isHomeOrFull = variant === "home" || variant === "full" || Boolean(focusline || primaryActionLabel || secondaryActionLabel);
+---
+
+{
+	isHomeOrFull ? (
+		<section class="hero hero--component">
+			<div class="frame hero-grid">
+				<div>
+					{eyebrow && (
+						<div class="eyebrow" {...editEyebrow}>
+							{eyebrow}
+						</div>
+					)}
+					<h1 class="hero__title" {...editTitle}>
+						{title}
+					</h1>
+					{lead && (
+						<p class="lead" {...editLead}>
+							{lead}
+						</p>
+					)}
+					{focusline && (
+						<p class="focusline" {...editFocusline}>
+							{focusline}
+						</p>
+					)}
+					{(primaryActionLabel || secondaryActionLabel) && (
+						<div class="actions">
+							{primaryActionLabel && (
+								<div class="action-btn-wrapper">
+									<a class="btn primary" href={localizeUrl(locale, primaryActionUrl)} {...editPrimaryActionLabel}>
+										{primaryActionLabel}
+									</a>
+									<span class="action-btn-url-tag" title={`URL: ${primaryActionUrl}`} {...editPrimaryActionUrl}>
+										<span class="url-icon">🔗</span>
+										<span class="url-text">{primaryActionUrl}</span>
+									</span>
+								</div>
+							)}
+							{secondaryActionLabel && (
+								<div class="action-btn-wrapper">
+									<a class="btn btn--ghost" href={localizeUrl(locale, secondaryActionUrl)} {...editSecondaryActionLabel}>
+										{secondaryActionLabel}
+									</a>
+									<span class="action-btn-url-tag" title={`URL: ${secondaryActionUrl}`} {...editSecondaryActionUrl}>
+										<span class="url-icon">🔗</span>
+										<span class="url-text">{secondaryActionUrl}</span>
+									</span>
+								</div>
+							)}
+						</div>
+					)}
+				</div>
+				{featuredImage && (
+					<div>
+						<Image
+							image={featuredImage}
+							alt={featuredImage.alt || title}
+							class="portrait"
+							priority
+							{...editFeaturedImage}
+						/>
+					</div>
+				)}
+			</div>
+		</section>
+	) : (
+		<header class="page-hero">
+			<div class="frame">
+				<div class="breadcrumb">
+					<a href={localePath(locale, "/")}>{t("page.home")}</a> / {breadcrumb || eyebrow || title}
+				</div>
+				{eyebrow && <div class="eyebrow" {...editEyebrow}>{eyebrow}</div>}
+				<h1 class="page-title" {...editTitle}>{title}</h1>
+				{lead && <p class="page-lead" {...editLead}>{lead}</p>}
+			</div>
+		</header>
+	)
+}
+
+<style>
+	.page-hero {
+		padding: clamp(1.5rem, 1.25rem + 1vw, 2.25rem) 0 clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+		border-bottom: 1px solid var(--color-border);
+		background: var(--color-bg);
+	}
+
+	.breadcrumb {
+		font-family: var(--font-mono);
+		font-size: 13px;
+		color: var(--color-muted);
+		margin-bottom: 8px;
+	}
+
+	.breadcrumb a {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+
+	.breadcrumb a:hover {
+		color: var(--color-brand);
+	}
+
+	.eyebrow {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--color-brand);
+		margin-bottom: 8px;
+	}
+
+	.page-title {
+		font-family: var(--font-heading);
+		font-size: clamp(32px, 4vw, 52px);
+		line-height: 1.15;
+		margin: 0 0 12px;
+		color: var(--color-text);
+		max-width: 26ch;
+	}
+
+	.page-lead {
+		font-size: clamp(16px, 1.3vw, 19px);
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		max-width: 65ch;
+		margin: 0;
+	}
+
+	.hero--component {
+		padding: clamp(2rem, 1.5rem + 1.2vw, 2.75rem) 0 clamp(1.75rem, 1.25rem + 1vw, 2.25rem);
+		background: linear-gradient(135deg, var(--hero-bg-from, #f7faf9) 0%, var(--hero-bg-to, #eef3f3) 100%);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: 56px;
+		align-items: center;
+	}
+
+	@media (max-width: 860px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+	}
+
+	.hero__title {
+		font-family: var(--font-heading);
+		font-size: clamp(40px, 5.5vw, 72px);
+		line-height: 1.1;
+		letter-spacing: -0.035em;
+		margin: 0 0 16px;
+		color: var(--color-text);
+		white-space: pre-line;
+	}
+
+	.lead {
+		font-size: clamp(18px, 1.4vw, 20px);
+		max-width: 760px;
+		color: var(--color-text-secondary);
+		line-height: 1.5;
+		margin: 16px 0;
+	}
+
+	.focusline {
+		font-weight: 700;
+		margin: 20px 0;
+		color: var(--focusline-color, #466f70);
+		font-size: 15px;
+		letter-spacing: 0.01em;
+	}
+
+	.actions {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+		margin-top: 24px;
+	}
+
+	.action-btn-wrapper {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		position: relative;
+	}
+
+	.action-btn-url-tag {
+		display: none;
+		align-items: center;
+		gap: 4px;
+		font-family: var(--font-mono, monospace);
+		font-size: 11px;
+		padding: 3px 8px;
+		background: rgba(70, 111, 112, 0.12);
+		color: var(--color-brand, #466f70);
+		border-radius: 9999px;
+		border: 1px dashed var(--color-brand, #466f70);
+		cursor: pointer;
+		user-select: none;
+		line-height: 1.2;
+		transition: all 0.15s ease;
+	}
+
+	.action-btn-url-tag:hover {
+		background: rgba(70, 111, 112, 0.22);
+		transform: translateY(-1px);
+	}
+
+	:global(body:has(#emdash-toolbar[data-edit-mode="true"])) .action-btn-url-tag,
+	:global([data-emdash-editing]) .action-btn-url-tag {
+		display: inline-flex;
+	}
+
+	:global(.portrait),
+	.portrait {
+		width: 100%;
+		max-height: 540px;
+		object-fit: cover;
+		object-position: center 35%;
+		border-radius: 4px;
+		box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+		border: 1px solid var(--color-border);
+		display: block;
+	}
+</style>

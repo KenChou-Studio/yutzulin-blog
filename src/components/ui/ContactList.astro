@@ -1,0 +1,40 @@
+---
+import ContactItem from "./ContactItem.astro";
+
+interface Props {
+	items?: any[];
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const items: any[] = data.items || props.items || [];
+const hasItems = Array.isArray(items) && items.length > 0;
+const className = props.class ?? "";
+---
+
+<div class={`editorial-contact-list ${className}`} data-emdash-block="contact_list">
+	{hasItems ? (
+		items.map((item: any) => (
+			<ContactItem node={item} />
+		))
+	) : (
+		<slot />
+	)}
+</div>
+
+<style>
+	.editorial-contact-list {
+		margin-block: 1.5rem 2.5rem;
+		border-top: 1px solid var(--color-border);
+		width: 100%;
+	}
+</style>

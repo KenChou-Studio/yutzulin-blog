@@ -1,0 +1,11 @@
+---
+import HomePage from "../../components/HomePage.astro";
+import { resolveRouteLocale } from "../../i18n";
+
+const locale = resolveRouteLocale(Astro.params.locale);
+if (!locale) {
+	return Astro.rewrite("/404");
+}
+---
+
+<HomePage locale={locale} />

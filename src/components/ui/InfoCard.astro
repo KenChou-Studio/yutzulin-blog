@@ -1,0 +1,121 @@
+---
+import { getLocale, getTranslator, localizeUrl } from "../../i18n";
+
+interface Props {
+	badge?: string;
+	kicker?: string;
+	title?: string;
+	desc?: string;
+	description?: string;
+	link?: string;
+	linkText?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+// Support direct props or PortableText node/value props
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const badge = data.badge ?? data.kicker ?? props.badge ?? props.kicker;
+const title = data.title ?? props.title;
+const desc = data.desc ?? data.description ?? props.desc ?? props.description;
+const rawLink = data.link ?? props.link;
+const link = rawLink ? localizeUrl(getLocale(Astro), rawLink) : rawLink;
+const linkText = data.linkText ?? data.link_text ?? props.linkText ?? (await getTranslator(Astro, getLocale(Astro)))("blocks.cardLink");
+const className = props.class ?? "";
+---
+
+<article class={`info-card ${className}`} data-emdash-block="info_card">
+	{badge && <div class="card-badge">{badge}</div>}
+	{title && (
+		<h3 class="card-title">
+			{link ? <a href={link}>{title}</a> : title}
+		</h3>
+	)}
+	{desc && <p class="card-desc">{desc}</p>}
+	<slot />
+	{link && (
+		<div class="card-action">
+			<a href={link} class="card-link">{linkText}</a>
+		</div>
+	)}
+</article>
+
+<style>
+	.info-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		padding: clamp(24px, 3vw, 32px);
+		display: flex;
+		flex-direction: column;
+		box-shadow: var(--shadow-card);
+		transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.info-card:hover {
+		border-color: var(--color-brand);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-card-hover, var(--shadow-card));
+	}
+
+	.card-badge {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-brand);
+		margin-bottom: 12px;
+	}
+
+	.card-title {
+		font-family: var(--font-heading);
+		font-size: clamp(20px, 2.5vw, 24px);
+		line-height: 1.3;
+		margin: 0 0 12px;
+		color: var(--color-text);
+	}
+
+	.card-title a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.card-title a:hover {
+		color: var(--color-brand);
+	}
+
+	.card-desc {
+		font-size: 15px;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0 0 16px;
+		flex-grow: 1;
+	}
+
+	.card-action {
+		margin-top: auto;
+		padding-top: 14px;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.card-link {
+		font-family: var(--font-mono);
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--color-brand);
+		text-decoration: none;
+	}
+
+	.card-link:hover {
+		text-decoration: underline;
+	}
+</style>

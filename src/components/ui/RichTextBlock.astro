@@ -1,0 +1,52 @@
+---
+import { PortableText } from "emdash/ui";
+
+interface Props {
+	node?: any;
+	value?: any;
+	content?: any[];
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const content = data.content ?? props.content ?? [];
+const className = props.class ?? "";
+---
+
+{
+	Array.isArray(content) && content.length > 0 && (
+		<div class={`modular-rich-text prose ${className}`} data-emdash-block="rich_text">
+			<PortableText value={content} />
+		</div>
+	)
+}
+
+<style>
+	.modular-rich-text {
+		width: 100%;
+		max-width: var(--wide-width, 1200px);
+		margin-inline: auto;
+		margin-block: 28px 16px;
+	}
+
+	.modular-rich-text :global(h2) {
+		font-family: var(--font-heading);
+		font-weight: var(--font-weight-heading, 600);
+		letter-spacing: -0.02em;
+		margin-bottom: 12px;
+	}
+
+	.modular-rich-text :global(p) {
+		color: var(--color-text-secondary);
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		max-width: var(--content-width, 680px);
+	}
+</style>
