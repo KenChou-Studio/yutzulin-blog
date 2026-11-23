@@ -17,9 +17,8 @@ export const ADMIN_LABELS: Record<SupportedLocale, Record<string, Labels>> = {
 			labelSingular: "Page",
 			fields: {
 				title: "Title",
-				hero_content: "Hero (legacy: used on the home page only when Content has no Hero block)",
 				content: "Content (sections, stats, cards and feature blocks)",
-				featured_image: "Featured image (not used on the home page when it has a Hero block)",
+				featured_image: "Side image (shown beside the page text, e.g. the portrait on the About page)",
 				excerpt: "Excerpt (subtitle and lead)",
 			},
 		},
@@ -45,9 +44,8 @@ export const ADMIN_LABELS: Record<SupportedLocale, Record<string, Labels>> = {
 			labelSingular: "頁面",
 			fields: {
 				title: "頁面標題",
-				hero_content: "舊版橫幅（僅在首頁內文沒有 Hero 區塊時使用）",
 				content: "頁面正文（章節標題、數據、卡片與功能區塊）",
-				featured_image: "代表圖片（首頁有 Hero 區塊時不使用，請改在 Hero 區塊設定圖片）",
+				featured_image: "側邊圖片（顯示在頁面文字旁，例如「關於」頁的肖像）",
 				excerpt: "副標題與引言",
 			},
 		},

@@ -5,7 +5,7 @@
  */
 import { getSiteSettings } from "emdash";
 import { getEntryWithFallback } from "../i18n/fallback";
-import { Image, PortableText } from "emdash/ui";
+import { PortableText } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 import { getContentAlternates } from "../i18n/alternates";
 import { getTranslator, type Locale } from "../i18n";
@@ -35,46 +35,8 @@ if (Astro.cache?.enabled) {
 	if (homeResult?.cacheHint) Astro.cache.set(homeResult.cacheHint);
 }
 
-const heroBlocks = Array.isArray(homePage?.data?.hero_content) ? homePage.data.hero_content : [];
-const rawContentBlocks = Array.isArray(homePage?.data?.content) ? homePage.data.content : [];
-const featuredImage = homePage?.data?.featured_image;
-
-// A Hero block inside Content is the single place that sets the home hero (text, buttons and
-// image). The separate Hero field and the Featured image only apply to older pages without one.
-const hasHeroBlock = rawContentBlocks.some((b: any) => b?._type === "hero_block");
-let introBlocks = hasHeroBlock ? [] : heroBlocks;
-let bodyBlocks = rawContentBlocks;
-
-if (!hasHeroBlock && introBlocks.length === 0 && rawContentBlocks.length > 0) {
-	const dividerIndex = rawContentBlocks.findIndex(
-		(b: any) => b._type === "break" || b._type === "horizontalRule" || b.style === "lineBreak"
-	);
-	const firstComponentIndex = rawContentBlocks.findIndex(
-		(b: any) => b._type && b._type !== "block" && b._type !== "break"
-	);
-	const firstH2Index = rawContentBlocks.findIndex((b: any) => b._type === "block" && b.style === "h2");
-
-	let splitIndex = -1;
-	let skipDivider = false;
-
-	if (dividerIndex !== -1) {
-		splitIndex = dividerIndex;
-		skipDivider = true;
-	} else if (firstComponentIndex !== -1) {
-		splitIndex = firstComponentIndex;
-	} else if (firstH2Index !== -1) {
-		splitIndex = firstH2Index;
-	}
-
-	if (splitIndex > 0) {
-		introBlocks = rawContentBlocks.slice(0, splitIndex);
-		bodyBlocks = skipDivider ? rawContentBlocks.slice(splitIndex + 1) : rawContentBlocks.slice(splitIndex);
-	}
-}
-
-const hasHero = introBlocks.length > 0;
-const hasBody = bodyBlocks.length > 0;
-const hasAnyContent = hasHero || hasBody;
+// The home page is its Content: the hero is a Hero block at the top of it.
+const blocks = Array.isArray(homePage?.data?.content) ? homePage.data.content : [];
 ---
 
 <Base
@@ -85,156 +47,17 @@ const hasAnyContent = hasHero || hasBody;
 	// but the home page is served at `/`. Base emits the correct hreflang links itself.
 >
 	{
-		hasAnyContent && (
+		blocks.length > 0 && (
 			<section class="band section">
 				<div class="frame">
-					{hasHero && (
-						<div class={`home-hero-grid ${featuredImage ? "has-media" : "no-media"}`}>
-							<div class="home-hero-content prose page-body" {...((homePage?.edit as any)?.hero_content || (homePage?.edit as any)?.content)}>
-								<PortableText
-									value={groupContentBlocks(introBlocks)}
-									components={{ type: blockComponents }}
-								/>
-							</div>
-							{featuredImage && (
-								<div class="home-hero-media">
-									<Image
-										image={featuredImage}
-										alt={homePage.data.title || siteTitle}
-										class="portrait"
-										priority
-									/>
-								</div>
-							)}
-						</div>
-					)}
-					{hasBody && (
-						<div class="home-body-content prose page-body" {...(homePage?.edit as any)?.content}>
-							<PortableText
-								value={groupContentBlocks(bodyBlocks)}
-								components={{ type: blockComponents }}
-							/>
-						</div>
-					)}
+					<div class="home-body-content prose page-body" {...(homePage?.edit as any)?.content}>
+						<PortableText
+							value={groupContentBlocks(blocks)}
+							components={{ type: blockComponents }}
+						/>
+					</div>
 				</div>
 			</section>
 		)
 	}
 </Base>
-
-<style>
-	.home-hero-grid {
-		display: grid;
-		gap: 48px;
-		align-items: center;
-		border-bottom: 1px solid var(--color-border);
-		padding: clamp(1.5rem, 1.25rem + 1vw, 2.5rem) 0 clamp(1.25rem, 1rem + 0.5vw, 2rem);
-		margin-bottom: clamp(1.5rem, 2vw, 2.5rem);
-	}
-
-	.home-hero-grid.has-media {
-		grid-template-columns: 1.15fr 0.85fr;
-	}
-
-	.home-hero-grid.no-media {
-		grid-template-columns: 1fr;
-		max-width: 900px;
-	}
-
-	@media (max-width: 860px) {
-		.home-hero-grid.has-media {
-			grid-template-columns: 1fr;
-			gap: 32px;
-		}
-
-		.home-hero-media {
-			order: -1;
-			max-width: 320px;
-		}
-	}
-
-	.home-hero-media :global(.portrait),
-	.home-hero-media .portrait {
-		width: 100%;
-		max-height: min(480px, 60vh);
-		object-fit: cover;
-		object-position: center 30%;
-		border-radius: var(--radius-sm, 4px);
-		box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.08));
-	}
-
-	/* Hero Content Typography - styled like Notion headers */
-	.home-hero-content :global(h1) {
-		font-family: var(--font-heading);
-		font-size: clamp(40px, 5.5vw, 72px);
-		line-height: 1.1;
-		letter-spacing: -0.035em;
-		margin: 0 0 16px;
-		color: var(--color-text);
-	}
-
-	.home-hero-content :global(h2) {
-		font-family: var(--font-heading);
-		font-size: clamp(28px, 3.5vw, 42px);
-		line-height: 1.2;
-		letter-spacing: -0.025em;
-		margin: 20px 0 12px;
-		color: var(--color-text);
-	}
-
-	.home-hero-content :global(h3),
-	.home-hero-content :global(h4) {
-		font-family: var(--font-mono, monospace);
-		font-size: 0.8125rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--color-muted);
-		margin: 0 0 12px;
-	}
-
-	.home-hero-content :global(p) {
-		font-size: 1.2rem;
-		color: var(--color-text-secondary);
-		line-height: 1.55;
-		margin: 16px 0;
-		max-width: 760px;
-	}
-
-	.home-hero-content :global(strong) {
-		color: var(--focusline-color, var(--color-brand));
-		font-weight: 700;
-	}
-
-	.home-hero-content :global(a) {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.5rem 1.25rem;
-		border-radius: var(--radius-full, 999px);
-		font-size: 0.9375rem;
-		font-weight: 500;
-		text-decoration: none !important;
-		transition: all 0.15s ease;
-		margin-right: 12px;
-		margin-top: 12px;
-	}
-
-	.home-hero-content :global(a:first-of-type) {
-		background: var(--color-brand);
-		color: var(--color-on-brand) !important;
-	}
-
-	.home-hero-content :global(a:first-of-type:hover) {
-		background: var(--color-brand-hover);
-	}
-
-	.home-hero-content :global(a:not(:first-of-type)) {
-		background: var(--color-surface);
-		color: var(--color-text) !important;
-		box-shadow: inset 0 0 0 1px var(--color-border), var(--shadow-sm);
-	}
-
-	.home-hero-content :global(a:not(:first-of-type):hover) {
-		box-shadow: inset 0 0 0 1px var(--color-border-strong), var(--shadow-sm);
-	}
-</style>

@@ -173,4 +173,26 @@ npx emdash site import site.emdash --plan sha256:（上一步印出的值） --c
 
 重大變更前請先備份：D1 有 Time Travel（時間點還原），也可用 `npx wrangler d1 export yutzulin-blog-db --remote --output backup.sql`。
 
+### 已部署的站台：移除舊的「Hero」欄位
+
+首頁橫幅現在只由內文裡的 Hero 區塊決定，頁面的 `hero_content` 欄位已從程式與 seed 移除。**已經建立好的正式資料庫還留著這個欄位**（seed 不會改動既有資料庫），要在正式站清掉：
+
+```bash
+npx emdash login --url https://你的網域
+npx emdash schema remove-field pages hero_content --url https://你的網域
+```
+
+移除欄位會刪除該欄的值；本站這個欄位早已清空。重大結構變更前請先備份（見上方「備份」）。
+
+### 已部署的站台：移除舊的「Hero」欄位
+
+首頁橫幅現在只由內文裡的 Hero 區塊決定，頁面的 `hero_content` 欄位已從程式與 seed 移除。**已經建立好的正式資料庫還留著這個欄位**（seed 不會改動既有資料庫），要在正式站清掉：
+
+```bash
+npx emdash login --url https://你的網域
+npx emdash schema remove-field pages hero_content --url https://你的網域
+```
+
+移除欄位會刪除該欄的值；本站這個欄位早已清空。重大結構變更前請先備份。
+
 網站預設為「暫存」狀態，搜尋引擎看不到；準備上線時在後台 SEO 設定關閉。

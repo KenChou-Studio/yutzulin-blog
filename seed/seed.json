@@ -72,18 +72,13 @@
           "searchable": true
         },
         {
-          "slug": "hero_content",
-          "label": "Hero (legacy: used on the home page only when Content has no Hero block)",
-          "type": "portableText"
-        },
-        {
           "slug": "excerpt",
           "label": "Excerpt (subtitle and lead)",
           "type": "text"
         },
         {
           "slug": "featured_image",
-          "label": "Featured image (not used on the home page when it has a Hero block)",
+          "label": "Side image (shown beside the page text, e.g. the portrait on the About page)",
           "type": "image"
         },
         {
