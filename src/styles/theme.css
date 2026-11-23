@@ -55,6 +55,27 @@
   --focusline-color: #294b50;
 }
 
+/*
+ * Explicit theme (footer / mobile-menu switcher sets html.light or html.dark).
+ *
+ * The production build compiles light-dark() into
+ *   var(--lightningcss-light, <light>) var(--lightningcss-dark, <dark>)
+ * and only flips those two switches for the OS preference (@media). Without the
+ * rules below, the switcher changes `color-scheme` but every colour keeps
+ * following the OS. They are inert in development, where light-dark() is native.
+ */
+:root.light {
+  color-scheme: light;
+  --lightningcss-light: initial;
+  --lightningcss-dark: ;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+}
+
 /* Explicit Dark Mode Overrides (cookie or html.dark) */
 :root[class~="dark"],
 .dark {

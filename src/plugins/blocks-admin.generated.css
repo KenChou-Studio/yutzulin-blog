@@ -954,11 +954,6 @@
 		height: 100%;
 		object-fit: cover;
 	}
-	.sb-node .news-card__placeholder {
-		width: 100%;
-		height: 100%;
-		background: repeating-linear-gradient(45deg, var(--color-fill), var(--color-fill) 10px, var(--color-fill-strong) 10px, var(--color-fill-strong) 20px);
-	}
 	.sb-node .news-card__body {
 		display: flex;
 		flex-direction: column;

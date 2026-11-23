@@ -123,7 +123,7 @@ const SPECS: Record<CustomBlockType, BlockSpec> = {
 		settings: [{ field: "imageUrl", type: "url" }, { field: "imageAlt" }, { field: "link", type: "url" }],
 		render: (d, f, e) => `
 			<div class="news-card">
-				<div class="news-card__media">${d.imageUrl ? `<img src="${e(d.imageUrl)}" alt="${e(d.imageAlt)}" />` : `<div class="news-card__placeholder"></div>`}</div>
+				${d.imageUrl ? `<div class="news-card__media"><img src="${e(d.imageUrl)}" alt="${e(d.imageAlt)}" /></div>` : ""}
 				<div class="news-card__body">
 					<h3 class="news-card__title">${f("title", { tag: "span", placeholder: "Title" })}</h3>
 					${f("description", { tag: "p", cls: "news-card__desc", multiline: true, placeholder: "Description" })}
