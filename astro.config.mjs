@@ -29,6 +29,13 @@ export default defineConfig({
 		react(),
 		emdash({
 			database: d1({ binding: "DB", session: "auto", coalesce: true }),
+			// Media is served through the Worker by default. To serve it from a CDN
+			// instead (faster, and saves Worker requests/CPU):
+			//   1. R2 bucket → Settings → Custom Domains → add e.g. media.example.com
+			//      (needs a domain on Cloudflare; the r2.dev URL is rate-limited, dev only).
+			//   2. Replace the line below with:
+			//        storage: r2({ binding: "MEDIA", publicUrl: "https://media.example.com" }),
+			//   3. Redeploy, then check in the admin that existing media still loads.
 			storage: r2({ binding: "MEDIA" }),
 			admin: {
 				hiddenNavItems: ["import"],
