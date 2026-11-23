@@ -1,5 +1,6 @@
 ---
-import { getEmDashCollection, getTermsForEntries } from "emdash";
+import { getTermsForEntries } from "emdash";
+import { getEntriesWithFallback, pageOf } from "../../../i18n/fallback";
 import { getTranslator, localePath, resolveRouteLocale } from "../../../i18n";
 import Base from "../../../layouts/Base.astro";
 import PostCard from "../../../components/PostCard.astro";
@@ -11,21 +12,13 @@ if (!locale) {
 }
 const t = await getTranslator(Astro, locale);
 
-// Sort in the database rather than in JS — lets the DB use its index on
-// published_at and avoids a full-table scan on the client.
+// Posts in this language plus the ones that only exist in the other language
+// (EmDash lists one locale at a time), paged in memory; `cursor` is the offset.
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
-const {
-	entries: posts,
-	cacheHint,
-	nextCursor,
-} = await getEmDashCollection("posts", {
-	locale,
-	orderBy: { published_at: "desc" },
-	limit: 20,
-	cursor,
-});
+const { entries: allPosts, cacheHints } = await getEntriesWithFallback("posts", locale);
+const { page: posts, nextCursor } = pageOf(allPosts, cursor, 20);
 
-if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (Astro.cache?.enabled) for (const hint of cacheHints) Astro.cache.set(hint as never);
 
 // Single batched query for tags across all posts, instead of one
 // getEntryTerms() call per post (which would be N round-trips).

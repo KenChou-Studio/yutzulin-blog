@@ -18,7 +18,9 @@ export type Locale = (typeof LOCALE_CODES)[number];
 export const i18nConfig = {
 	defaultLocale: DEFAULT_LOCALE,
 	locales: [...LOCALE_CODES],
-	// A missing zh-TW entry falls back to English on single-entry lookups.
+	// EmDash follows this chain for single-entry lookups. Astro does not allow the
+	// default locale as a key, so the reverse direction (English missing -> zh-TW)
+	// and all lists are handled in ./fallback.ts.
 	fallback: { "zh-TW": "en" },
 } as const;
 

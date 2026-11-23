@@ -57,6 +57,7 @@ const en = {
 	"footer.rights": "© {year} {title}. All rights reserved.",
 
 	"lang.switch": "Language",
+	"lang.fallbackNotice": "This page is not available in your language yet. Showing the {language} version.",
 
 	"posts.all": "All posts",
 	"posts.allTitle": "All Posts",
@@ -210,6 +211,7 @@ const zhTW: Record<UiKey, string> = {
 	"footer.rights": "© {year} {title}。版權所有。",
 
 	"lang.switch": "語言",
+	"lang.fallbackNotice": "此頁面尚無對應語言的版本，以下顯示 {language} 版本。",
 
 	"posts.all": "所有文章",
 	"posts.allTitle": "所有文章",

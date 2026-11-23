@@ -15,12 +15,8 @@
  * Supported widgets: content, menu, and the core search / categories / tags /
  * recent-posts components. Anything else (e.g. core:archives) is skipped.
  */
-import {
-	getEmDashCollection,
-	getMenu,
-	getTaxonomyTerms,
-	getWidgetAreaWithCacheHint,
-} from "emdash";
+import { getMenu, getWidgetAreaWithCacheHint } from "emdash";
+import { getEntriesWithFallback, getTermsWithFallback } from "../i18n/fallback";
 import type { Widget } from "emdash";
 import { PortableText } from "emdash/ui";
 import {
@@ -111,20 +107,14 @@ const data = await Promise.all(
 		const p = props(widget);
 		switch (widget.componentId) {
 			case "core:categories":
-				return getTaxonomyTerms("category", { locale, includeCounts: flag(p.showCount, true) });
+				return getTermsWithFallback("category", locale, { includeCounts: flag(p.showCount, true) });
 			case "core:tags":
-				return (await getTaxonomyTerms("tag", { locale, includeCounts: flag(p.showCount, false) })).slice(
+				return (await getTermsWithFallback("tag", locale, { includeCounts: flag(p.showCount, false) })).slice(
 					0,
 					num(p.limit, 20),
 				);
 			case "core:recent-posts":
-				return (
-					await getEmDashCollection("posts", {
-						locale,
-						limit: num(p.count, 5),
-						orderBy: { published_at: "desc" },
-					})
-				).entries;
+				return (await getEntriesWithFallback("posts", locale)).entries.slice(0, num(p.count, 5));
 			default:
 				return widget.type === "menu" && widget.menuName
 					? getMenu(widget.menuName, { locale })

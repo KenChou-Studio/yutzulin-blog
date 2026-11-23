@@ -3973,6 +3973,16 @@
         }
       },
       {
+        "id": "ui:lang-fallback-notice:en",
+        "slug": "lang-fallback-notice",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "lang.fallbackNotice",
+          "text": "This page is not available in your language yet. Showing the {language} version."
+        }
+      },
+      {
         "id": "ui:posts-all:en",
         "slug": "posts-all",
         "status": "published",
@@ -5261,6 +5271,17 @@
           "text": "語言"
         },
         "translationOf": "ui:lang-switch:en"
+      },
+      {
+        "id": "ui:lang-fallback-notice:zh-TW",
+        "slug": "lang-fallback-notice",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "lang.fallbackNotice",
+          "text": "此頁面尚無對應語言的版本，以下顯示 {language} 版本。"
+        },
+        "translationOf": "ui:lang-fallback-notice:en"
       },
       {
         "id": "ui:posts-all:zh-TW",

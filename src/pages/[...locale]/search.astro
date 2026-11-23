@@ -1,7 +1,8 @@
 ---
 export const prerender = false;
 
-import { getEmDashEntry, search } from "emdash";
+import { getEmDashEntry, getTranslations, search } from "emdash";
+import { localeChain } from "../../i18n/fallback";
 import { getTranslator, localePath, localizeUrl, resolveRouteLocale } from "../../i18n";
 import Base from "../../layouts/Base.astro";
 
@@ -17,9 +18,25 @@ const query = Astro.url.searchParams.get("q")?.trim() || "";
 // filtering in JS. FTS scales as the post count grows, returns ranked
 // results, and handles tokenization/stemming. Templates that grep all
 // post bodies in JS quickly become unusable past a few hundred posts.
-const { items: results, nextCursor } = query
+// Results in this language first; then hits in the other language(s), but only for
+// content that has no published translation in this language (no duplicates).
+const primary = query
 	? await search(query, { collections: ["posts", "news"], locale, limit: 30 })
 	: { items: [], nextCursor: undefined };
+const nextCursor = primary.nextCursor;
+const results = [...primary.items];
+if (query) {
+	for (const other of localeChain(locale).slice(1)) {
+		const { items } = await search(query, { collections: ["posts", "news"], locale: other, limit: 30 });
+		for (const item of items) {
+			const { translations } = await getTranslations(item.collection, item.id);
+			const covered = translations.some(
+				(entry) => entry.locale === locale && entry.status === "published",
+			);
+			if (!covered) results.push(item);
+		}
+	}
+}
 
 function escapeHtml(text: string) {
 	return text

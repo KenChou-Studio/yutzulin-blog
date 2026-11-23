@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { getEmDashCollection, getSiteSettings } from "emdash";
+import { getSiteSettings } from "emdash";
+import { getEntriesWithFallback } from "../../i18n/fallback";
 
 import { LOCALES, getTranslator, localePath, localizeUrl, resolveRouteLocale } from "../../i18n";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
@@ -15,17 +16,9 @@ export const GET: APIRoute = async ({ site, url, params, request }) => {
 		t,
 	);
 
-	const { entries: posts } = await getEmDashCollection("posts", {
-		locale,
-		orderBy: { published_at: "desc" },
-		limit: 20,
-	});
-
-	const { entries: news } = await getEmDashCollection("news", {
-		locale,
-		orderBy: { published_at: "desc" },
-		limit: 20,
-	});
+	// Entries without a translation in this language are taken from the other one.
+	const { entries: posts } = await getEntriesWithFallback("posts", locale);
+	const { entries: news } = await getEntriesWithFallback("news", locale);
 
 	// Posts and news in one feed, newest first. A news item links to its own URL when it has
 	// one (resolved against the locale for site paths), otherwise to the news archive.

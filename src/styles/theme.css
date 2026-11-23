@@ -1324,3 +1324,14 @@ body::before {
     display: none;
   }
 }
+
+/* Notice above content that is shown in another language than the visitor's */
+.lang-notice {
+  margin: var(--spacing-3) 0 0;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-fill);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}

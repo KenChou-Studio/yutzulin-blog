@@ -1,10 +1,6 @@
 ---
-import {
-	getTaxonomyTermsWithCacheHint,
-	getEmDashCollection,
-	getTermsForEntries,
-	decodeSlug,
-} from "emdash";
+import { getTermsForEntries, decodeSlug } from "emdash";
+import { getEntriesWithFallback, getTermsWithFallback, pageOf } from "../../../i18n/fallback";
 import { getTranslator, localePath, resolveRouteLocale } from "../../../i18n";
 import Base from "../../../layouts/Base.astro";
 import PostCard from "../../../components/PostCard.astro";
@@ -16,33 +12,20 @@ if (!locale) {
 }
 const t = await getTranslator(Astro, locale);
 const slug = decodeSlug(Astro.params.slug);
-const termsResult = await getTaxonomyTermsWithCacheHint("category", {
-	locale,
-	includeCounts: false,
-});
-const term = slug ? termsResult.data.find((item) => item.slug === slug) : null;
+const terms = await getTermsWithFallback("category", locale, { includeCounts: false });
+const term = slug ? terms.find((item) => item.slug === slug) : null;
 
 if (!term) {
 	return Astro.rewrite("/404");
 }
 
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
-const {
-	entries: posts,
-	cacheHint,
-	nextCursor,
-} = await getEmDashCollection("posts", {
-	locale,
+const { entries: allPosts, cacheHints } = await getEntriesWithFallback("posts", locale, {
 	where: { category: term.slug },
-	orderBy: { published_at: "desc" },
-	limit: 20,
-	cursor,
 });
+const { page: posts, nextCursor } = pageOf(allPosts, cursor, 20);
 
-if (Astro.cache?.enabled) {
-	Astro.cache.set(termsResult.cacheHint);
-	Astro.cache.set(cacheHint);
-}
+if (Astro.cache?.enabled) for (const hint of cacheHints) Astro.cache.set(hint as never);
 
 // Single batched query for tags on every post in this category, rather
 // than calling getEntryTerms() per post (which would be one round-trip

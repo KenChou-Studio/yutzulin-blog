@@ -3,7 +3,8 @@
  * Home page body, shared by `/` and `/<locale>` so the locale-prefixed root
  * does not depend on how Astro ranks the `[...locale]` routes.
  */
-import { getEmDashEntry, getSiteSettings } from "emdash";
+import { getSiteSettings } from "emdash";
+import { getEntryWithFallback } from "../i18n/fallback";
 import { Image, PortableText } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 import { getContentAlternates } from "../i18n/alternates";
@@ -20,7 +21,7 @@ interface Props {
 const { locale } = Astro.props;
 
 const [homeResult, settings] = await Promise.all([
-	getEmDashEntry("pages", "home", { locale }),
+	getEntryWithFallback("pages", "home", locale),
 	getSiteSettings(),
 ]);
 

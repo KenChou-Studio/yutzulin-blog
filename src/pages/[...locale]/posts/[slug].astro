@@ -1,7 +1,5 @@
 ---
 import {
-	getEmDashEntry,
-	getEmDashCollection,
 	getTermsForEntries,
 	getSeoMeta,
 	decodeSlug,
@@ -10,6 +8,8 @@ import {
 import { Image, PortableText } from "emdash/ui";
 import LocalizedWidgetArea from "../../../components/LocalizedWidgetArea.astro";
 import { Comments, CommentForm } from "emdash/ui/comments";
+import { getEntriesWithFallback, getEntryWithFallback } from "../../../i18n/fallback";
+import FallbackNotice from "../../../components/FallbackNotice.astro";
 import Base from "../../../layouts/Base.astro";
 import Byline from "../../../components/Byline.astro";
 import PostCard from "../../../components/PostCard.astro";
@@ -32,7 +32,7 @@ if (!slug) {
 	return Astro.rewrite("/404");
 }
 
-const { entry: post, cacheHint } = await getEmDashEntry("posts", slug, { locale });
+const { entry: post, cacheHint, locale: contentLocale } = await getEntryWithFallback("posts", slug, locale);
 
 if (!post) {
 	return Astro.rewrite("/404");
@@ -84,14 +84,9 @@ const readingTime = getReadingTime(post.data.content);
 const tags = post.data.terms?.tag ?? [];
 
 // Fetch a few extra recent posts in case the current post is among them.
-const { entries: recentPosts, cacheHint: recentPostsCacheHint } =
-	await getEmDashCollection("posts", {
-		locale,
-		orderBy: { published_at: "desc" },
-		limit: 4,
-	});
-if (Astro.cache?.enabled) Astro.cache.set(recentPostsCacheHint);
-const otherPosts = recentPosts.filter((p) => p.id !== post.id).slice(0, 3);
+const { entries: recentPosts, cacheHints: recentPostsCacheHints } = await getEntriesWithFallback("posts", locale);
+if (Astro.cache?.enabled) for (const hint of recentPostsCacheHints) Astro.cache.set(hint as never);
+const otherPosts = recentPosts.filter((p) => p.data.id !== post.data.id).slice(0, 3);
 
 // Single batched query for related-posts tags, rather than one
 // getEntryTerms() call per related post.
@@ -135,6 +130,7 @@ const hasHeadings = (post.data.content ?? []).some(
 	content={{ collection: "posts", id: post.data.id, slug }}
 	alternates={alternates}
 >
+	<FallbackNotice contentLocale={contentLocale} />
 	<article class="post">
 		<header class="intro post-header">
 			<div class="frame">

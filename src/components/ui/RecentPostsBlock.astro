@@ -1,5 +1,6 @@
 ---
-import { getEmDashCollection, getTermsForEntries } from "emdash";
+import { getTermsForEntries } from "emdash";
+import { getEntriesWithFallback } from "../../i18n/fallback";
 import PostCard from "../PostCard.astro";
 import { getLocale, getTranslator, localizeUrl } from "../../i18n";
 
@@ -39,24 +40,14 @@ const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 24)
 const tag = data.tag ? String(data.tag).trim() : "";
 const className = props.class ?? "";
 
-const queryOptions: any = {
-	locale,
-	orderBy: { published_at: "desc" },
-	limit,
-};
-if (tag) {
-	queryOptions.where = { tag };
-}
 
 let posts: any[] = [];
 let tagsByEntry = new Map();
 
 try {
-	const result = await getEmDashCollection("posts", queryOptions);
-	if (Astro.cache?.enabled && result?.cacheHint) {
-		Astro.cache.set(result.cacheHint);
-	}
-	posts = result.entries || [];
+	const result = await getEntriesWithFallback("posts", locale, tag ? { where: { tag } } : {});
+	if (Astro.cache?.enabled) for (const hint of result.cacheHints) Astro.cache.set(hint as never);
+	posts = result.entries.slice(0, limit);
 	const tagEntryIds = posts.map((p) => p.data.id);
 	if (tagEntryIds.length > 0) {
 		tagsByEntry = await getTermsForEntries("posts", tagEntryIds, "tag", { locale });

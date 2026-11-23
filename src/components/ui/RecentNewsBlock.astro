@@ -3,7 +3,7 @@
  * Latest entries of the `news` collection as cards, for the home page (the
  * news counterpart of RecentPostsBlock). Edited in place in the admin editor.
  */
-import { getEmDashCollection } from "emdash";
+import { getEntriesWithFallback } from "../../i18n/fallback";
 import NewsItem from "./NewsItem.astro";
 import { getLocale, getTranslator, localizeUrl } from "../../i18n";
 
@@ -41,13 +41,9 @@ const className = props.class ?? "";
 
 let items: any[] = [];
 try {
-	const result = await getEmDashCollection("news", {
-		locale,
-		limit,
-		orderBy: { published_at: "desc" },
-	});
-	if (Astro.cache?.enabled && result?.cacheHint) Astro.cache.set(result.cacheHint);
-	items = result.entries ?? [];
+	const result = await getEntriesWithFallback("news", locale);
+	if (Astro.cache?.enabled) for (const hint of result.cacheHints) Astro.cache.set(hint as never);
+	items = result.entries.slice(0, limit);
 } catch (error) {
 	console.error("[RecentNewsBlock] Failed to fetch news:", error);
 }

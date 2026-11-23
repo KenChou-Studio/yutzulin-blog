@@ -1,0 +1,28 @@
+---
+/**
+ * Shown when a page is displayed in another language because it has not been
+ * translated into the visitor's language yet.
+ */
+import { LOCALES, getLocale, getTranslator, type Locale } from "../i18n";
+
+interface Props {
+	/** Language the content is actually written in. */
+	contentLocale: Locale;
+}
+
+const { contentLocale } = Astro.props;
+const locale = getLocale(Astro);
+const t = await getTranslator(Astro, locale);
+---
+
+{
+	contentLocale !== locale && (
+		<div class="band">
+			<div class="frame">
+				<p class="lang-notice" role="note">
+					{t("lang.fallbackNotice", { language: LOCALES[contentLocale].label })}
+				</p>
+			</div>
+		</div>
+	)
+}

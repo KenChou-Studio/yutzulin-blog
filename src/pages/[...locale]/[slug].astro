@@ -1,6 +1,5 @@
 ---
 import {
-	getEmDashEntry,
 	getSeoMeta,
 	decodeSlug,
 	getSiteSettings,
@@ -8,6 +7,8 @@ import {
 import { PortableText } from "emdash/ui";
 import { getTranslator, localePath, resolveRouteLocale } from "../../i18n";
 import { getContentAlternates } from "../../i18n/alternates";
+import { getEntryWithFallback } from "../../i18n/fallback";
+import FallbackNotice from "../../components/FallbackNotice.astro";
 import Base from "../../layouts/Base.astro";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import PageHero from "../../components/ui/PageHero.astro";
@@ -45,7 +46,7 @@ if (reservedSlugs.includes(slug)) {
 	return Astro.rewrite("/404");
 }
 
-const { entry: page, cacheHint } = await getEmDashEntry("pages", slug, { locale });
+const { entry: page, cacheHint, locale: contentLocale } = await getEntryWithFallback("pages", slug, locale);
 
 if (!page) {
 	return Astro.rewrite("/404");
@@ -81,6 +82,8 @@ const heroContent = groupContentBlocks(page.data.hero_content);
 	content={{ collection: "pages", id: page.data.id, slug }}
 	alternates={alternates}
 >
+	<FallbackNotice contentLocale={contentLocale} />
+
 	<PageHero
 		title={page.data.title}
 		eyebrow={siteTitle}
