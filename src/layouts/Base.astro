@@ -206,6 +206,54 @@ const year = new Date().getFullYear();
 				}
 			})();
 		</script>
+		<script
+			is:inline
+			define:vars={{
+				current: locale,
+				links: Object.fromEntries(localeLinks.map((link) => [link.code, link.href])),
+			}}
+		>
+			// First visit with no saved choice: follow the browser's language list.
+			// A language-switcher click saves `lang`, so a deliberate choice always wins.
+			// Client-side on purpose, so cached pages stay identical for everyone.
+			(function () {
+				var saved = document.cookie.split("; ").find(function (item) {
+					return item.startsWith("lang=");
+				});
+				function remember(code) {
+					document.cookie = "lang=" + code + "; path=/; max-age=31536000; samesite=lax";
+				}
+				document.addEventListener("click", function (event) {
+					var link = event.target.closest && event.target.closest(".lang-switch a[hreflang]");
+					if (!link) return;
+					var code = Object.keys(links).find(function (key) {
+						return links[key] === link.getAttribute("href");
+					});
+					if (code) remember(code);
+				});
+				if (saved) return;
+				var codes = Object.keys(links);
+				var wanted = null;
+				var prefs =
+					navigator.languages && navigator.languages.length
+						? navigator.languages
+						: [navigator.language || ""];
+				for (var i = 0; i < prefs.length && !wanted; i++) {
+					var tag = String(prefs[i]).toLowerCase();
+					wanted =
+						codes.find(function (code) {
+							return code.toLowerCase() === tag;
+						}) ||
+						codes.find(function (code) {
+							return code.toLowerCase().split("-")[0] === tag.split("-")[0];
+						}) ||
+						null;
+				}
+				if (!wanted) return;
+				remember(wanted);
+				if (wanted !== current && links[wanted]) location.replace(links[wanted]);
+			})();
+		</script>
 	</head>
 	<body data-emdash-editor={isLoggedIn ? "" : undefined}>
 		<EmDashBodyStart page={pageCtx} />
