@@ -84,7 +84,7 @@ npx wrangler d1 create yutzulin-blog-db --location=apac
 npx wrangler r2 bucket create yutzulin-blog-media --location=apac
 ```
 
-`d1 create` 會輸出 `database_id`，貼進 `wrangler.jsonc` 的 `d1_databases[0].database_id`。名稱需與 `wrangler.jsonc` 一致。
+`d1 create` 會輸出 `database_id`，貼進 `wrangler.jsonc` 的 `d1_databases[0].database_id`（不是機密；沒有填的話 wrangler 會沿用上一次記住的舊 ID）。名稱需與 `wrangler.jsonc` 一致。
 
 ### 2. 建置與發布
 
@@ -133,6 +133,22 @@ npm run db:migrate -- --take-over-lock <id>
 - 做完請執行 `npx wrangler logout`，之後要部署再 `npx wrangler login`。
 - 每次升級 EmDash 後重新部署，都要再跑一次 `npm run db:status` 與 `npm run db:migrate`。
 
+### 清掉正式資料庫重建（交付前演練）
+
+只有測試用的站台才這樣做，**資料會全部消失**，而且 `wrangler d1 delete` 無法復原；先用 `npx wrangler d1 list` 確認 UUID，帳號裡可能有別的資料庫。
+
+```bash
+npx wrangler d1 delete yutzulin-blog-db -y
+npx wrangler d1 create yutzulin-blog-db --location=apac      # 記下新的 database_id
+# 把新的 database_id 填進 wrangler.jsonc，否則 deploy 會去找舊的資料庫
+npm run db:status                                            # 記下 Target fingerprint
+npm run db:migrate -- --no-build --expected-target-fingerprint <上一步的指紋>
+npm run deploy
+# 然後立刻到 /_emdash/admin/setup 完成設定精靈
+```
+
+R2 裡舊的圖片不會跟著刪除，需要的話到 Cloudflare 儀表板清空儲存桶。
+
 ### 4. 完成設定精靈（立刻做）
 
 開啟 `https://你的網域/_emdash/admin/setup` 建立管理員。**精靈完成前，第一個到訪的人會成為管理員**，所以部署完要馬上做。
@@ -171,7 +187,7 @@ npx emdash site import site.emdash --plan sha256:（上一步印出的值） --c
 | 升級 EmDash | 見上方第 3 步，重新 build 後執行 `migrate` |
 | 結構改動後同步 seed | 把 D1 備份載入本機 SQLite，再 `npx emdash export-seed --database prod.db > seed/seed.json`，供日後重建環境使用 |
 
-重大變更前請先備份：D1 有 Time Travel（時間點還原），也可用 `npx wrangler d1 export yutzulin-blog-db --remote --output backup.sql`。
+重大變更前請先備份：D1 有 Time Travel（時間點還原），`wrangler d1 export` 在本站**無法使用**（資料庫含全文搜尋的虛擬資料表，D1 匯出會報 `cannot export databases with virtual tables`），請改用 `npx emdash site export`。
 
 ### 已部署的站台：移除舊的「Hero」欄位
 
