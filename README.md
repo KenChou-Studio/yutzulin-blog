@@ -70,22 +70,99 @@ npm run build
 
 ---
 
-## 🚀 未來遠端部署至 Cloudflare（待準備好時再執行）
+## 🚀 部署至 Cloudflare（D1 + R2）
 
-當日後確定要正式部署上線時，請遵循以下步驟（確保 D1 與 R2 皆位於 **`apac`** 亞太區域）：
+正式站使用 Cloudflare Workers、D1（資料庫）與 R2（媒體）。請依序操作。
 
-### 1. 建立亞太區 D1 資料庫
+### 1. 建立資源（只需一次）
+
+D1 與 R2 皆建在 **`apac`** 亞太區域：
+
 ```bash
+npx wrangler login
 npx wrangler d1 create yutzulin-blog-db --location=apac
-```
-執行後終端會輸出 `database_id`，請將其貼入 `wrangler.jsonc` 的 `d1_databases[0].database_id`。
-
-### 2. 建立亞太區 R2 儲存桶
-```bash
 npx wrangler r2 bucket create yutzulin-blog-media --location=apac
 ```
 
-### 3. 正式發布 Worker
+`d1 create` 會輸出 `database_id`，貼進 `wrangler.jsonc` 的 `d1_databases[0].database_id`。名稱需與 `wrangler.jsonc` 一致。
+
+### 2. 建置與發布
+
 ```bash
-npm run deploy
+npm run deploy      # = astro build && wrangler deploy
 ```
+
+### 3. 套用資料庫遷移（EmDash 核心資料表）
+
+EmDash 預設在第一個請求由 Worker 自己遷移，但免費方案每個請求只能對外呼叫 50 次，常常跑不完，網站會回 `503 Database migrations are required`。這時從本機用 `emdash migrate` 直接對 D1 套用（走 Cloudflare API，不受 Worker 限制）。
+
+不需要另外建立 API Token，可以直接用 wrangler 的登入憑證：
+
+```bash
+npx wrangler login
+npx wrangler whoami                       # 從表格找到 Account ID
+
+export CLOUDFLARE_ACCOUNT_ID="貼上 Account ID"
+unset CLOUDFLARE_API_TOKEN
+export CLOUDFLARE_API_TOKEN="$(npx wrangler auth token --json | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).token')"
+echo ${#CLOUDFLARE_API_TOKEN} ${CLOUDFLARE_API_TOKEN:0:6}   # 應顯示「93 cfoat_」，不會印出憑證
+```
+
+> 一定要加 `--json`：不加的話輸出前面會帶 wrangler 橫幅（含 ⛅ 符號），會出現 `Cannot convert argument to a ByteString` 的錯誤，長度也會是約 190 而不是 93。
+
+```bash
+npm run build                                              # 產生 .emdash/migrations.json
+npx emdash migrate --status --d1 yutzulin-blog-db          # 只看狀態，確認帳號與資料庫
+npx emdash migrate --d1 yutzulin-blog-db                   # 套用（會再要求確認）
+npx emdash migrate --check --d1 yutzulin-blog-db           # 檢查是否還有未套用的遷移
+```
+
+完成後最多等 30 秒，網站就會恢復。
+
+- 這些變數只在目前的終端機視窗有效，**不要寫進專案檔案或貼到任何地方**。
+- wrangler 的登入憑證約一小時過期；過期就重新執行 `export` 那兩行。
+- 如果出現 `Authentication error` / `403`，代表 wrangler 憑證權限不足，改到 Cloudflare 儀表板建立「D1 → Edit」權限的 API Token，設成 `CLOUDFLARE_API_TOKEN`。
+- 做完請執行 `npx wrangler logout`，之後要部署再 `npx wrangler login`。
+- 每次升級 EmDash 後重新部署，都要先 `npm run build` 再重跑一次 `migrate --status` 與 `migrate`。
+
+### 4. 完成設定精靈（立刻做）
+
+開啟 `https://你的網域/_emdash/admin/setup` 建立管理員。**精靈完成前，第一個到訪的人會成為管理員**，所以部署完要馬上做。
+
+- 免費方案：精靈裡**不要勾選「匯入範例內容」**（單次請求寫入大量資料會超過呼叫次數上限）。網站結構（集合、欄位、分類、選單）會自動由 `seed/seed.json` 建立。
+- 付費方案（Workers Paid）：可以勾選匯入範例內容，內含英文與繁中的頁面、文章、消息、UI Text。
+
+### 5. 匯入內容
+
+**方案 A：在本機開發站匯出，再匯入正式站（保留圖片、草稿與編輯紀錄）**
+
+```bash
+# 本機開發伺服器要在執行中（npm run dev）
+npx emdash site export --output site.emdash
+
+npx emdash login --url https://你的網域
+npx emdash site import site.emdash --analyze --url https://你的網域
+npx emdash site import site.emdash --plan sha256:（上一步印出的值） --confirm --url https://你的網域
+```
+
+匯入目標必須是內容為空的新站，不含使用者與密碼。匯出前先到本機後台清空垃圾桶（避免測試資料被帶上去）。匯出檔含作者與留言者的電子郵件，請當作資料庫備份保管。
+
+**方案 B：不匯入，直接在正式站後台建立內容。**
+
+### 6. 補一個手動步驟
+
+到後台 **Bylines**，對作者按 **Translate** 建立繁中版（seed 無法建立分語系的作者）。
+
+### 之後改版的原則
+
+| 變更 | 做法 |
+|---|---|
+| 版型、元件、新增區塊類型 | 改程式後 `npm run deploy`，不需要動資料庫 |
+| 新增／修改集合或欄位 | 後台 **Content Types**，或 `npx emdash schema ...`（登入後對正式站執行）；**部署 seed 不會改動既有資料庫** |
+| 新增 UI 文字 | 後台 **UI Text** 新增項目（沒有項目時使用程式預設文字） |
+| 升級 EmDash | 見上方第 3 步，重新 build 後執行 `migrate` |
+| 結構改動後同步 seed | 把 D1 備份載入本機 SQLite，再 `npx emdash export-seed --database prod.db > seed/seed.json`，供日後重建環境使用 |
+
+重大變更前請先備份：D1 有 Time Travel（時間點還原），也可用 `npx wrangler d1 export yutzulin-blog-db --remote --output backup.sql`。
+
+網站預設為「暫存」狀態，搜尋引擎看不到；準備上線時在後台 SEO 設定關閉。
