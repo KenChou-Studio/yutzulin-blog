@@ -11,6 +11,7 @@ import RecentNewsBlock from "../components/ui/RecentNewsBlock.astro";
 import RecentPostsBlock from "../components/ui/RecentPostsBlock.astro";
 import RichTextBlock from "../components/ui/RichTextBlock.astro";
 import StatsBlock from "../components/ui/StatsBlock.astro";
+import VideoEmbed from "../components/ui/VideoEmbed.astro";
 
 /**
  * Native Portable Text and Blocks field component mapping.
@@ -29,6 +30,7 @@ export const blockComponents = {
 	recent_posts: RecentPostsBlock,
 	recent_news: RecentNewsBlock,
 	stats_grid: StatsBlock,
+	video_embed: VideoEmbed,
 	rich_text: RichTextBlock,
 	feature_cards: FeatureCardsBlock,
 

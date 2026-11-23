@@ -200,3 +200,13 @@
 .sb-setting__pick:hover {
 	background: rgb(127 127 127 / 0.15);
 }
+
+.sb-video-empty {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	opacity: 0.6;
+	font: 500 14px system-ui, sans-serif;
+}

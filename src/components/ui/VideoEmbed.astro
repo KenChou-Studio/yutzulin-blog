@@ -1,0 +1,169 @@
+---
+/**
+ * YouTube video with a heading and a description. Nothing from YouTube runs
+ * until the visitor presses play: the poster is a thumbnail, and the player is
+ * then loaded from youtube-nocookie.com.
+ * Edited in place in the admin editor (src/plugins/block-nodeviews.ts).
+ */
+import { getLocale, getTranslator } from "../../i18n";
+import { getYouTubeId, youTubeThumbnail } from "../../utils/video";
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	description?: string;
+	videoUrl?: string;
+	node?: any;
+	value?: any;
+	class?: string;
+}
+
+const props = Astro.props;
+const data =
+	props.node && typeof props.node === "object"
+		? props.node
+		: props.value && typeof props.value === "object"
+			? props.value
+			: props;
+
+const t = await getTranslator(Astro, getLocale(Astro));
+const eyebrow: string | undefined = data.eyebrow ?? props.eyebrow;
+const title: string | undefined = data.title ?? props.title;
+const description: string | undefined = data.description ?? props.description;
+const id = getYouTubeId(data.videoUrl ?? props.videoUrl);
+const className = props.class ?? "";
+---
+
+<section class={`video-embed ${className}`} data-emdash-block="video_embed">
+	{(eyebrow || title || description) && (
+		<div class="video-embed__head">
+			{eyebrow && <div class="eyebrow">{eyebrow}</div>}
+			{title && <h2 class="video-embed__title">{title}</h2>}
+			{description && <p class="video-embed__desc">{description}</p>}
+		</div>
+	)}
+	{id && (
+		<div class="video-embed__frame">
+			<button
+				type="button"
+				class="video-embed__play"
+				data-video-id={id}
+				data-video-title={title ?? ""}
+				aria-label={`${t("blocks.videoPlay")}${title ? `: ${title}` : ""}`}
+			>
+				<img src={youTubeThumbnail(id)} alt="" loading="lazy" decoding="async" />
+				<span class="video-embed__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+				</span>
+			</button>
+		</div>
+	)}
+</section>
+
+<script>
+	// Swap the poster for the player when it is pressed (event delegation: works for every video on the page).
+	document.addEventListener("click", (event) => {
+		const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(".video-embed__play");
+		if (!button) return;
+		const iframe = document.createElement("iframe");
+		iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(button.dataset.videoId ?? "")}?autoplay=1&rel=0`;
+		iframe.title = button.dataset.videoTitle || "YouTube video";
+		iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+		iframe.allowFullscreen = true;
+		iframe.referrerPolicy = "strict-origin-when-cross-origin";
+		iframe.className = "video-embed__player";
+		button.replaceWith(iframe);
+		iframe.focus();
+	});
+</script>
+
+<style>
+	.video-embed {
+		width: 100%;
+		max-width: 100% !important;
+		margin-block: clamp(2rem, 3vw, 3.5rem);
+	}
+	.video-embed__head {
+		max-width: 760px;
+		margin-bottom: 20px;
+	}
+	.video-embed__title {
+		font-family: var(--font-heading);
+		font-size: clamp(26px, 3vw, 36px);
+		line-height: 1.15;
+		margin: 4px 0 0;
+		color: var(--color-text);
+	}
+	.video-embed__desc {
+		margin: 12px 0 0;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		font-size: 0.98rem;
+	}
+	.video-embed__frame {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		border-radius: var(--radius);
+		border: 1px solid var(--color-border);
+		background: #000;
+		box-shadow: var(--shadow-card);
+	}
+	.video-embed__play {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		border: 0;
+		background: #000;
+		cursor: pointer;
+	}
+	.video-embed__play img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0.92;
+		transition: opacity 0.15s ease, transform 0.3s ease;
+	}
+	.video-embed__play:hover img {
+		opacity: 1;
+		transform: scale(1.02);
+	}
+	.video-embed__icon {
+		position: absolute;
+		inset: 50% auto auto 50%;
+		translate: -50% -50%;
+		display: grid;
+		place-items: center;
+		width: 72px;
+		height: 72px;
+		border-radius: 999px;
+		background: rgb(0 0 0 / 0.65);
+		color: #fff;
+		box-shadow: 0 4px 20px rgb(0 0 0 / 0.35);
+		transition: background-color 0.15s ease, scale 0.15s ease;
+	}
+	.video-embed__icon svg {
+		width: 34px;
+		height: 34px;
+		margin-left: 4px;
+	}
+	.video-embed__play:hover .video-embed__icon,
+	.video-embed__play:focus-visible .video-embed__icon {
+		background: rgb(0 0 0 / 0.85);
+		scale: 1.06;
+	}
+	.video-embed__play:focus-visible {
+		outline: 3px solid var(--color-brand);
+		outline-offset: -3px;
+	}
+	.video-embed__frame :global(.video-embed__player) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+</style>

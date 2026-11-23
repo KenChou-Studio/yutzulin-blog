@@ -671,6 +671,14 @@
               "imageAlt": "Portrait of Yu-Tzu Lin"
             },
             {
+              "_type": "video_embed",
+              "_key": "home_video_01",
+              "eyebrow": "Featured video",
+              "title": "Jiangcui Green Boundary: Stone Rhythm Reborn",
+              "description": "A project film from the New Taipei community planner programme, showing how small-scale block improvements renewed the neighbourhood (in Chinese).",
+              "videoUrl": "https://www.youtube.com/watch?v=AVtS3APkC9U"
+            },
+            {
               "_type": "stats_grid",
               "_key": "h_stats_grid_01",
               "item1_num": "15+",
@@ -783,6 +791,14 @@
               "secondaryUrl": "/about",
               "imageUrl": "/images/yu-tzu-lin.jpg",
               "imageAlt": "林育慈肖像"
+            },
+            {
+              "_type": "video_embed",
+              "_key": "home_video_01",
+              "eyebrow": "影片介紹",
+              "title": "江翠綠界・石韻新生",
+              "description": "新北市社區規劃師計畫的成果影片，介紹以街廓微整形讓社區煥然一新的過程。",
+              "videoUrl": "https://www.youtube.com/watch?v=AVtS3APkC9U"
             },
             {
               "_type": "stats_grid",
@@ -4507,6 +4523,16 @@
         }
       },
       {
+        "id": "ui:blocks-video-play:en",
+        "slug": "blocks-video-play",
+        "status": "published",
+        "locale": "en",
+        "data": {
+          "title": "blocks.videoPlay",
+          "text": "Play video"
+        }
+      },
+      {
         "id": "ui:blocks-news-eyebrow:en",
         "slug": "blocks-news-eyebrow",
         "status": "published",
@@ -5840,6 +5866,17 @@
           "text": "了解更多 →"
         },
         "translationOf": "ui:blocks-card-link:en"
+      },
+      {
+        "id": "ui:blocks-video-play:zh-TW",
+        "slug": "blocks-video-play",
+        "status": "published",
+        "locale": "zh-TW",
+        "data": {
+          "title": "blocks.videoPlay",
+          "text": "播放影片"
+        },
+        "translationOf": "ui:blocks-video-play:en"
       },
       {
         "id": "ui:blocks-news-eyebrow:zh-TW",

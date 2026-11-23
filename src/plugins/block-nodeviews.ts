@@ -17,6 +17,7 @@
  * If a block type isn't handled here, or anything looks unexpected, the
  * original EmDash node view is used instead, so the editor never breaks.
  */
+import { getYouTubeId, youTubeThumbnail } from "../utils/video.ts";
 import { BLOCKS, COMMON_I18N, getLocale, localizePluginBlocks, type CustomBlockType } from "./block-i18n.ts";
 
 type Data = Record<string, any>;
@@ -128,6 +129,28 @@ const SPECS: Record<CustomBlockType, BlockSpec> = {
 					${f("description", { tag: "p", cls: "news-card__desc", multiline: true, placeholder: "Description" })}
 				</div>
 			</div>`,
+	},
+	video_embed: {
+		cls: "sb-wrap--video",
+		settings: [{ field: "videoUrl", type: "url" }],
+		render: (d, f, e) => {
+			const id = getYouTubeId(d.videoUrl);
+			return `
+			<section class="video-embed">
+				<div class="video-embed__head">
+					${f("eyebrow", { cls: "eyebrow", placeholder: "Eyebrow" })}
+					${f("title", { tag: "h2", cls: "video-embed__title", placeholder: "Title" })}
+					${f("description", { tag: "p", cls: "video-embed__desc", multiline: true, placeholder: "Description" })}
+				</div>
+				<div class="video-embed__frame">
+					${
+						id
+							? `<div class="video-embed__play"><img src="${e(youTubeThumbnail(id))}" alt="" /><span class="video-embed__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>`
+							: `<div class="sb-video-empty">YouTube URL</div>`
+					}
+				</div>
+			</section>`;
+		},
 	},
 	recent_news: {
 		cls: "sb-wrap--posts",
@@ -315,7 +338,7 @@ class CustomBlockView {
 
 	/** Parts of the markup that depend on settings (hero image) are redrawn after a settings edit. */
 	private refreshDependentMarkup() {
-		if (this.type === "hero_block" || this.type === "news_item") this.rerender();
+		if (this.type === "hero_block" || this.type === "news_item" || this.type === "video_embed") this.rerender();
 	}
 
 	private rerender() {

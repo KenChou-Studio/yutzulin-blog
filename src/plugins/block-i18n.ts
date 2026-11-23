@@ -24,7 +24,8 @@ export type CustomBlockType =
 	| "recent_posts"
 	| "stats_grid"
 	| "news_item"
-	| "recent_news";
+	| "recent_news"
+	| "video_embed";
 
 export interface FieldI18n {
 	label: string;
@@ -51,6 +52,41 @@ export interface BlockDefinition {
 }
 
 export const BLOCKS: Record<CustomBlockType, BlockDefinition> = {
+	video_embed: {
+		type: "video_embed",
+		icon: "video",
+		category: "Sections",
+		zh: {
+			name: "影片",
+			description: "嵌入 YouTube 影片，附標題與說明；按下播放才會載入。",
+			titleFallback: "影片標題",
+			descFallback: "貼上 YouTube 連結...",
+			editTooltip: "編輯影片",
+			dialogTitleEdit: "編輯 影片",
+			dialogTitleInsert: "插入 影片",
+			fields: {
+				eyebrow: { label: "眉標", placeholder: "例：影片介紹" },
+				title: { label: "標題", placeholder: "輸入影片標題" },
+				description: { label: "說明", placeholder: "輸入影片說明" },
+				videoUrl: { label: "YouTube 連結", placeholder: "https://www.youtube.com/watch?v=..." },
+			},
+		},
+		en: {
+			name: "Video",
+			description: "Embeds a YouTube video with a title and description; loads only when played.",
+			titleFallback: "Video title",
+			descFallback: "Paste a YouTube link...",
+			editTooltip: "Edit video",
+			dialogTitleEdit: "Edit Video",
+			dialogTitleInsert: "Insert Video",
+			fields: {
+				eyebrow: { label: "Eyebrow", placeholder: "e.g. Featured video" },
+				title: { label: "Title", placeholder: "Enter the video title" },
+				description: { label: "Description", placeholder: "Enter the video description" },
+				videoUrl: { label: "YouTube URL", placeholder: "https://www.youtube.com/watch?v=..." },
+			},
+		},
+	},
 	recent_news: {
 		type: "recent_news",
 		icon: "newspaper",
@@ -931,6 +967,20 @@ export function getPortableTextBlocks(locale: SupportedLocale = "zh"): PortableT
 				action_id: field,
 				label: BLOCKS.recent_news[locale].fields[field].label,
 				placeholder: BLOCKS.recent_news[locale].fields[field].placeholder,
+			})),
+		},
+		{
+			type: BLOCKS.video_embed.type,
+			label: BLOCKS.video_embed[locale].name,
+			icon: BLOCKS.video_embed.icon,
+			description: BLOCKS.video_embed[locale].description,
+			category: BLOCKS.video_embed.category,
+			fields: (["videoUrl", "eyebrow", "title", "description"] as const).map((field) => ({
+				type: "text_input" as const,
+				action_id: field,
+				label: BLOCKS.video_embed[locale].fields[field].label,
+				placeholder: BLOCKS.video_embed[locale].fields[field].placeholder,
+				...(field === "description" ? { multiline: true } : {}),
 			})),
 		},
 	] as PortableTextBlockConfig[];

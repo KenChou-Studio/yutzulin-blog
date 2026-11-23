@@ -89,13 +89,14 @@ The site is bilingual: `en` (default, unprefixed) and `zh-TW` (`/zh-TW/...`). Lo
 
 ## Custom blocks (info_card, hero_block, stats_grid, …)
 
-Eight custom Portable Text blocks are provided by the `site-blocks` plugin (`src/plugins/`). They render on the site with the Astro components in `src/components/ui/`, and are edited **in place** in the admin editor and in on-page edit mode:
+Nine custom Portable Text blocks are provided by the `site-blocks` plugin (`src/plugins/`). They render on the site with the Astro components in `src/components/ui/`, and are edited **in place** in the admin editor and in on-page edit mode:
 
 - `src/plugins/block-nodeviews.ts` replaces the editor's node view for these blocks with the site markup; text is editable directly, links/numbers/images are in a small settings strip, and ⚙ opens EmDash's own full form. It uses only `editor` (exposed on `.ProseMirror`), `view.setProps({ nodeViews })` and normal `setNodeMarkup` transactions, and falls back to EmDash's default view for anything it doesn't handle.
 - The editor styles are **generated** from the site's real CSS: after changing a block component's `<style>`, the tokens, or `.btn`/`.eyebrow` in `Base.astro`, run `npm run sync:block-css` to refresh `src/plugins/blocks-admin.generated.css`. Hand-written editor chrome lives in `blocks-admin.css`.
 - Adding a block: define its fields in `block-i18n.ts`, its Astro component in `src/components/ui/` + `site-blocks-components.ts`, and its editor template in `SPECS` in `block-nodeviews.ts`.
 - `news_item` (image, title, description, whole card links to `link`) renders as a grid when several are consecutive (`groupContentBlocks`). Its image is picked from the media library in the block form (`imageUrl`).
 - News is a collection (`news`: title, image, description, optional link), translated per entry like posts. `/news` is the archive route (`src/pages/[...locale]/news/`), and the `recent_news` block shows the latest entries on the home page (counterpart of `recent_posts`). `news_item` is a standalone card for hand-placed use in any page.
+- `video_embed` shows a YouTube video (title, description, `videoUrl`). Nothing from YouTube loads until play is pressed (thumbnail poster from i.ytimg.com, then a youtube-nocookie iframe). Used on the home page below the hero; any page can use it via "/".
 - Block data uses camelCase keys (`primaryText`, `linkText`, …) — the keys the editor writes. Components still accept the older snake_case keys as a fallback.
 
 ## Customisation
