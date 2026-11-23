@@ -94,36 +94,44 @@ npm run deploy      # = astro build && wrangler deploy
 
 ### 3. 套用資料庫遷移（EmDash 核心資料表）
 
-EmDash 預設在第一個請求由 Worker 自己遷移，但免費方案每個請求只能對外呼叫 50 次，常常跑不完，網站會回 `503 Database migrations are required`。這時從本機用 `emdash migrate` 直接對 D1 套用（走 Cloudflare API，不受 Worker 限制）。
+EmDash 預設在第一個請求由 Worker 自己遷移，但免費方案每個請求只能對外呼叫 50 次，跑不完，網站會回 `503 Database migrations are required`，並且可能留下一把卡住的「遷移鎖」。所以改從本機對 D1 套用（走 Cloudflare API，不受 Worker 限制）。
 
-不需要另外建立 API Token，可以直接用 wrangler 的登入憑證：
-
-```bash
-npx wrangler login
-npx wrangler whoami                       # 從表格找到 Account ID
-
-export CLOUDFLARE_ACCOUNT_ID="貼上 Account ID"
-unset CLOUDFLARE_API_TOKEN
-export CLOUDFLARE_API_TOKEN="$(npx wrangler auth token --json | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8")).token')"
-echo ${#CLOUDFLARE_API_TOKEN} ${CLOUDFLARE_API_TOKEN:0:6}   # 應顯示「93 cfoat_」，不會印出憑證
-```
-
-> 一定要加 `--json`：不加的話輸出前面會帶 wrangler 橫幅（含 ⛅ 符號），會出現 `Cannot convert argument to a ByteString` 的錯誤，長度也會是約 190 而不是 93。
+已經包成 npm script，直接使用 `wrangler login` 的登入憑證，**不需要另外建立 API Token**，也不會把憑證印出或存檔：
 
 ```bash
-npm run build                                              # 產生 .emdash/migrations.json
-npx emdash migrate --status --d1 yutzulin-blog-db          # 只看狀態，確認帳號與資料庫
-npx emdash migrate --d1 yutzulin-blog-db                   # 套用（會再要求確認）
-npx emdash migrate --check --d1 yutzulin-blog-db           # 檢查是否還有未套用的遷移
+npx wrangler login          # 已登入可略過
+
+npm run db:status           # 只看狀態：目標資料庫、遷移鎖、已套用／待套用的遷移
+npm run db:migrate          # 套用待處理的遷移（會顯示目標並要求確認）
+npm run db:check            # 檢查是否還有未套用的遷移（有的話離開碼非 0）
 ```
 
-完成後最多等 30 秒，網站就會恢復。
+`db:*` 會先 `astro build` 產生 `.emdash/migrations.json`（要與部署的程式碼同一版），帳號 ID 會自動取得；如果帳號底下有多個 Cloudflare 帳號，需自行指定 `CLOUDFLARE_ACCOUNT_ID`。完成後最多等 30 秒，網站就會恢復。
 
-- 這些變數只在目前的終端機視窗有效，**不要寫進專案檔案或貼到任何地方**。
-- wrangler 的登入憑證約一小時過期；過期就重新執行 `export` 那兩行。
-- 如果出現 `Authentication error` / `403`，代表 wrangler 憑證權限不足，改到 Cloudflare 儀表板建立「D1 → Edit」權限的 API Token，設成 `CLOUDFLARE_API_TOKEN`。
+#### 網站仍回 503：先看真正的錯誤
+
+503 的訊息是通用的，真正原因要看 Worker 日誌：
+
+```bash
+npx wrangler tail yutzulin-blog --format pretty    # 開著，再重新整理網站
+```
+
+找 `[emdash] database migrations are required:` 後面那一行。
+
+**遷移鎖卡住**（`The migration lock has been held since …`）：Worker 在免費方案跑到一半被中止，沒有釋放鎖，之後所有遷移都被擋住。先用 `npm run db:status` 看第一行 `Migration lock: held since … (id 數字)`，確認沒有其他遷移正在執行後：
+
+```bash
+npm run db:migrate -- --take-over-lock <id>
+```
+
+它會接手那把鎖並套用剩下的遷移（會要求確認）。如果只想釋放鎖、不套用，改用 `--release-lock <id>`，但網站在 `auto` 模式下可能又搶先開始遷移，所以通常建議用 `--take-over-lock`。
+
+其他注意：
+
+- 憑證約一小時過期，過期就 `npx wrangler login` 重新登入。
+- 出現 `Authentication error` / `403` 代表 wrangler 憑證權限不足，改到 Cloudflare 儀表板建立「D1 → Edit」權限的 API Token，執行時設成環境變數 `CLOUDFLARE_API_TOKEN`（不要寫進專案檔案）。
 - 做完請執行 `npx wrangler logout`，之後要部署再 `npx wrangler login`。
-- 每次升級 EmDash 後重新部署，都要先 `npm run build` 再重跑一次 `migrate --status` 與 `migrate`。
+- 每次升級 EmDash 後重新部署，都要再跑一次 `npm run db:status` 與 `npm run db:migrate`。
 
 ### 4. 完成設定精靈（立刻做）
 

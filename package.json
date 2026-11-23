@@ -13,7 +13,10 @@
     "preview": "astro preview",
     "deploy": "astro build && wrangler deploy",
     "typecheck": "astro check",
-    "sync:block-css": "node scripts/sync-block-css.mjs"
+    "sync:block-css": "node scripts/sync-block-css.mjs",
+    "db:status": "node scripts/d1.mjs --status",
+    "db:migrate": "node scripts/d1.mjs",
+    "db:check": "node scripts/d1.mjs --check"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.1",
